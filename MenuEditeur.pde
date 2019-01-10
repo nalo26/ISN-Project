@@ -1,3 +1,8 @@
+/*
+/!\Il y a des élémentes spéciffiques à cet affichage (bien qu'il faille faire le tri) /!\
+Affichages des tanks ne doit pas se faire par exemple
+/*
+
 void Menu2(){
   AffEditeur();
   int Selectile=0;
@@ -80,6 +85,9 @@ noStroke();
         
     }
   }
+  
+  //Ca en particulier
+  
   fill(45,139,97);
   rect(20,505,50,50);
   PImage Montagne;Montagne = loadImage("Montagne.png");image(Montagne,90,505);
