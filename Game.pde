@@ -1,17 +1,14 @@
 /*
-v. 1.1.2, 09/01/19 à 17h38, Nathan
+v. 1.1.3, 10/01/19 à 19h07, Benj
 
 Changelog :
 
-/!\ ATTENTION AU CHANGEMENT DE SYSTEME DE MENU /!\
+-Changement de la taille de l'affichage pour :
+Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectionées dans le menu éditeur)
+-Fix de problèmes en liens avec la couleurs de certains textes
+-Début du menu éditeur
 
-- Reorganisation du menu en sous parties
-- Reajout de la touche ENTREE
-- Optimisation de certaines parties
-Fix en cours (attention ne pas toucher !):
-- Changement de toutes les demandes de touches dans la partie keyPressed()
-- Création du serveur
-- ...
+
  */
 String GameName = "Tank Game";
 int Player = 0; //Joueur 1 et 2 changement
@@ -74,7 +71,7 @@ int [] Collision = {
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
 PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL;
 void setup() {
-  size(500, 500);
+  size(500, 550);
   background(0);
   //A changer pour changer la rapidité du jeu
   frameRate(60);
@@ -240,11 +237,17 @@ void CDA() {
 
 
 void AffTank () {//Affiche le tank
-  delay(50);
-  background(45, 139, 97);
-  noStroke();
 
-  for (int x=0; x<10; x++) {
+delay(50);
+background(45,139,97);
+//Affichage barre d'info
+fill(0);
+rect(0,500,500,50);
+fill(200);
+rect(0,500,500,3);
+noStroke();
+
+for (int x=0; x<10; x++) {
     for (int y=0; y<10; y++) {
       int Ax = x;
       int Ay = y*10;
@@ -367,16 +370,17 @@ void AffTank () {//Affiche le tank
 
 
   //Affichage des vies
+  fill(0);
   textSize(14);
-  text("V1:", 20, 25);
-  text(":V2", 460, 25);
+  text("V1:", 20, 530);
+  text(":V2", 460, 530);
   for (int viebarre1 = vietank1; viebarre1>0; viebarre1--) {
     fill(150, 32, 32);
-    image(Vies, 12*viebarre1+40, 20, 8, 8);
+    image(Vies, 12*viebarre1+40, 523, 8, 8);
   }
   for (int viebarre2 = vietank2; viebarre2>0; viebarre2--) {
     fill(150, 32, 32);
-    image(Vies, -12*viebarre2+460, 20, 8, 8);
+    image(Vies, -12*viebarre2+460, 523, 8, 8);
   }
 }
 
@@ -420,15 +424,15 @@ void Game() {
 
   if (vietank1<1) {
     background(0);
-    fill(0, 0, 255);
-    textSize(40);
-    text("Player 1 WIN", 130, 220);
-  }
-  if (vietank2<1) {
-    background(0);
     fill(255, 0, 0);
     textSize(40);
     text("Player 2 WIN", 130, 220);
+  }
+  if (vietank2<1) {
+    background(0);
+    fill(0, 0, 255);
+    textSize(40);
+    text("Player 1 WIN", 130, 220);
   }
 
   if (Player==1 && Act>0) {
