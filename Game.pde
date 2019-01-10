@@ -1,13 +1,13 @@
 /*
-v. 1.1.3, 10/01/19 à 19h07, Benj
+v. 1.1.4, 10/01/19 à 22h51, Benj
 
 Changelog :
 
 -Changement de la taille de l'affichage pour :
 Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectionées dans le menu éditeur)
 -Fix de problèmes en liens avec la couleurs de certains textes
--Début du menu éditeur
-
+-Base du menu éditeur effectuée (Il reste a voir pour les problèmes de lag et un rendu plus esthétique)
+-Rajout de certaines variables pour le MenuEditeur dans menu /!\ Voir si leurs emplacement te conviens /!\
 
  */
 String GameName = "Tank Game";
@@ -43,6 +43,14 @@ boolean Gauche= false;
 boolean end = false;
 String toshow = "Menu";
 int Menu=1;
+
+// /!\ Parties valeurs MenuEditeur /!\
+int Selectile=0;
+int Selectedtile=0;
+int LockTile=0;
+int XCursorEdit=0;
+int YCursorEdit=0;
+
 //Maps
 int [] Collision = {
   0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
