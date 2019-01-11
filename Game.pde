@@ -1,13 +1,10 @@
 /*
-v. 1.1.4, 10/01/19 à 22h51, Benj
+v. 1.1.5, 11/01/19 à 16h53, Nathan
 
 Changelog :
 
--Changement de la taille de l'affichage pour :
-Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectionées dans le menu éditeur)
--Fix de problèmes en liens avec la couleurs de certains textes
--Base du menu éditeur effectuée (Il reste a voir pour les problèmes de lag et un rendu plus esthétique)
--Rajout de certaines variables pour le MenuEditeur dans menu /!\ Voir si leurs emplacement te conviens /!\
+- Ajout de la fonction de création / rejoindre le serveur (en cours)
+- Modifier la mise en page de quelques bug sur le menu
 
  */
 String GameName = "Tank Game";
@@ -64,18 +61,18 @@ int [] Collision = {
   3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
   3, 1, 1, 0, 0, 4, 4, 2, 2, 0
 };
-//    int [] Collision = {
-//0,0,0,0,0,0,0,0,0,0,
-//0,1,1,3,2,2,3,1,1,0,
-//0,1,0,2,0,0,2,0,1,0,
-//0,3,2,0,4,4,0,2,3,0,
-//0,2,0,4,0,0,4,0,2,0,
-//0,2,0,4,0,0,4,0,2,0,
-//0,3,2,0,4,4,0,2,3,0,
-//0,1,0,2,0,0,2,0,1,0,
-//0,1,1,3,2,2,3,1,1,0,
-//0,0,0,0,0,0,0,0,0,0
-//};
+/*int [] Collision = {
+0,0,0,0,0,0,0,0,0,0,
+0,1,1,3,2,2,3,1,1,0,
+0,1,0,2,0,0,2,0,1,0,
+0,3,2,0,4,4,0,2,3,0,
+0,2,0,4,0,0,4,0,2,0,
+0,2,0,4,0,0,4,0,2,0,
+0,3,2,0,4,4,0,2,3,0,
+0,1,0,2,0,0,2,0,1,0,
+0,1,1,3,2,2,3,1,1,0,
+0,0,0,0,0,0,0,0,0,0
+};*/
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
 PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL;
 void setup() {
@@ -394,8 +391,6 @@ for (int x=0; x<10; x++) {
 
 
 void draw() {
-  //println(Menu);
-  println(toshow);
   if (toshow == "Menu") Menu();
   if (toshow == "MenuPlay") MenuPlay();
   if (toshow == "MenuEditor") MenuEditor();
@@ -406,6 +401,7 @@ void draw() {
 }
 
 void Game() {
+  textAlign(LEFT);
   if (Player==0 && Act==0 && vietank1>0 && vietank2>0 || Player==2 && Act==0 && vietank1>0 && vietank2>0) {
     background(0);
     fill(0, 0, 255);

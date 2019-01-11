@@ -1,13 +1,13 @@
 /*
-/!\Il y a des élémentes spéciffiques à cet affichage (bien qu'il faille faire le tri) /!\
-Affichages des tanks ne doit pas se faire par exemple d'ou le AffEditeur
-
-/*
+/!\Il y a des éléments spécifiques à cet affichage (bien qu'il faille faire le tri) /!\
+ Affichages des tanks ne doit pas se faire par exemple d'ou le AffEditeur
+ 
+ */
 
 void Menu2() {
   AffEditeur();
 
-//Enter permet d'accéder au choix des types de terrains (ex:montagne,lave...) qui vont remplacer ceux choisit par le curseur  
+  //Enter permet d'accéder au choix des types de terrains (ex:montagne,lave...) qui vont remplacer ceux choisit par le curseur  
   if (keyCode==ENTER && Selectile==0 && LockTile==0) {
     Selectile=1;
     LockTile=1;
@@ -22,7 +22,7 @@ void Menu2() {
     LockTile=0;
   }
 
-//Déplacement du curseur
+  //Déplacement du curseur
   if (keyPressed==true && keyCode==LEFT && Selectile==0 && XCursorEdit!=0) {
     XCursorEdit--;
   }
@@ -43,7 +43,7 @@ void Menu2() {
     Selectile++;
   }
 
-//Remplace le terrain choisit par le curseur par celui choisit dans la barre d'info (En appuyant sur Shift)
+  //Remplace le terrain choisit par le curseur par celui choisit dans la barre d'info (En appuyant sur Shift)
   if (keyPressed==true && keyCode==SHIFT && Selectile==0) {
     Collision [XCursorEdit+YCursorEdit*10] =Selectedtile;
   }
