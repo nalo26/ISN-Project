@@ -1,0 +1,19 @@
+﻿v 1.1.2, à , Nathan
+
+
+----------------------------------------
+v. 1.1.4, 10/01/19 à 22h51, Benj
+
+- Changement de la taille de l'affichage pour :
+Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectionées dans le menu éditeur)
+- Fix de problèmes en liens avec la couleurs de certains textes
+- Base du menu éditeur effectuée (Il reste a voir pour les problèmes de lag et un rendu plus esthétique)
+- Rajout de certaines variables pour le MenuEditeur dans menu /!\ Voir si leurs emplacement te conviens /!\
+
+----------------------------------------
+v. 1.1.5, 11/01/19 à 16h53, Nathan
+
+Changelog :
+
+- Ajout de la fonction de création / rejoindre le serveur (en cours)
+- Modifier la mise en page de quelques bug sur le menu
