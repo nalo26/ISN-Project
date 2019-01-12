@@ -19,7 +19,11 @@ Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectioné
 ----------------------------------------
 v. 1.1.5, 11/01/19 à 16h53, Nathan
 
-Changelog :
-
 - Ajout de la fonction de création / rejoindre le serveur (en cours)
 - Modifier la mise en page de quelques bug sur le menu
+
+----------------------------------------
+v. 1.1.6, 12/01/19 à 18h21, Nathan
+ 
+- Ajout de la sauvegarde des données serveur (juste sauvegarde, pas lecture)
+- Compression des deux blocs de codes des deux joueurs en un seul (test du joueur à chaque évenement) (y'avait beaucoup de boulot)
