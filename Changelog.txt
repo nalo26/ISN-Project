@@ -1,5 +1,11 @@
-﻿v 1.1.2, à , Nathan
+v. 1.1.2, 09/01/19 à 17h38, Nathan
 
+- Reorganisation du menu en sous parties
+- Reajout de la touche ENTREE
+- Optimisation de certaines parties
+Fix en cours (attention ne pas toucher !):
+- Changement de toutes les demandes de touches dans la partie keyPressed()
+- Création du serveur
 
 ----------------------------------------
 v. 1.1.4, 10/01/19 à 22h51, Benj
