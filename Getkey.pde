@@ -30,4 +30,7 @@ void keyPressed() {
       else if (keyCode == ENTER && ServerIP.length() > 7) CanJoin = true;
       else if (key != CODED && keyCode != ENTER && keyCode != BACKSPACE) ServerIP += key;
   }
+  /*if (toshow == "Game"){
+    
+  }*/
 }
