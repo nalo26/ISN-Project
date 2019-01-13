@@ -5,6 +5,7 @@ v. 1.1.7, 13/01/19 à 19h00, Benjamin
  
 -Rajout de la texture d'explosion de la balle
 -Modiffication du code pour l'intégrer
+-Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
  
  */
 String GameName = "Tank Game";
@@ -622,8 +623,6 @@ void Game() {
           Balle = BalleR;
           image(Balle, xbasem, ybasem);
         }
-        //fill(0);
-        //rect(xbasem+12,ybasem+12,25,25);
         fill(200);
         textSize(50);
         text(CB, 450, 490, 500);
@@ -634,6 +633,7 @@ void Game() {
         lock=0;
         AffTank();
         Balle =  BalleExplosion;
+        image(Balle, xbasem, ybasem);
         Act=Act-1;
       }
     }
