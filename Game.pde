@@ -1,10 +1,10 @@
 /*
-v. 1.1.6, 12/01/19 à 18h21, Nathan
+v. 1.1.7, 13/01/19 à 19h00, Benjamin
  
  Changelog :
  
- - Ajout de la sauvegarde des données serveur (juste sauvegarde, pas lecture)
- - Compression des deux blocs de codes des deux joueurs en un seul (test du joueur à chaque évenement) (y'avait beaucoup de boulot)
+-Rajout de la texture d'explosion de la balle
+-Modiffication du code pour l'intégrer
  
  */
 String GameName = "Tank Game";
@@ -74,7 +74,7 @@ int [] Collision = {
  0,0,0,0,0,0,0,0,0,0
  };*/
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
-PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL;
+PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL;BalleExplosion;
 
 void setup() {
   size(500, 550);
@@ -118,6 +118,7 @@ void setup() {
   BalleD = loadImage("BalleD.png");
   BalleR = loadImage("BalleR.png");
   BalleL = loadImage("BalleL.png");
+  BalleExplosion = loadImage("Explosion.png");
 }
 void CDD() {
   //Cadrillage Des Déplacements (Tanks)
@@ -632,8 +633,7 @@ void Game() {
         choix=0;
         lock=0;
         AffTank();
-        fill(250, 180, 0);
-        rect(xbasem+12, ybasem+12, 25, 25); 
+        Balle =  BalleExplosion;
         Act=Act-1;
       }
     }
