@@ -4,7 +4,7 @@ v. 1.1.7, 13/01/19 à 19h00, Benjamin
  Changelog :
  
 -Rajout de la texture d'explosion de la balle
--Modiffication du code pour l'intégrer
+-Modification du code pour l'intégrer
 -Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
  
  */
@@ -75,7 +75,7 @@ int [] Collision = {
  0,0,0,0,0,0,0,0,0,0
  };*/
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
-PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL;BalleExplosion;
+PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
 
 void setup() {
   size(500, 550);
@@ -378,7 +378,7 @@ void AffTank () {//Affiche le tank
 
 
   //Affichage des vies
-  fill(0);
+  fill(255);
   textSize(14);
   text("V1:", 20, 530);
   text(":V2", 460, 530);
