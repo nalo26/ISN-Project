@@ -31,12 +31,16 @@ v. 1.1.6, 12/01/19 à 18h21, Nathan
 ----------------------------------------
 v. 1.1.7, 13/01/19 à 19h00, Benjamin
 
--Rajout de la texture d'explosion de la balle
--Modification du code pour l'intégrer
--Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
+- Rajout de la texture d'explosion de la balle
+- Modification du code pour l'intégrer
+- Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
 
 ----------------------------------------
-
 v. 1.1.8, 14/01/19 à 10h46, Benjamin
 
--Optimisation du MenuEditeur (Loadimage supprimé car déja chargé précédement)
+- Optimisation du MenuEditeur (Loadimage supprimé car déja chargé précédement)
+
+----------------------------------------
+v. 1.1.9, 14/01/19 à 16h51, Nathan
+ 
+- Optimisation du nombre de ligne de l'éditeur
