@@ -18,35 +18,19 @@ void MenuEditor() {
     LockTile=1;
   }
   //A changer plus tard (Force le joueur a choisir une texture avec les fleches avant de valider
-  if (keyPressed==true) {
-    LockTile=0;
-  }
+  if (keyPressed==true) LockTile=0;
 
   //Déplacement du curseur
-  if (keyPressed==true && keyCode==LEFT && Selectile==0 && XCursorEdit!=0) {
-    XCursorEdit--;
-  }
-  if (keyPressed==true && keyCode==RIGHT && Selectile==0 && XCursorEdit!=9) {
-    XCursorEdit++;
-  }
-  if (keyPressed==true && keyCode==UP && Selectile==0 && YCursorEdit!=0) {
-    YCursorEdit--;
-  }
-  if (keyPressed==true && keyCode==DOWN && Selectile==0 && YCursorEdit!=9) {
-    YCursorEdit++;
-  }
+  if (keyPressed==true && keyCode==LEFT && Selectile==0 && XCursorEdit!=0) XCursorEdit--;
+  if (keyPressed==true && keyCode==RIGHT && Selectile==0 && XCursorEdit!=9) XCursorEdit++;
+  if (keyPressed==true && keyCode==UP && Selectile==0 && YCursorEdit!=0) YCursorEdit--;
+  if (keyPressed==true && keyCode==DOWN && Selectile==0 && YCursorEdit!=9) YCursorEdit++;
 
-  if (keyPressed==true && keyCode==LEFT && Selectile!=0 && Selectile!=1) {
-    Selectile--;
-  }
-  if (keyPressed==true && keyCode==RIGHT && Selectile!=0 && Selectile!=5) {
-    Selectile++;
-  }
+  if (keyPressed==true && keyCode==LEFT && Selectile!=0 && Selectile!=1) Selectile--;
+  if (keyPressed==true && keyCode==RIGHT && Selectile!=0 && Selectile!=5) Selectile++;
 
   //Remplace le terrain choisit par le curseur par celui choisit dans la barre d'info (En appuyant sur Shift)
-  if (keyPressed==true && keyCode==SHIFT && Selectile==0) {
-    Collision [XCursorEdit+YCursorEdit*10] =Selectedtile;
-  }
+  if (keyPressed==true && keyCode==SHIFT && Selectile==0) Collision [XCursorEdit+YCursorEdit*10] =Selectedtile;
 }
 
 void AffEditeur () {//Affiche l'éditeur
@@ -89,18 +73,10 @@ void AffEditeur () {//Affiche l'éditeur
         }
 
         //Coins/angles lave
-        if (Haut==true && Droite==true) {
-          image(Eauhetd, x*50, y*50);
-        }
-        if (Haut==true && Gauche==true) {
-          image(Eauhetg, x*50, y*50);
-        }
-        if (Bas==true && Droite==true) {
-          image(Eaubetd, x*50, y*50);
-        }
-        if (Bas==true && Gauche==true) {
-          image(Eaubetg, x*50, y*50);
-        }
+        if (Haut==true && Droite==true) image(Eauhetd, x*50, y*50);
+        if (Haut==true && Gauche==true) image(Eauhetg, x*50, y*50);
+        if (Bas==true && Droite==true) image(Eaubetd, x*50, y*50);
+        if (Bas==true && Gauche==true) image(Eaubetg, x*50, y*50);
 
         //Remise a 0 de la détection des tiles autours du blocs de lave
         Bas= false;
@@ -131,18 +107,10 @@ void AffEditeur () {//Affiche l'éditeur
         }
 
         //Coins/angles lave
-        if (Haut==true && Droite==true) {
-          image(Lavehetd, x*50, y*50);
-        }
-        if (Haut==true && Gauche==true) {
-          image(Lavehetg, x*50, y*50);
-        }
-        if (Bas==true && Droite==true) {
-          image(Lavebetd, x*50, y*50);
-        }
-        if (Bas==true && Gauche==true) {
-          image(Lavebetg, x*50, y*50);
-        }
+        if (Haut==true && Droite==true) image(Lavehetd, x*50, y*50);
+        if (Haut==true && Gauche==true) image(Lavehetg, x*50, y*50);
+        if (Bas==true && Droite==true) image(Lavebetd, x*50, y*50);
+        if (Bas==true && Gauche==true) image(Lavebetg, x*50, y*50);
 
         //Remise a 0 de la détection des tiles autours du blocs de lave
         Bas= false;
@@ -152,9 +120,8 @@ void AffEditeur () {//Affiche l'éditeur
       }//Couleur Lave
 
       //Foret/arbre en bas pour recouvrir les tank
-      if (Collision [A] ==4) {
-        image(arbre, x*50, y*50);
-      }//Couleur Foret
+      if (Collision [A] ==4) image(arbre, x*50, y*50);
+      //Couleur Foret
     }
   }
   //Affiche les terrains proposées en barre d'info
