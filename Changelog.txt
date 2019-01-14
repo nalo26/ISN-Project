@@ -27,3 +27,10 @@ v. 1.1.6, 12/01/19 à 18h21, Nathan
  
 - Ajout de la sauvegarde des données serveur (juste sauvegarde, pas lecture)
 - Compression des deux blocs de codes des deux joueurs en un seul (test du joueur à chaque évenement) (y'avait beaucoup de boulot)
+
+----------------------------------------
+v. 1.1.7, 13/01/19 à 19h00, Benjamin
+
+-Rajout de la texture d'explosion de la balle
+-Modification du code pour l'intégrer
+-Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
