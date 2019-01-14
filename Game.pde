@@ -1,11 +1,9 @@
 /*
-v. 1.1.7, 13/01/19 à 19h00, Benjamin
+v. 1.1.8, 14/01/19 à 16h51, Nathan
  
  Changelog :
  
--Rajout de la texture d'explosion de la balle
--Modification du code pour l'intégrer
--Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
+- Optimisation du nombre de ligne de l'éditeur
  
  */
 String GameName = "Tank Game";
