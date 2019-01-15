@@ -1,4 +1,4 @@
-v. 1.1.2, 09/01/19 à 17h38, Nathan
+﻿v. 1.1.2, 09/01/19 à 17h38, Nathan
 
 - Reorganisation du menu en sous parties
 - Reajout de la touche ENTREE
@@ -44,3 +44,9 @@ v. 1.1.8, 14/01/19 à 10h46, Benjamin
 v. 1.1.9, 14/01/19 à 16h51, Nathan
  
 - Optimisation du nombre de ligne de l'éditeur
+
+----------------------------------------
+v. 1.1.10, 15/01/19 à 21h51, Benj
+ 
+- Début du Menu de maps et de la sauvegarde des maps
+

@@ -40,12 +40,21 @@ boolean end = false;
 String toshow = "Menu";
 int Menu=1;
 
-// /!\ Parties valeurs MenuEditeur /!\
+// Parties valeurs MenuEditeur
 int Selectile=0;
 int Selectedtile=0;
 int LockTile=0;
 int XCursorEdit=0;
 int YCursorEdit=0;
+
+// /!\ MenuMaps en cours de dévellopement (comprends aussi la sauvegarde des maps éditées) /!\
+JSONObject Map1;
+JSONObject Map2;
+JSONObject Map3;
+//Interac(tion)Map permet de définir s'il s'agit d'une lecture (0) ou d'une écriture de map
+int InteracMap = 0; 
+//Annonce quelle map est sélectione
+int SelectMap = 1;
 
 //Maps
 int [] Collision = {
@@ -399,6 +408,7 @@ void draw() {
   if (toshow == "Game") Game();
   if (toshow == "ServerJoin") ServerJoin();
   if (toshow == "ServerCreate") ServerCreate();
+  if (toshow == "MenuMaps") MenuMaps();
 }
 
 void Game() {

@@ -31,8 +31,5 @@ void MenuPlay() {
   delay(10);
 }
 
-void MenuEditor() {
-}
-
 void MenuOption() {
 }
