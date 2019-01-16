@@ -50,3 +50,8 @@ v. 1.1.10, 15/01/19 à 21h51, Benj
  
 - Début du Menu de maps et de la sauvegarde des maps
 
+----------------------------------------
+v. 1.1.11, 16/01/19 à 18h50, Benj
+ 
+- MenuMaps finit dans les grandes lignes
+

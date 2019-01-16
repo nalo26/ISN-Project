@@ -1,9 +1,9 @@
 /*
-v. 1.1.9, 14/01/19 à 16h51, Nathan
+v. 1.1.11, 16/01/19 à 18h50, Benjamin
  
  Changelog :
  
-- Optimisation du nombre de ligne de l'éditeur
+-MenuMaps finit dans les grandes lignes
  
  */
 String GameName = "Tank Game";
@@ -55,9 +55,13 @@ JSONObject Map3;
 int InteracMap = 0; 
 //Annonce quelle map est sélectione
 int SelectMap = 1;
+//Json object
+//Map1 = new JSONObject();
 
-//Maps
-int [] Collision = {
+
+
+//Maps de base lorsqu'on édite une map dans le menu editeur
+/*int [] Collision = {
   0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
   0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
   0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
@@ -68,19 +72,19 @@ int [] Collision = {
   0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
   3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
   3, 1, 1, 0, 0, 4, 4, 2, 2, 0
-};
-/*int [] Collision = {
+};*/
+int [] Collision = {
+ 0,1,2,3,4,0,0,0,0,0,
  0,0,0,0,0,0,0,0,0,0,
- 0,1,1,3,2,2,3,1,1,0,
- 0,1,0,2,0,0,2,0,1,0,
- 0,3,2,0,4,4,0,2,3,0,
- 0,2,0,4,0,0,4,0,2,0,
- 0,2,0,4,0,0,4,0,2,0,
- 0,3,2,0,4,4,0,2,3,0,
- 0,1,0,2,0,0,2,0,1,0,
- 0,1,1,3,2,2,3,1,1,0,
+ 0,0,0,0,0,0,0,0,0,0,
+ 0,0,0,0,0,0,0,0,0,0,
+ 0,0,0,0,0,0,0,0,0,0,
+ 0,0,0,0,0,0,0,0,0,0,
+ 0,0,0,0,0,0,0,0,0,0,
+ 0,0,0,0,0,0,0,0,0,0,
+ 0,0,0,0,0,0,0,0,0,0,
  0,0,0,0,0,0,0,0,0,0
- };*/
+ };
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
 PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
 

@@ -17,7 +17,7 @@ void keyPressed() {
     if (keyCode==RIGHT) Menu++;
     if (keyCode==LEFT) Menu--;
     if (keyCode==TAB) toshow = "Menu"; //Touche retour, pour revenir sur le menu principal
-    if (Menu == 1 && keyCode == ENTER) toshow = "Game"; //Lancer le jeu
+    if (Menu == 1 && keyCode == ENTER) toshow = "MenuMaps"; //Lancer le jeu
     if (Menu == 2 && keyCode == ENTER) toshow = "ServerCreate"; //Afficher la page de création de serveur
     if (Menu == 3 && keyCode == ENTER) {
       toshow = "ServerJoin"; //Afficher la page pour rejoindre le serveur
