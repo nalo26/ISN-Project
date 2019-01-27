@@ -1,9 +1,10 @@
 /*
-v. 1.1.13, 28/01/19 à 12h28, Benjamin
+v. 1.1.13, 27/01/19 à 16h08, Benjamin
  
  Changelog :
  
-- Bruitages et options de bruitage fonctionels (Tir et Déplacement)
+- Accès au MenuOption en jeu
+- Dévellopement Interface
  
  */
 String GameName = "Tank Game";
@@ -61,7 +62,8 @@ int MenuOpt = 0;
 int SMenuOpt = 1;
 int MusicVOL = 50;
 int SoundVOL = 50;
-
+//Permet d'accéder au parametres de son en jeu
+int Link =0;
 
 //Maps de base lorsqu'on édite une map dans le menu editeur
 /*int [] Collision = {
@@ -408,6 +410,13 @@ void AffTank () {//Affiche le tank
     fill(150, 32, 32);
     image(Vies, -12*viebarre2+460, 523, 8, 8);
   }
+  
+  //Affichage de la Commande pour accéder aux options en jeu
+  textAlign(CENTER);
+  fill(255);
+  text("Press Shift",250,520);
+  text("For Options",250,540);
+  textAlign(LEFT);
 }
 
 
@@ -575,6 +584,7 @@ void Game() {
           if (Player == 2) Direction2=4;
         }
         if (lock3==1 && keyCode==ENTER) {
+          Fire.play(3);
           lock=lock2;
           lock3=0;
           if (IsMulti == true) {

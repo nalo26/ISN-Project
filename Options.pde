@@ -72,7 +72,7 @@ else if (SoundVOL>9 && SoundVOL!=100)text(SoundVOL,400,290);
 
 
 fill(230);
-if(MenuOpt==3){
+if(MenuOpt==3 && Link==0){
 if(keyPressed == true && keyCode == RIGHT && vietank1<10){vietank1++;vietank2++;}
 if(keyPressed == true && keyCode == LEFT && vietank2>1){vietank1--;vietank2--;}
 //Triangle de pour montrer comment régler le son
@@ -87,4 +87,11 @@ fill(255);
 textSize(15);
 if(vietank1<10)text(vietank1,410,440);
 else text(vietank1,400,440);
+if(MenuOpt==3 && Link==1){
+fill(255,0,0);
+text("You can't change the number ",260,470);
+text("Tank's Health now",290,500);
+triangle(300,430,310,420,310,440);
+triangle(430,420,430,440,440,430);
+}
 }
