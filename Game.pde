@@ -1,9 +1,10 @@
 /*
-v. 1.1.11, 16/01/19 à 18h50, Benjamin
+v. 1.1.12, 27/01/19 à 1h50, Benjamin
  
  Changelog :
  
--MenuMaps finit dans les grandes lignes
+- Options finis (il ne reste plus qu'a rajouter le programme jouant la musique et le effets sonores)
+- Avec les options il est possible de changer l'intensité sonores de la musique et des effets sonres ainsi que de choisir le nombre de vie au début de la partie
  
  */
 String GameName = "Tank Game";
@@ -47,7 +48,7 @@ int LockTile=0;
 int XCursorEdit=0;
 int YCursorEdit=0;
 
-// /!\ MenuMaps en cours de dévellopement (comprends aussi la sauvegarde des maps éditées) /!\
+//MenuMaps
 JSONObject Map1;
 JSONObject Map2;
 JSONObject Map3;
@@ -55,9 +56,12 @@ JSONObject Map3;
 int InteracMap = 0; 
 //Annonce quelle map est sélectione
 int SelectMap = 1;
-//Json object
-//Map1 = new JSONObject();
 
+//Menu option
+int MenuOpt = 0;
+int SMenuOpt = 1;
+int MusicVOL = 50;
+int SoundVOL = 50;
 
 
 //Maps de base lorsqu'on édite une map dans le menu editeur
@@ -413,6 +417,7 @@ void draw() {
   if (toshow == "ServerJoin") ServerJoin();
   if (toshow == "ServerCreate") ServerCreate();
   if (toshow == "MenuMaps") MenuMaps();
+  if (toshow == "Options") Options();
 }
 
 void Game() {

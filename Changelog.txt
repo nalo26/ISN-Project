@@ -55,3 +55,10 @@ v. 1.1.11, 16/01/19 à 18h50, Benj
  
 - MenuMaps finit dans les grandes lignes
 
+----------------------------------------
+v. 1.1.12, 27/01/19 à 1h50, Benjamin
+ 
+- Options finis (il ne reste plus qu'a rajouter le programme jouant la musique et le effets sonores)
+- Avec les options il est possible de changer l'intensité sonores de la musique et des effets sonres ainsi que de choisir le nombre de vie au début de la partie
+ 
+

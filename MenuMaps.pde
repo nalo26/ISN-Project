@@ -5,12 +5,12 @@ void MenuMaps() {
   if (InteracMap==0) {
     background(0);
     textAlign(CENTER);
-    text("CHOIX DE LA MAP", 250, 50);
-    text("Choisir Map N°1", 250, 100);
-    text("Choisir Map N°2", 250, 200);
-    text("Choisir Map N°3", 250, 300);
-    text("Appuyer sur la flèche du Haut ou du Bas pour choisir un dossier de sauvegarde", 250, 400);
-    text("Et Appuyez sur la flèche de droite pour confirmer", 250, 450);
+    text("Selection of Maps", 250, 50);
+    text("Select Map N°1", 250, 100);
+    text("Select Map N°2", 250, 200);
+    text("Select Map N°3", 250, 300);
+    text("Press Up or Down arrows to select your folder", 250, 400);
+    text("And Press Right arrow  to load file", 250, 450);
     textAlign(LEFT);
 
     CurseurMenuMaps();
@@ -35,11 +35,11 @@ void MenuMaps() {
   if (InteracMap==1) {
     background(0);
     textAlign(CENTER);
-    text("Remplacer Map N°1", 250, 100);
-    text("Remplacer Map N°2", 250, 200);
-    text("Remplacer Map N°3", 250, 300);
-    text("Appuyer sur la flèche du Haut ou du Bas pour choisir le dossier de sauvegarde", 250, 400);
-    text("Et Appuyez sur Entrer pour confirmer", 250, 450);
+    text("Remplace Map N°1", 250, 100);
+    text("Remplace Map N°2", 250, 200);
+    text("Remplace Map N°3", 250, 300);
+    text("Press Up or Down arrows to select a backup location", 250, 400);
+    text("And Press Enter to save file", 250, 450);
     textAlign(LEFT);
 
     CurseurMenuMaps();

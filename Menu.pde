@@ -7,8 +7,8 @@ void Menu() {
   textAlign(CENTER);
   text(GameName, 250, 50);
   text("Select with arrows and enter", 250, 150);
-  text("Jeu", 140, 250);
-  text("Editeur", 240, 250);
+  text("Game", 140, 250);
+  text("Editor", 240, 250);
   text("Options", 340, 250);
   text("Press esc to back", 250, 350);
   rect(Menu*100+5, 270, 70, 5);

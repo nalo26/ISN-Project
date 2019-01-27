@@ -10,7 +10,7 @@ void keyPressed() {
       Menu = 0;
     }
     if (Menu==2 && keyCode==ENTER) toshow = "MenuEditor"; //Lancer l'éditeur
-    // if (Menu==3 && keyCode==ENTER) toshow = "MenuOption"; //Lancer le menu d'option
+    if (Menu==3 && keyCode==ENTER){toshow = "Options";}//Lancer le menu d'option
   }
 
   if (toshow == "MenuPlay") { //Si le jeu est sur la sélection de type de jeu
@@ -35,7 +35,11 @@ void keyPressed() {
     toshow = "MenuMaps";
     InteracMap = 1;
   }
+  if ( toshow == "Options" && keyCode == TAB && MenuOpt==0) toshow ="Menu";
+  if ( toshow == "Options" && keyCode == RIGHT && MenuOpt==0)MenuOpt=SMenuOpt;
+  if ( toshow == "Options" && keyCode == TAB && MenuOpt>0)MenuOpt=0;
   /*if (toshow == "Game"){
    
    }*/
+   
 }
