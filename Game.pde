@@ -1,10 +1,9 @@
 /*
-v. 1.1.12, 27/01/19 à 1h50, Benjamin
+v. 1.1.13, 28/01/19 à 12h28, Benjamin
  
  Changelog :
  
-- Options finis (il ne reste plus qu'a rajouter le programme jouant la musique et le effets sonores)
-- Avec les options il est possible de changer l'intensité sonores de la musique et des effets sonres ainsi que de choisir le nombre de vie au début de la partie
+- Bruitages et options de bruitage fonctionels (Tir et Déplacement)
  
  */
 String GameName = "Tank Game";
@@ -91,6 +90,7 @@ int [] Collision = {
  };
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
 PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
+import processing.sound.*; SoundFile Fire; SoundFile Move;
 
 void setup() {
   size(500, 550);
@@ -135,6 +135,9 @@ void setup() {
   BalleR = loadImage("BalleR.png");
   BalleL = loadImage("BalleL.png");
   BalleExplosion = loadImage("Explosion.png");
+  
+  Fire = new SoundFile(this, "tankfire.wav");
+  Move = new SoundFile(this, "Move.wav");
 }
 void CDD() {
   //Cadrillage Des Déplacements (Tanks)
@@ -421,6 +424,9 @@ void draw() {
 }
 
 void Game() {
+  Move.amp((float)SoundVOL/1000);
+  Fire.amp((float)SoundVOL/1000);
+  
   textAlign(LEFT);
   if (Player==0 && Act==0 && vietank1>0 && vietank2>0 || Player==2 && Act==0 && vietank1>0 && vietank2>0) {
     background(0);
@@ -676,6 +682,7 @@ void Game() {
         if (Player == 2) CDD2();
         if (Player == 1) Direction=1;/*arrows=1;*/
         if (Player == 2) Direction2 = 1;
+        Move.play();
       }
       if (keyPressed==true && keyCode==DOWN /*&& arrows==0*/) {
         if (Player == 1) ybase= ybase+50;
@@ -685,6 +692,7 @@ void Game() {
         if (Player == 2) CDD2();
         if (Player == 1) Direction=2;/*arrows=1;*/
         if (Player == 2) Direction2=2;
+        Move.play();
       }
       if (keyPressed==true && keyCode==LEFT /*&& arrows==0*/) {
         if (Player == 1) xbase= xbase-50;
@@ -694,6 +702,7 @@ void Game() {
         if (Player == 2) CDD2();
         if (Player == 1) Direction=3;/*arrows=1;*/
         if (Player == 2) Direction2=3;
+        Move.play();
       }
       if (keyPressed==true && keyCode==RIGHT /*&& arrows==0*/) {
         if (Player == 1) xbase= xbase+50;
@@ -703,6 +712,7 @@ void Game() {
         if (Player == 2) CDD2();
         if (Player == 1) Direction=4;/*arrows=1;*/
         if (Player == 2) Direction2=4;
+        Move.play();
       }
       //if (keyPressed==false && arrows==1){arrows=0;}
 

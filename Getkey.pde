@@ -38,8 +38,8 @@ void keyPressed() {
   if ( toshow == "Options" && keyCode == TAB && MenuOpt==0) toshow ="Menu";
   if ( toshow == "Options" && keyCode == RIGHT && MenuOpt==0)MenuOpt=SMenuOpt;
   if ( toshow == "Options" && keyCode == TAB && MenuOpt>0)MenuOpt=0;
-  /*if (toshow == "Game"){
-   
-   }*/
-   
+
+  if (toshow == "Game" && keyCode==ENTER && choix==1){
+   Fire.play(3);
+   }
 }
