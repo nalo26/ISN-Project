@@ -1,10 +1,11 @@
 /*
-v. 1.1.13, 27/01/19 à 16h08, Benjamin
+v. 1.2.0, 01/02/19 à 21h16, Benjamin
  
  Changelog :
  
-- Accès au MenuOption en jeu
-- Dévellopement Interface
+ - Musiques de fond ajoutées
+ - Amélioration design
+ - Version de la partie Game définitive (seul des changements visuels et auditifs serons effectués a partir de maintenant)
  
  */
 String GameName = "Tank Game";
@@ -65,34 +66,41 @@ int SoundVOL = 50;
 //Permet d'accéder au parametres de son en jeu
 int Link =0;
 
+//MusicBackground
+int FrameRate = 60;
+int DecompteMusique = 19 * FrameRate + 1;
+
 //Maps de base lorsqu'on édite une map dans le menu editeur
 /*int [] Collision = {
-  0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
-  0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
-  0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
-  0, 1, 2, 2, 2, 0, 0, 0, 1, 1, 
-  0, 0, 2, 2, 2, 2, 0, 0, 0, 1, 
-  1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 
-  1, 1, 0, 0, 0, 2, 2, 2, 1, 0, 
-  0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
-  3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
-  3, 1, 1, 0, 0, 4, 4, 2, 2, 0
-};*/
+ 0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
+ 0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
+ 0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
+ 0, 1, 2, 2, 2, 0, 0, 0, 1, 1, 
+ 0, 0, 2, 2, 2, 2, 0, 0, 0, 1, 
+ 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 
+ 1, 1, 0, 0, 0, 2, 2, 2, 1, 0, 
+ 0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
+ 3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
+ 3, 1, 1, 0, 0, 4, 4, 2, 2, 0
+ };*/
 int [] Collision = {
- 0,1,2,3,4,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0,
- 0,0,0,0,0,0,0,0,0,0
- };
+  0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
 PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
 PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
-import processing.sound.*; SoundFile Fire; SoundFile Move;
+import processing.sound.*; 
+SoundFile Fire; 
+SoundFile Move; 
+SoundFile MusicBackground;
 
 void setup() {
   size(500, 550);
@@ -137,9 +145,10 @@ void setup() {
   BalleR = loadImage("BalleR.png");
   BalleL = loadImage("BalleL.png");
   BalleExplosion = loadImage("Explosion.png");
-  
+
   Fire = new SoundFile(this, "tankfire.wav");
   Move = new SoundFile(this, "Move.wav");
+  MusicBackground = new SoundFile(this, "MusicBackground.wav");
 }
 void CDD() {
   //Cadrillage Des Déplacements (Tanks)
@@ -410,17 +419,17 @@ void AffTank () {//Affiche le tank
     fill(150, 32, 32);
     image(Vies, -12*viebarre2+460, 523, 8, 8);
   }
-  
+
   //Affichage de la Commande pour accéder aux options en jeu
   textAlign(CENTER);
   fill(255);
-  text("Press Shift",250,520);
-  text("For Options",250,540);
+  text("Press Shift", 250, 520);
+  text("For Options", 250, 540);
   textAlign(LEFT);
 }
 
-
 void draw() {
+
   if (toshow == "Menu") Menu();
   if (toshow == "MenuPlay") MenuPlay();
   if (toshow == "MenuEditor") MenuEditor();
@@ -430,15 +439,33 @@ void draw() {
   if (toshow == "ServerCreate") ServerCreate();
   if (toshow == "MenuMaps") MenuMaps();
   if (toshow == "Options") Options();
+  MusicBackground();
+
+}
+
+void MusicBackground(){
+  
+  //Volume du son
+  MusicBackground.amp((float)MusicVOL/1000);
+  //Boucle musique de fond
+  DecompteMusique--;
+  if (DecompteMusique<0 || DecompteMusique==(19*FrameRate)) {
+    MusicBackground.play();
+    DecompteMusique=(19*FrameRate);
+      }
 }
 
 void Game() {
   Move.amp((float)SoundVOL/1000);
   Fire.amp((float)SoundVOL/1000);
-  
+
   textAlign(LEFT);
   if (Player==0 && Act==0 && vietank1>0 && vietank2>0 || Player==2 && Act==0 && vietank1>0 && vietank2>0) {
     background(0);
+    //textSize(40);
+    //text("Player 1", 160, 220);
+    //text("Press Down", 130, 270);
+    stroke(0);
     fill(0, 0, 255);
     textSize(40);
     text("Player 1", 160, 220);
@@ -490,7 +517,7 @@ void Game() {
     }
   }
   //début modification (et sécurité ctrl + Z)
-  if (/*Player==1 && */Act>0) {
+  if (Act>0) {
 
     AffTank();
 
@@ -499,15 +526,15 @@ void Game() {
       if (keyCode==LEFT) {//Lorsque le curseur est sur Shoot
         choix2=1;
         choix3=1;
-        fill(200, 50, 0);//Souligne en rouge le choix Left
-        rect(70, 260, 160, 5);
+        fill(255, 255, 255, 100);//Souligne en rouge le choix Left
+        rect(55, 227, 180, 30);
       }
 
       if (keyCode==RIGHT) {//Lorsque le curseur est sur Move
         choix2=2;
         choix3=1;
-        fill(200, 50, 0);//Souligne en rouge le choix Right
-        rect(250, 260, 160, 5);
+        fill(255, 255, 255, 100);//Souligne en rouge le choix Right
+        rect(263, 227, 180, 30);
       }
 
       if (choix3==1 && keyCode==ENTER) {
@@ -515,11 +542,35 @@ void Game() {
         choix3=0;
       }//Lorsque l'action est choisie par Enter
 
-      fill(200);
+
+      //Affichage du choix des Actions (shoot ou move)
+      fill(0, 0, 0, 125);
+      rect(0, 175, 500, 140);
+      
+      fill(0, 0, 0, 65);
+      rect(0, 175+140, 500, 500-(175+140));
+      rect(0, 0, 500, 175);
+      
+      fill(255, 255, 255, 30);
+      rect(0, 175+140, 500, 3);
+      rect(0, 172, 500, 3);
+      
+      textAlign(CENTER);
+      textSize(45);
+      fill(255, 255, 255, 200);
+      ellipse(480, 190, 15, 15);
+      if (Player==1)fill(0, 0, 255);
+      if (Player==2)fill(255, 0, 0);
+      ellipse(480, 190, 10, 10);
+      
+      textSize(23);
+      fill(250, 250, 250, 255);
+      text("Left(for Attack)     Right(for move)", 250, 250);
+      fill(255);
       textSize(20);
-      text("Press arrow", 175, 200);
-      text("Left(for Attack)     Right(for move)", 75, 250);
-      text("And then press Enter", 140, 300);
+      text("Press arrow", 250, 200);
+      text("And then press Enter", 250, 300);
+      textAlign(LEFT);
     }
 
 

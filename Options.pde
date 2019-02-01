@@ -15,7 +15,7 @@ text("OK: Press Right Arrow",50,50);
 if (MenuOpt==0){
 if (keyPressed==true && keyCode == DOWN && SMenuOpt < 3)SMenuOpt++;
 if (keyPressed==true && keyCode == UP && SMenuOpt > 1)SMenuOpt--;
-rect(50,150*SMenuOpt+2,150,6);
+rect(50,150*SMenuOpt+2,150,5);
 delay(100);
 }
 
