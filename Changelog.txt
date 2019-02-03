@@ -79,4 +79,9 @@ v. 1.2.0, 01/02/19 à 21h16, Benjamin
  - Musiques de fond ajoutées
  - Amélioration design
  - Version de la partie Game définitive (seul des changements visuels et auditifs serons effectués a partir de maintenant)
+
+-------------------------------------
+v. 1.2.1, 03/02/19 à 19h34, Benjamin
+
+ - Ajout de nouvelles options
  

@@ -1,11 +1,9 @@
 /*
-v. 1.2.0, 01/02/19 à 21h16, Benjamin
+v. 1.2.1, 03/02/19 à 19h34, Benjamin
  
  Changelog :
  
- - Musiques de fond ajoutées
- - Amélioration design
- - Version de la partie Game définitive (seul des changements visuels et auditifs serons effectués a partir de maintenant)
+ - Ajout de nouvelles options
  
  */
 String GameName = "Tank Game";
@@ -63,6 +61,8 @@ int MenuOpt = 0;
 int SMenuOpt = 1;
 int MusicVOL = 50;
 int SoundVOL = 50;
+int TypeDeSon = 1;
+int Design = 1;
 //Permet d'accéder au parametres de son en jeu
 int Link =0;
 
