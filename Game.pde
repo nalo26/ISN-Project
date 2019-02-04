@@ -1,9 +1,9 @@
 /*
-v. 1.2.1, 03/02/19 à 19h34, Benjamin
+v. 1.2.2, 4/02/19 à 09h30, Benjamin
  
  Changelog :
  
- - Ajout de nouvelles options
+ - Préparation de rajout de la saison Hiver
  
  */
 String GameName = "Tank Game";
@@ -276,7 +276,8 @@ void CDA() {
 void AffTank () {//Affiche le tank
 
   delay(50);
-  background(45, 139, 97);
+  if (Design==1)background(45, 139, 97);
+  if (Design==2)background(196, 247, 255);
   //Affichage barre d'info
   fill(0);
   rect(0, 500, 500, 50);
@@ -291,7 +292,7 @@ void AffTank () {//Affiche le tank
       int A = Ax + Ay;
       if (Collision [A] == 1) image(Montagne, x*50, y*50);
       //Couleur Roche
-      if (Collision [A] == 2) {
+      if (Collision [A] == 2 && Design==1) {
         //Eau
         image(Eau, x*50, y*50);
         //rebors eau
@@ -311,521 +312,560 @@ void AffTank () {//Affiche le tank
           image(Eaudroite, x*50, y*50);
           Droite=true;
         }
+                  //Coins/angles lave
+          //Eté
+          if (Haut==true && Droite==true && Design==1) image(Eauhetd, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==1) image(Eauhetg, x*50, y*50);
+          if (Bas==true && Droite==true && Design==1) image(Eaubetd, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==1) image(Eaubetg, x*50, y*50);
 
-        //Coins/angles lave
-        if (Haut==true && Droite==true) image(Eauhetd, x*50, y*50);
-        if (Haut==true && Gauche==true) image(Eauhetg, x*50, y*50);
-        if (Bas==true && Droite==true) image(Eaubetd, x*50, y*50);
-        if (Bas==true && Gauche==true) image(Eaubetg, x*50, y*50);
-
-        //Remise a 0 de la détection des tiles autours du blocs de lave
-        Bas= false;
-        Haut= false;
-        Droite= false;
-        Gauche= false;
-      }//Couleur Eau
-
-      if (Collision [A] ==3) {
-        //Lave
-        image(Lave, x*50, y*50);
-        //rebors lave
-        if (A>10 && Collision [A-10] !=3) {
-          image(Lavehaut, x*50, y*50);
-          Haut=true;
+          //Remise a 0 de la détection des tiles autours du blocs de lave
+          Bas= false;
+          Haut= false;
+          Droite= false;
+          Gauche= false;
         }
-        if (A<90 && Collision [A+10] !=3) {
-          image(Lavebas, x*50, y*50);
-          Bas=true;
-        }
-        if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=3) {
-          image(Lavegauche, x*50, y*50);
-          Gauche=true;
-        }
-        if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=3) {
-          image(Lavedroite, x*50, y*50);
-          Droite=true;
-        }
+        
+      if (Collision [A] == 2 && Design==2) {
+          //Eau
+          image(Eau, x*50, y*50);
+          //rebors eau
+          if (A>10 && Collision [A-10] !=2) {
+            image(Eauhaut, x*50, y*50);
+            Haut=true;
+          }
+          if (A<90 && Collision [A+10] !=2) {
+            image(Eaubas, x*50, y*50);
+            Bas=true;
+          }
+          if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=2) {
+            image(Eaugauche, x*50, y*50);
+            Gauche=true;
+          }
+          if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=2) {
+            image(Eaudroite, x*50, y*50);
+            Droite=true;
+          }
 
-        //Coins/angles lave
-        if (Haut==true && Droite==true) image(Lavehetd, x*50, y*50);
-        if (Haut==true && Gauche==true) image(Lavehetg, x*50, y*50);
-        if (Bas==true && Droite==true) image(Lavebetd, x*50, y*50);
-        if (Bas==true && Gauche==true) image(Lavebetg, x*50, y*50);
+          //Coins/angles lave
+          //Hiver
+          if (Haut==true && Droite==true && Design==2) image(Eauhetd, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==2) image(Eauhetg, x*50, y*50);
+          if (Bas==true && Droite==true && Design==2) image(Eaubetd, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==2) image(Eaubetg, x*50, y*50);
 
-        //Remise a 0 de la détection des tiles autours du blocs de lave
-        Bas= false;
-        Haut= false;
-        Droite= false;
-        Gauche= false;
-      }//Couleur Lave
+          //Remise a 0 de la détection des tiles autours du blocs de lave
+          Bas= false;
+          Haut= false;
+          Droite= false;
+          Gauche= false;
+        }//Couleur Eau
 
-      //Foret/arbre en bas pour recouvrir les tank
-      if (Collision [A] ==4) image(arbre, x*50, y*50);
-      //Couleur Foret
-    }
-  }
+        if (Collision [A] ==3) {
+          //Lave
+          image(Lave, x*50, y*50);
+          //rebors lave
+          if (A>10 && Collision [A-10] !=3) {
+            image(Lavehaut, x*50, y*50);
+            Haut=true;
+          }
+          if (A<90 && Collision [A+10] !=3) {
+            image(Lavebas, x*50, y*50);
+            Bas=true;
+          }
+          if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=3) {
+            image(Lavegauche, x*50, y*50);
+            Gauche=true;
+          }
+          if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=3) {
+            image(Lavedroite, x*50, y*50);
+            Droite=true;
+          }
 
-  //Selection entourage tank
-  if (Player==1) image(STank1, xbase, ybase);
-  if (Player==2) image(STank2, xbase2, ybase2);
+          //Coins/angles lave
+          if (Haut==true && Droite==true && Design==1) image(Lavehetd, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==1) image(Lavehetg, x*50, y*50);
+          if (Bas==true && Droite==true && Design==1) image(Lavebetd, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==1) image(Lavebetg, x*50, y*50);
+          
+          if (Haut==true && Droite==true && Design==2) image(Lavehetd, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==2) image(Lavehetg, x*50, y*50);
+          if (Bas==true && Droite==true && Design==2) image(Lavebetd, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==2) image(Lavebetg, x*50, y*50);
 
+          //Remise a 0 de la détection des tiles autours du blocs de lave
+          Bas= false;
+          Haut= false;
+          Droite= false;
+          Gauche= false;
+        }//Couleur Lave
 
-  //Affichage Tank
-  if (Direction == 1) { 
-    Tank1 = Tank1u; 
-    image(Tank1, xbase, ybase);
-  }
-  if (Direction == 2) { 
-    Tank1 = Tank1d; 
-    image(Tank1, xbase, ybase);
-  }
-  if (Direction == 3) { 
-    Tank1 = Tank1l; 
-    image(Tank1, xbase, ybase);
-  }
-  if (Direction == 4) { 
-    Tank1 = Tank1r; 
-    image(Tank1, xbase, ybase);
-  }
-
-  if (Direction2 == 1) { 
-    Tank2 = Tank2u; 
-    image(Tank2, xbase2, ybase2);
-  }
-  if (Direction2 == 2) { 
-    Tank2 = Tank2d; 
-    image(Tank2, xbase2, ybase2);
-  }
-  if (Direction2 == 3) { 
-    Tank2 = Tank2l; 
-    image(Tank2, xbase2, ybase2);
-  }
-  if (Direction2 == 4) { 
-    Tank2 = Tank2r; 
-    image(Tank2, xbase2, ybase2);
-  }
-
-
-  //Affichage des vies
-  fill(255);
-  textSize(14);
-  text("V1:", 20, 530);
-  text(":V2", 460, 530);
-  for (int viebarre1 = vietank1; viebarre1>0; viebarre1--) {
-    fill(150, 32, 32);
-    image(Vies, 12*viebarre1+40, 523, 8, 8);
-  }
-  for (int viebarre2 = vietank2; viebarre2>0; viebarre2--) {
-    fill(150, 32, 32);
-    image(Vies, -12*viebarre2+460, 523, 8, 8);
-  }
-
-  //Affichage de la Commande pour accéder aux options en jeu
-  textAlign(CENTER);
-  fill(255);
-  text("Press Shift", 250, 520);
-  text("For Options", 250, 540);
-  textAlign(LEFT);
-}
-
-void draw() {
-
-  if (toshow == "Menu") Menu();
-  if (toshow == "MenuPlay") MenuPlay();
-  if (toshow == "MenuEditor") MenuEditor();
-  if (toshow == "MenuOption") MenuOption();
-  if (toshow == "Game") Game();
-  if (toshow == "ServerJoin") ServerJoin();
-  if (toshow == "ServerCreate") ServerCreate();
-  if (toshow == "MenuMaps") MenuMaps();
-  if (toshow == "Options") Options();
-  MusicBackground();
-
-}
-
-void MusicBackground(){
-  
-  //Volume du son
-  MusicBackground.amp((float)MusicVOL/1000);
-  //Boucle musique de fond
-  DecompteMusique--;
-  if (DecompteMusique<0 || DecompteMusique==(19*FrameRate)) {
-    MusicBackground.play();
-    DecompteMusique=(19*FrameRate);
-      }
-}
-
-void Game() {
-  Move.amp((float)SoundVOL/1000);
-  Fire.amp((float)SoundVOL/1000);
-
-  textAlign(LEFT);
-  if (Player==0 && Act==0 && vietank1>0 && vietank2>0 || Player==2 && Act==0 && vietank1>0 && vietank2>0) {
-    background(0);
-    //textSize(40);
-    //text("Player 1", 160, 220);
-    //text("Press Down", 130, 270);
-    stroke(0);
-    fill(0, 0, 255);
-    textSize(40);
-    text("Player 1", 160, 220);
-    text("Press Down", 130, 270);
-    if (keyPressed==true && keyCode==DOWN) {
-      Player=1; 
-      Act=3;
-      if (IsMulti == true) {
-        dataO.setInt("tour", 1);
-        data.setJSONObject(4, dataO);
+        //Foret/arbre en bas pour recouvrir les tank
+        if (Collision [A] ==4) image(arbre, x*50, y*50);
+        //Couleur Foret
       }
     }
-  }
 
-  if (Player==1 && Act==0 && vietank1>0 && vietank2>0) {
-    background(0);  
-    fill(255, 0, 0);
-    textSize(40);
-    text("Player 2", 160, 220);
-    text("Press Down", 130, 270);
-    if (keyPressed==true && keyCode==DOWN) {
-      Player=2; 
-      Act=3;
-      if (IsMulti == true) {
-        dataO.setInt("tour", 2);
-        data.setJSONObject(4, dataO);
-      }
+    //Selection entourage tank
+    if (Player==1) image(STank1, xbase, ybase);
+    if (Player==2) image(STank2, xbase2, ybase2);
+
+
+    //Affichage Tank
+    if (Direction == 1) { 
+      Tank1 = Tank1u; 
+      image(Tank1, xbase, ybase);
     }
-  }
-
-  if (vietank1<1) {
-    background(0);
-    fill(255, 0, 0);
-    textSize(40);
-    text("Player 2 WIN", 130, 220);
-    if (IsMulti == true) {
-      dataO.setInt("winner", 2);
-      data.setJSONObject(6, dataO);
+    if (Direction == 2) { 
+      Tank1 = Tank1d; 
+      image(Tank1, xbase, ybase);
     }
-  }
-  if (vietank2<1) {
-    background(0);
-    fill(0, 0, 255);
-    textSize(40);
-    text("Player 1 WIN", 130, 220);
-    if (IsMulti == true) {
-      dataO.setInt("winner", 1);
-      data.setJSONObject(6, dataO);
+    if (Direction == 3) { 
+      Tank1 = Tank1l; 
+      image(Tank1, xbase, ybase);
     }
-  }
-  //début modification (et sécurité ctrl + Z)
-  if (Act>0) {
+    if (Direction == 4) { 
+      Tank1 = Tank1r; 
+      image(Tank1, xbase, ybase);
+    }
 
-    AffTank();
-
-    if (choix==0) {//Choix des actions (Left=Shoot/Right=Move)
-
-      if (keyCode==LEFT) {//Lorsque le curseur est sur Shoot
-        choix2=1;
-        choix3=1;
-        fill(255, 255, 255, 100);//Souligne en rouge le choix Left
-        rect(55, 227, 180, 30);
-      }
-
-      if (keyCode==RIGHT) {//Lorsque le curseur est sur Move
-        choix2=2;
-        choix3=1;
-        fill(255, 255, 255, 100);//Souligne en rouge le choix Right
-        rect(263, 227, 180, 30);
-      }
-
-      if (choix3==1 && keyCode==ENTER) {
-        choix=choix2;
-        choix3=0;
-      }//Lorsque l'action est choisie par Enter
-
-
-      //Affichage du choix des Actions (shoot ou move)
-      fill(0, 0, 0, 125);
-      rect(0, 175, 500, 140);
-      
-      fill(0, 0, 0, 65);
-      rect(0, 175+140, 500, 500-(175+140));
-      rect(0, 0, 500, 175);
-      
-      fill(255, 255, 255, 30);
-      rect(0, 175+140, 500, 3);
-      rect(0, 172, 500, 3);
-      
-      textAlign(CENTER);
-      textSize(45);
-      fill(255, 255, 255, 200);
-      ellipse(480, 190, 15, 15);
-      if (Player==1)fill(0, 0, 255);
-      if (Player==2)fill(255, 0, 0);
-      ellipse(480, 190, 10, 10);
-      
-      textSize(23);
-      fill(250, 250, 250, 255);
-      text("Left(for Attack)     Right(for move)", 250, 250);
-      fill(255);
-      textSize(20);
-      text("Press arrow", 250, 200);
-      text("And then press Enter", 250, 300);
-      textAlign(LEFT);
+    if (Direction2 == 1) { 
+      Tank2 = Tank2u; 
+      image(Tank2, xbase2, ybase2);
+    }
+    if (Direction2 == 2) { 
+      Tank2 = Tank2d; 
+      image(Tank2, xbase2, ybase2);
+    }
+    if (Direction2 == 3) { 
+      Tank2 = Tank2l; 
+      image(Tank2, xbase2, ybase2);
+    }
+    if (Direction2 == 4) { 
+      Tank2 = Tank2r; 
+      image(Tank2, xbase2, ybase2);
     }
 
 
-    if (choix==1) {//Shoot
+    //Affichage des vies
+    fill(255);
+    textSize(14);
+    text("V1:", 20, 530);
+    text(":V2", 460, 530);
+    for (int viebarre1 = vietank1; viebarre1>0; viebarre1--) {
+      fill(150, 32, 32);
+      image(Vies, 12*viebarre1+40, 523, 8, 8);
+    }
+    for (int viebarre2 = vietank2; viebarre2>0; viebarre2--) {
+      fill(150, 32, 32);
+      image(Vies, -12*viebarre2+460, 523, 8, 8);
+    }
 
-      if (CB<1 || lock==0) {
-        CB = random(10);
-        CB = int(CB);
-        println(CB);
+    //Affichage de la Commande pour accéder aux options en jeu
+    textAlign(CENTER);
+    fill(255);
+    text("Press Shift", 250, 520);
+    text("For Options", 250, 540);
+    textAlign(LEFT);
+  }
+
+  void draw() {
+
+    if (toshow == "Menu") Menu();
+    if (toshow == "MenuPlay") MenuPlay();
+    if (toshow == "MenuEditor") MenuEditor();
+    if (toshow == "MenuOption") MenuOption();
+    if (toshow == "Game") Game();
+    if (toshow == "ServerJoin") ServerJoin();
+    if (toshow == "ServerCreate") ServerCreate();
+    if (toshow == "MenuMaps") MenuMaps();
+    if (toshow == "Options") Options();
+    MusicBackground();
+  }
+
+  void MusicBackground() {
+
+    //Volume du son
+    MusicBackground.amp((float)MusicVOL/1000);
+    //Boucle musique de fond
+    DecompteMusique--;
+    if (DecompteMusique<0 || DecompteMusique==(19*FrameRate)) {
+      MusicBackground.play();
+      DecompteMusique=(19*FrameRate);
+    }
+  }
+
+  void Game() {
+    Move.amp((float)SoundVOL/1000);
+    Fire.amp((float)SoundVOL/1000);
+
+    textAlign(LEFT);
+    if (Player==0 && Act==0 && vietank1>0 && vietank2>0 || Player==2 && Act==0 && vietank1>0 && vietank2>0) {
+      background(0);
+      //textSize(40);
+      //text("Player 1", 160, 220);
+      //text("Press Down", 130, 270);
+      stroke(0);
+      fill(0, 0, 255);
+      textSize(40);
+      text("Player 1", 160, 220);
+      text("Press Down", 130, 270);
+      if (keyPressed==true && keyCode==DOWN) {
+        Player=1; 
+        Act=3;
         if (IsMulti == true) {
-          dataO.setInt("DistFeu", int(CB));
-          if (Player == 1) data.setJSONObject(1, dataO);
-          if (Player == 2) data.setJSONObject(2, dataO);
+          dataO.setInt("tour", 1);
+          data.setJSONObject(4, dataO);
+        }
+      }
+    }
+
+    if (Player==1 && Act==0 && vietank1>0 && vietank2>0) {
+      background(0);  
+      fill(255, 0, 0);
+      textSize(40);
+      text("Player 2", 160, 220);
+      text("Press Down", 130, 270);
+      if (keyPressed==true && keyCode==DOWN) {
+        Player=2; 
+        Act=3;
+        if (IsMulti == true) {
+          dataO.setInt("tour", 2);
+          data.setJSONObject(4, dataO);
+        }
+      }
+    }
+
+    if (vietank1<1) {
+      background(0);
+      fill(255, 0, 0);
+      textSize(40);
+      text("Player 2 WIN", 130, 220);
+      if (IsMulti == true) {
+        dataO.setInt("winner", 2);
+        data.setJSONObject(6, dataO);
+      }
+    }
+    if (vietank2<1) {
+      background(0);
+      fill(0, 0, 255);
+      textSize(40);
+      text("Player 1 WIN", 130, 220);
+      if (IsMulti == true) {
+        dataO.setInt("winner", 1);
+        data.setJSONObject(6, dataO);
+      }
+    }
+    //début modification (et sécurité ctrl + Z)
+    if (Act>0) {
+
+      AffTank();
+
+      if (choix==0) {//Choix des actions (Left=Shoot/Right=Move)
+
+        if (keyCode==LEFT) {//Lorsque le curseur est sur Shoot
+          choix2=1;
+          choix3=1;
+          fill(255, 255, 255, 100);//Souligne en rouge le choix Left
+          rect(55, 227, 180, 30);
         }
 
-        if (Player == 1) {
-          xbasem=xbase;
-          ybasem=ybase;
-        }
-        if (Player == 2) {
-          xbasem=xbase2;
-          ybasem=ybase2;
+        if (keyCode==RIGHT) {//Lorsque le curseur est sur Move
+          choix2=2;
+          choix3=1;
+          fill(255, 255, 255, 100);//Souligne en rouge le choix Right
+          rect(263, 227, 180, 30);
         }
 
-        AffTank();
+        if (choix3==1 && keyCode==ENTER) {
+          choix=choix2;
+          choix3=0;
+        }//Lorsque l'action est choisie par Enter
 
-        fill(200);
+
+        //Affichage du choix des Actions (shoot ou move)
+        fill(0, 0, 0, 125);
+        rect(0, 175, 500, 140);
+
+        fill(0, 0, 0, 65);
+        rect(0, 175+140, 500, 500-(175+140));
+        rect(0, 0, 500, 175);
+
+        fill(255, 255, 255, 30);
+        rect(0, 175+140, 500, 3);
+        rect(0, 172, 500, 3);
+
+        textAlign(CENTER);
+        textSize(45);
+        fill(255, 255, 255, 200);
+        ellipse(480, 190, 15, 15);
+        if (Player==1)fill(0, 0, 255);
+        if (Player==2)fill(255, 0, 0);
+        ellipse(480, 190, 10, 10);
+
+        textSize(23);
+        fill(250, 250, 250, 255);
+        text("Left(for Attack)     Right(for move)", 250, 250);
+        fill(255);
         textSize(20);
-        text("Press arrows to shoot your bullet in a direction", 30, 430);
-        text("Then press Enter", 180, 480);
+        text("Press arrow", 250, 200);
+        text("And then press Enter", 250, 300);
+        textAlign(LEFT);
+      }
 
-        if ( keyCode==UP) {
-          lock2=1;
-          lock3=1;
-          if (Player == 1) triangle(xbase+10, ybase-10, xbase+40, ybase-10, xbase+25, ybase-30);
-          if (Player == 1) Direction=1;
-          if (Player == 2) triangle(xbase2+10, ybase2-10, xbase2+40, ybase2-10, xbase2+25, ybase2-30);
-          if (Player == 2) Direction2=1;
-        }
-        if ( keyCode==DOWN) {
-          lock2=2;
-          lock3=1;
-          if (Player == 1) triangle(xbase+10, ybase+60, xbase+40, ybase+60, xbase+25, ybase+80);
-          if (Player == 1) Direction=2;
-          if (Player == 2) triangle(xbase2+10, ybase2+60, xbase2+40, ybase2+60, xbase2+25, ybase2+80);
-          if (Player == 2) Direction2=2;
-        }
-        if ( keyCode==LEFT) {
-          lock2=3;
-          lock3=1;
-          if (Player == 1) triangle(xbase-10, ybase+10, xbase-10, ybase+40, xbase-30, ybase+25);
-          if (Player == 1) Direction=3;
-          if (Player == 2) triangle(xbase2-10, ybase2+10, xbase2-10, ybase2+40, xbase2-30, ybase2+25);
-          if (Player == 2) Direction2=3;
-        }
-        if ( keyCode==RIGHT) {
-          lock2=4;
-          lock3=1;
-          if (Player == 1) triangle(xbase+60, ybase+10, xbase+60, ybase+40, xbase+80, ybase+25);
-          if (Player == 1) Direction=4;
-          if (Player == 2) triangle(xbase2+60, ybase2+10, xbase2+60, ybase2+40, xbase2+80, ybase2+25);
-          if (Player == 2) Direction2=4;
-        }
-        if (lock3==1 && keyCode==ENTER) {
-          Fire.play(3);
-          lock=lock2;
-          lock3=0;
+
+      if (choix==1) {//Shoot
+
+        if (CB<1 || lock==0) {
+          CB = random(10);
+          CB = int(CB);
+          println(CB);
           if (IsMulti == true) {
-            dataO.setBoolean("Feu", true);
+            dataO.setInt("DistFeu", int(CB));
             if (Player == 1) data.setJSONObject(1, dataO);
             if (Player == 2) data.setJSONObject(2, dataO);
           }
+
+          if (Player == 1) {
+            xbasem=xbase;
+            ybasem=ybase;
+          }
+          if (Player == 2) {
+            xbasem=xbase2;
+            ybasem=ybase2;
+          }
+
+          AffTank();
+
+          fill(200);
+          textSize(20);
+          text("Press arrows to shoot your bullet in a direction", 30, 430);
+          text("Then press Enter", 180, 480);
+
+          if ( keyCode==UP) {
+            lock2=1;
+            lock3=1;
+            if (Player == 1) triangle(xbase+10, ybase-10, xbase+40, ybase-10, xbase+25, ybase-30);
+            if (Player == 1) Direction=1;
+            if (Player == 2) triangle(xbase2+10, ybase2-10, xbase2+40, ybase2-10, xbase2+25, ybase2-30);
+            if (Player == 2) Direction2=1;
+          }
+          if ( keyCode==DOWN) {
+            lock2=2;
+            lock3=1;
+            if (Player == 1) triangle(xbase+10, ybase+60, xbase+40, ybase+60, xbase+25, ybase+80);
+            if (Player == 1) Direction=2;
+            if (Player == 2) triangle(xbase2+10, ybase2+60, xbase2+40, ybase2+60, xbase2+25, ybase2+80);
+            if (Player == 2) Direction2=2;
+          }
+          if ( keyCode==LEFT) {
+            lock2=3;
+            lock3=1;
+            if (Player == 1) triangle(xbase-10, ybase+10, xbase-10, ybase+40, xbase-30, ybase+25);
+            if (Player == 1) Direction=3;
+            if (Player == 2) triangle(xbase2-10, ybase2+10, xbase2-10, ybase2+40, xbase2-30, ybase2+25);
+            if (Player == 2) Direction2=3;
+          }
+          if ( keyCode==RIGHT) {
+            lock2=4;
+            lock3=1;
+            if (Player == 1) triangle(xbase+60, ybase+10, xbase+60, ybase+40, xbase+80, ybase+25);
+            if (Player == 1) Direction=4;
+            if (Player == 2) triangle(xbase2+60, ybase2+10, xbase2+60, ybase2+40, xbase2+80, ybase2+25);
+            if (Player == 2) Direction2=4;
+          }
+          if (lock3==1 && keyCode==ENTER) {
+            Fire.play(3);
+            lock=lock2;
+            lock3=0;
+            if (IsMulti == true) {
+              dataO.setBoolean("Feu", true);
+              if (Player == 1) data.setJSONObject(1, dataO);
+              if (Player == 2) data.setJSONObject(2, dataO);
+            }
+          }
+
+          if (IsMulti == true) {
+            if (Player == 1) {
+              dataO.setInt("Direction", Direction);
+              data.setJSONObject(1, dataO);
+            }
+            if (Player == 2) {
+              dataO.setInt("Direction", Direction2);
+              data.setJSONObject(2, dataO);
+            }
+          }
         }
 
+        if (CB>0 && lock!=0) {
+
+          CB=CB-1;
+
+          if (lock==1) {
+            ybasem=ybasem-50;
+            CDA();
+          }
+          if (lock==2) {
+            ybasem=ybasem+50;
+            CDA();
+          }
+          if (lock==3) {
+            xbasem=xbasem-50;
+            CDA();
+          }
+          if (lock==4) {
+            xbasem=xbasem+50;
+            CDA();
+          }
+          if (Player == 1) {
+            if (xbasem==xbase2 && ybasem==ybase2) {
+              CB=0;
+              vietank2=vietank2-1;
+            }
+          }
+          if (Player == 2) {
+            if (xbasem==xbase && ybasem==ybase) {
+              CB=0;
+              vietank1=vietank1-1;
+            }
+          }
+
+          AffTank();
+          if (lock==1) {
+            Balle = BalleU;
+            image(Balle, xbasem, ybasem);
+          }
+          if (lock==2) {
+            Balle = BalleD;
+            image(Balle, xbasem, ybasem);
+          }
+          if (lock==3) {
+            Balle = BalleL;
+            image(Balle, xbasem, ybasem);
+          }
+          if (lock==4) {
+            Balle = BalleR;
+            image(Balle, xbasem, ybasem);
+          }
+          fill(200);
+          textSize(50);
+          text(CB, 450, 490, 500);
+        }
+
+        if (CB<1 && lock!=0) {
+          choix=0;
+          lock=0;
+          AffTank();
+          Balle =  BalleExplosion;
+          image(Balle, xbasem, ybasem);
+          Act=Act-1;
+        }
+      }
+    }
+
+
+    if (choix==2) {//Move
+      println(CP);
+      //Initialisation du dès de déplacements
+      if (CP<1) {
+        CP = random(10);
+        CP = int(CP);
+        println(CP);
+      }
+
+      //Déplacements lorsque CP est != de 0 (Joueur a encore des déplacements)
+      if (CP>0) {
+        if (keyPressed==true && keyCode==UP /*&& arrows==0*/) {
+          if (Player == 1) ybase= ybase-50;
+          if (Player == 2) ybase2 = ybase2-50;
+          CP=CP-1;
+          if (Player == 1) CDD();
+          if (Player == 2) CDD2();
+          if (Player == 1) Direction=1;/*arrows=1;*/
+          if (Player == 2) Direction2 = 1;
+          Move.play();
+        }
+        if (keyPressed==true && keyCode==DOWN /*&& arrows==0*/) {
+          if (Player == 1) ybase= ybase+50;
+          if (Player == 2) ybase2 = ybase2+50;
+          CP=CP-1;
+          if (Player == 1) CDD();
+          if (Player == 2) CDD2();
+          if (Player == 1) Direction=2;/*arrows=1;*/
+          if (Player == 2) Direction2=2;
+          Move.play();
+        }
+        if (keyPressed==true && keyCode==LEFT /*&& arrows==0*/) {
+          if (Player == 1) xbase= xbase-50;
+          if (Player == 2) xbase2= xbase2-50;
+          CP=CP-1;
+          if (Player == 1) CDD();
+          if (Player == 2) CDD2();
+          if (Player == 1) Direction=3;/*arrows=1;*/
+          if (Player == 2) Direction2=3;
+          Move.play();
+        }
+        if (keyPressed==true && keyCode==RIGHT /*&& arrows==0*/) {
+          if (Player == 1) xbase= xbase+50;
+          if (Player == 2) xbase2= xbase2+50;
+          CP=CP-1;
+          if (Player == 1) CDD();
+          if (Player == 2) CDD2();
+          if (Player == 1) Direction=4;/*arrows=1;*/
+          if (Player == 2) Direction2=4;
+          Move.play();
+        }
+        //if (keyPressed==false && arrows==1){arrows=0;}
+
+        if (keyCode==UP && TestCadriD==0) {
+          if (Player == 1) ybase= ybase+50;
+          if (Player == 2) ybase2= ybase2+50;
+          CP=CP+1;
+          TestCadriD=1;
+        }
+        if (keyCode==DOWN && TestCadriD==0) {
+          if (Player == 1) ybase= ybase-50;
+          if (Player == 2) ybase2= ybase2-50;
+          CP=CP+1;
+          TestCadriD=1;
+        }
+        if (keyCode==LEFT && TestCadriD==0) {
+          if (Player == 1) xbase= xbase+50;
+          if (Player == 2) xbase2= xbase2+50;
+          CP=CP+1;
+          TestCadriD=1;
+        }
+        if (keyCode==RIGHT && TestCadriD==0) {
+          if (Player == 1) xbase= xbase-50;
+          if (Player == 2) xbase2= xbase2-50;
+          CP=CP+1;
+          TestCadriD=1;
+        }
         if (IsMulti == true) {
           if (Player == 1) {
-            dataO.setInt("Direction", Direction);
+            dataO.setInt("PosX", xbase);
+            dataO.setInt("PosY", ybase);
             data.setJSONObject(1, dataO);
           }
           if (Player == 2) {
-            dataO.setInt("Direction", Direction2);
+            dataO.setInt("PosX", xbase2);
+            dataO.setInt("PosY", ybase2);
             data.setJSONObject(2, dataO);
           }
         }
-      }
-
-      if (CB>0 && lock!=0) {
-
-        CB=CB-1;
-
-        if (lock==1) {
-          ybasem=ybasem-50;
-          CDA();
-        }
-        if (lock==2) {
-          ybasem=ybasem+50;
-          CDA();
-        }
-        if (lock==3) {
-          xbasem=xbasem-50;
-          CDA();
-        }
-        if (lock==4) {
-          xbasem=xbasem+50;
-          CDA();
-        }
-        if (Player == 1) {
-          if (xbasem==xbase2 && ybasem==ybase2) {
-            CB=0;
-            vietank2=vietank2-1;
-          }
-        }
-        if (Player == 2) {
-          if (xbasem==xbase && ybasem==ybase) {
-            CB=0;
-            vietank1=vietank1-1;
-          }
-        }
 
         AffTank();
-        if (lock==1) {
-          Balle = BalleU;
-          image(Balle, xbasem, ybasem);
-        }
-        if (lock==2) {
-          Balle = BalleD;
-          image(Balle, xbasem, ybasem);
-        }
-        if (lock==3) {
-          Balle = BalleL;
-          image(Balle, xbasem, ybasem);
-        }
-        if (lock==4) {
-          Balle = BalleR;
-          image(Balle, xbasem, ybasem);
-        }
         fill(200);
+
         textSize(50);
-        text(CB, 450, 490, 500);
+        text(CP, 450, 490, 500);
+        println(CP);
       }
 
-      if (CB<1 && lock!=0) {
+      //Déplacements lorsque CP est inférieur à 0 (Joueur n'a plus de déplacements)
+      if (CP<1) {
         choix=0;
-        lock=0;
-        AffTank();
-        Balle =  BalleExplosion;
-        image(Balle, xbasem, ybasem);
         Act=Act-1;
       }
     }
   }
-
-
-  if (choix==2) {//Move
-    println(CP);
-    //Initialisation du dès de déplacements
-    if (CP<1) {
-      CP = random(10);
-      CP = int(CP);
-      println(CP);
-    }
-
-    //Déplacements lorsque CP est != de 0 (Joueur a encore des déplacements)
-    if (CP>0) {
-      if (keyPressed==true && keyCode==UP /*&& arrows==0*/) {
-        if (Player == 1) ybase= ybase-50;
-        if (Player == 2) ybase2 = ybase2-50;
-        CP=CP-1;
-        if (Player == 1) CDD();
-        if (Player == 2) CDD2();
-        if (Player == 1) Direction=1;/*arrows=1;*/
-        if (Player == 2) Direction2 = 1;
-        Move.play();
-      }
-      if (keyPressed==true && keyCode==DOWN /*&& arrows==0*/) {
-        if (Player == 1) ybase= ybase+50;
-        if (Player == 2) ybase2 = ybase2+50;
-        CP=CP-1;
-        if (Player == 1) CDD();
-        if (Player == 2) CDD2();
-        if (Player == 1) Direction=2;/*arrows=1;*/
-        if (Player == 2) Direction2=2;
-        Move.play();
-      }
-      if (keyPressed==true && keyCode==LEFT /*&& arrows==0*/) {
-        if (Player == 1) xbase= xbase-50;
-        if (Player == 2) xbase2= xbase2-50;
-        CP=CP-1;
-        if (Player == 1) CDD();
-        if (Player == 2) CDD2();
-        if (Player == 1) Direction=3;/*arrows=1;*/
-        if (Player == 2) Direction2=3;
-        Move.play();
-      }
-      if (keyPressed==true && keyCode==RIGHT /*&& arrows==0*/) {
-        if (Player == 1) xbase= xbase+50;
-        if (Player == 2) xbase2= xbase2+50;
-        CP=CP-1;
-        if (Player == 1) CDD();
-        if (Player == 2) CDD2();
-        if (Player == 1) Direction=4;/*arrows=1;*/
-        if (Player == 2) Direction2=4;
-        Move.play();
-      }
-      //if (keyPressed==false && arrows==1){arrows=0;}
-
-      if (keyCode==UP && TestCadriD==0) {
-        if (Player == 1) ybase= ybase+50;
-        if (Player == 2) ybase2= ybase2+50;
-        CP=CP+1;
-        TestCadriD=1;
-      }
-      if (keyCode==DOWN && TestCadriD==0) {
-        if (Player == 1) ybase= ybase-50;
-        if (Player == 2) ybase2= ybase2-50;
-        CP=CP+1;
-        TestCadriD=1;
-      }
-      if (keyCode==LEFT && TestCadriD==0) {
-        if (Player == 1) xbase= xbase+50;
-        if (Player == 2) xbase2= xbase2+50;
-        CP=CP+1;
-        TestCadriD=1;
-      }
-      if (keyCode==RIGHT && TestCadriD==0) {
-        if (Player == 1) xbase= xbase-50;
-        if (Player == 2) xbase2= xbase2-50;
-        CP=CP+1;
-        TestCadriD=1;
-      }
-      if (IsMulti == true) {
-        if (Player == 1) {
-          dataO.setInt("PosX", xbase);
-          dataO.setInt("PosY", ybase);
-          data.setJSONObject(1, dataO);
-        }
-        if (Player == 2) {
-          dataO.setInt("PosX", xbase2);
-          dataO.setInt("PosY", ybase2);
-          data.setJSONObject(2, dataO);
-        }
-      }
-
-      AffTank();
-      fill(200);
-
-      textSize(50);
-      text(CP, 450, 490, 500);
-      println(CP);
-    }
-
-    //Déplacements lorsque CP est inférieur à 0 (Joueur n'a plus de déplacements)
-    if (CP<1) {
-      choix=0;
-      Act=Act-1;
-    }
-  }
-}

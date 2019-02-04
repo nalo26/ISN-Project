@@ -6,7 +6,7 @@ text("Music:",50,150);
 text("Sound effect:",50,230);
 text("Tank's Health:",50,310);
 text("Type of songs:",50,390);
-text("Game's Apparence:",50,470);
+text("Season:",50,470);
 textSize(13);
 text("Back: Press Tab",50,70);
 text("OK: Press Right Arrow",50,50);
@@ -97,8 +97,8 @@ if(keyPressed == true && keyCode == LEFT && Design>1)Design--;
 triangledeselction();
 fill(247,153,0);
 }
-if(Design==1)text("V.1",330,470);
-if(Design==2)text("V.2",330,470);
+if(Design==1)text("Summer",330,470);
+if(Design==2)text("Winter",330,470);
 
 //Affichage des Paramêtre
 fill(0);
