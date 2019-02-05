@@ -1,9 +1,10 @@
 /*
-v. 1.2.2, 4/02/19 à 09h30, Benjamin
+v. 1.2.3, 5/02/19 à 21h22, Benjamin
  
  Changelog :
  
- - Préparation de rajout de la saison Hiver
+ - Rajout des textures Hiver
+ - Compactage variable 
  
  */
 String GameName = "Tank Game";
@@ -95,8 +96,9 @@ int [] Collision = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
-PImage Montagne, Eau, Eauhaut, Eaubas, Eaugauche, Eaudroite, Eauhetd, Eauhetg, Eaubetd, Eaubetg, Lave, Lavehaut, Lavebas, Lavegauche, Lavedroite, Lavehetd, Lavehetg, Lavebetd, Lavebetg;
-PImage arbre, STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
+PImage arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG;
+PImage arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW,  ContHDW, ContHGW, ContBDW, ContBGW;
+PImage STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
 import processing.sound.*; 
 SoundFile Fire; 
 SoundFile Move; 
@@ -108,27 +110,32 @@ void setup() {
   //A changer pour changer la rapidité du jeu
   frameRate(60);
 
+  arbre = loadImage("arbre.png");
   Montagne = loadImage("Montagne.png");
   Eau = loadImage("Eau.png");
-  Eauhaut = loadImage("Lavehaut.png");
-  Eaubas = loadImage("Lavebas.png");
-  Eaugauche = loadImage("Lavegauche.png");
-  Eaudroite = loadImage("Lavedroite.png");
-  Eauhetd = loadImage("Lavehaut+droite.png");
-  Eauhetg = loadImage("Lavehaut+gauche.png");
-  Eaubetd = loadImage("Lavebas+droite.png");
-  Eaubetg = loadImage("Lavebas+gauche.png");
   Lave = loadImage("Lave.png");
-  Lavehaut = loadImage("Lavehaut.png");
-  Lavebas = loadImage("Lavebas.png");
-  Lavegauche = loadImage("Lavegauche.png");
-  Lavedroite = loadImage("Lavedroite.png");
-  Lavehetd = loadImage("Lavehaut+droite.png");
-  Lavehetg = loadImage("Lavehaut+gauche.png");
-  Lavebetd = loadImage("Lavebas+droite.png");
-  Lavebetg = loadImage("Lavebas+gauche.png");
+  ContH = loadImage("Lavehaut.png");
+  ContB = loadImage("Lavebas.png");
+  ContG = loadImage("Lavegauche.png");
+  ContD = loadImage("Lavedroite.png");
+  ContHD = loadImage("Lavehaut+droite.png");
+  ContHG = loadImage("Lavehaut+gauche.png");
+  ContBD = loadImage("Lavebas+droite.png");
+  ContBG = loadImage("Lavebas+gauche.png");
 
-  arbre = loadImage("arbre.png");
+  arbreW = loadImage("arbreW.png");
+  MontagneW = loadImage("MontagneW.png");
+  EauW = loadImage("EauW.png");
+  LaveW = loadImage("LaveW.png");
+  ContHW = loadImage("LavehautW.png");
+  ContBW = loadImage("LavebasW.png");
+  ContGW = loadImage("LavegaucheW.png");
+  ContDW = loadImage("LavedroiteW.png");
+  ContHDW = loadImage("Lavehaut+droiteW.png");
+  ContHGW = loadImage("Lavehaut+gaucheW.png");
+  ContBDW = loadImage("Lavebas+droiteW.png");
+  ContBGW = loadImage("Lavebas+gaucheW.png");
+
   STank1 = loadImage("Selection Tank1.png");
   STank2 = loadImage("Selection Tank2.png");
   Tank1u = loadImage("Tank1u.png");
@@ -290,34 +297,45 @@ void AffTank () {//Affiche le tank
       int Ax = x;
       int Ay = y*10;
       int A = Ax + Ay;
-      if (Collision [A] == 1) image(Montagne, x*50, y*50);
+      if (Collision [A] == 1 && Design==1) image(Montagne, x*50, y*50);
+      if (Collision [A] == 1 && Design==2) image(MontagneW, x*50, y*50);
       //Couleur Roche
-      if (Collision [A] == 2 && Design==1) {
+      if (Collision [A] == 2) {
         //Eau
-        image(Eau, x*50, y*50);
+        if (Design==1)image(Eau, x*50, y*50);
+        if (Design==2)image(EauW, x*50, y*50);
         //rebors eau
         if (A>10 && Collision [A-10] !=2) {
-          image(Eauhaut, x*50, y*50);
+          if (Design==1)image(ContH, x*50, y*50);
+          if (Design==2)image(ContHW, x*50, y*50);
           Haut=true;
         }
         if (A<90 && Collision [A+10] !=2) {
-          image(Eaubas, x*50, y*50);
+          if (Design==1)image(ContB, x*50, y*50);
+          if (Design==2)image(ContBW, x*50, y*50);
           Bas=true;
         }
         if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=2) {
-          image(Eaugauche, x*50, y*50);
+          if (Design==1)image(ContG, x*50, y*50);
+          if (Design==2)image(ContGW, x*50, y*50);
           Gauche=true;
         }
         if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=2) {
-          image(Eaudroite, x*50, y*50);
+          if (Design==1)image(ContD, x*50, y*50);
+          if (Design==2)image(ContDW, x*50, y*50);
           Droite=true;
         }
                   //Coins/angles lave
           //Eté
-          if (Haut==true && Droite==true && Design==1) image(Eauhetd, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==1) image(Eauhetg, x*50, y*50);
-          if (Bas==true && Droite==true && Design==1) image(Eaubetd, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==1) image(Eaubetg, x*50, y*50);
+          if (Haut==true && Droite==true && Design==1) image(ContHD, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==1) image(ContHG, x*50, y*50);
+          if (Bas==true && Droite==true && Design==1) image(ContBD, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==1) image(ContBG, x*50, y*50);
+          
+          if (Haut==true && Droite==true && Design==2) image(ContHDW, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==2) image(ContHGW, x*50, y*50);
+          if (Bas==true && Droite==true && Design==2) image(ContBDW, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==2) image(ContBGW, x*50, y*50);
 
           //Remise a 0 de la détection des tiles autours du blocs de lave
           Bas= false;
@@ -325,73 +343,43 @@ void AffTank () {//Affiche le tank
           Droite= false;
           Gauche= false;
         }
-        
-      if (Collision [A] == 2 && Design==2) {
-          //Eau
-          image(Eau, x*50, y*50);
-          //rebors eau
-          if (A>10 && Collision [A-10] !=2) {
-            image(Eauhaut, x*50, y*50);
-            Haut=true;
-          }
-          if (A<90 && Collision [A+10] !=2) {
-            image(Eaubas, x*50, y*50);
-            Bas=true;
-          }
-          if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=2) {
-            image(Eaugauche, x*50, y*50);
-            Gauche=true;
-          }
-          if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=2) {
-            image(Eaudroite, x*50, y*50);
-            Droite=true;
-          }
-
-          //Coins/angles lave
-          //Hiver
-          if (Haut==true && Droite==true && Design==2) image(Eauhetd, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==2) image(Eauhetg, x*50, y*50);
-          if (Bas==true && Droite==true && Design==2) image(Eaubetd, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==2) image(Eaubetg, x*50, y*50);
-
-          //Remise a 0 de la détection des tiles autours du blocs de lave
-          Bas= false;
-          Haut= false;
-          Droite= false;
-          Gauche= false;
-        }//Couleur Eau
 
         if (Collision [A] ==3) {
           //Lave
-          image(Lave, x*50, y*50);
+          if (Design==1)image(Lave, x*50, y*50);
+          if (Design==2)image(LaveW, x*50, y*50);
           //rebors lave
           if (A>10 && Collision [A-10] !=3) {
-            image(Lavehaut, x*50, y*50);
+            if (Design==1)image(ContH, x*50, y*50);
+            if (Design==2)image(ContHW, x*50, y*50);
             Haut=true;
           }
           if (A<90 && Collision [A+10] !=3) {
-            image(Lavebas, x*50, y*50);
+            if (Design==1)image(ContB, x*50, y*50);
+            if (Design==2)image(ContBW, x*50, y*50);
             Bas=true;
           }
           if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=3) {
-            image(Lavegauche, x*50, y*50);
+            if (Design==1)image(ContG, x*50, y*50);
+            if (Design==2)image(ContGW, x*50, y*50);
             Gauche=true;
           }
           if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=3) {
-            image(Lavedroite, x*50, y*50);
+            if (Design==1)image(ContD, x*50, y*50);
+            if (Design==2)image(ContDW, x*50, y*50);
             Droite=true;
           }
 
           //Coins/angles lave
-          if (Haut==true && Droite==true && Design==1) image(Lavehetd, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==1) image(Lavehetg, x*50, y*50);
-          if (Bas==true && Droite==true && Design==1) image(Lavebetd, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==1) image(Lavebetg, x*50, y*50);
+          if (Haut==true && Droite==true && Design==1) image(ContHD, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==1) image(ContHG, x*50, y*50);
+          if (Bas==true && Droite==true && Design==1) image(ContBD, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==1) image(ContBG, x*50, y*50);
           
-          if (Haut==true && Droite==true && Design==2) image(Lavehetd, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==2) image(Lavehetg, x*50, y*50);
-          if (Bas==true && Droite==true && Design==2) image(Lavebetd, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==2) image(Lavebetg, x*50, y*50);
+          if (Haut==true && Droite==true && Design==2) image(ContHDW, x*50, y*50);
+          if (Haut==true && Gauche==true && Design==2) image(ContHGW, x*50, y*50);
+          if (Bas==true && Droite==true && Design==2) image(ContBDW, x*50, y*50);
+          if (Bas==true && Gauche==true && Design==2) image(ContBGW, x*50, y*50);
 
           //Remise a 0 de la détection des tiles autours du blocs de lave
           Bas= false;
@@ -401,7 +389,8 @@ void AffTank () {//Affiche le tank
         }//Couleur Lave
 
         //Foret/arbre en bas pour recouvrir les tank
-        if (Collision [A] ==4) image(arbre, x*50, y*50);
+        if (Collision [A] ==4 && Design==1) image(arbre, x*50, y*50);
+        if (Collision [A] ==4 && Design==2) image(arbreW, x*50, y*50);
         //Couleur Foret
       }
     }

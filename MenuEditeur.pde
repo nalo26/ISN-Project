@@ -56,27 +56,27 @@ void AffEditeur () {//Affiche l'éditeur
 
         //rebors eau
         if (A>10 && Collision [A-10] !=2) {
-          image(Eauhaut, x*50, y*50);
+          image(ContH, x*50, y*50);
           Haut=true;
         }
         if (A<90 && Collision [A+10] !=2) {
-          image(Eaubas, x*50, y*50);
+          image(ContB, x*50, y*50);
           Bas=true;
         }
         if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=2) {
-          image(Eaugauche, x*50, y*50);
+          image(ContG, x*50, y*50);
           Gauche=true;
         }
         if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=2) {
-          image(Eaudroite, x*50, y*50);
+          image(ContD, x*50, y*50);
           Droite=true;
         }
 
         //Coins/angles lave
-        if (Haut==true && Droite==true) image(Eauhetd, x*50, y*50);
-        if (Haut==true && Gauche==true) image(Eauhetg, x*50, y*50);
-        if (Bas==true && Droite==true) image(Eaubetd, x*50, y*50);
-        if (Bas==true && Gauche==true) image(Eaubetg, x*50, y*50);
+        if (Haut==true && Droite==true) image(ContHD, x*50, y*50);
+        if (Haut==true && Gauche==true) image(ContHG, x*50, y*50);
+        if (Bas==true && Droite==true) image(ContBD, x*50, y*50);
+        if (Bas==true && Gauche==true) image(ContBG, x*50, y*50);
 
         //Remise a 0 de la détection des tiles autours du blocs de lave
         Bas= false;
@@ -90,27 +90,27 @@ void AffEditeur () {//Affiche l'éditeur
         image(Lave, x*50, y*50);
         //rebors lave
         if (A>10 && Collision [A-10] !=3) {
-          image(Lavehaut, x*50, y*50);
+          image(ContH, x*50, y*50);
           Haut=true;
         }
         if (A<90 && Collision [A+10] !=3) { 
-          image(Lavebas, x*50, y*50);
+          image(ContB, x*50, y*50);
           Bas=true;
         }
         if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=3) {
-          image(Lavegauche, x*50, y*50);
+          image(ContG, x*50, y*50);
           Gauche=true;
         }
         if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=3) {
-          image(Lavedroite, x*50, y*50);
+          image(ContD, x*50, y*50);
           Droite=true;
         }
 
         //Coins/angles lave
-        if (Haut==true && Droite==true) image(Lavehetd, x*50, y*50);
-        if (Haut==true && Gauche==true) image(Lavehetg, x*50, y*50);
-        if (Bas==true && Droite==true) image(Lavebetd, x*50, y*50);
-        if (Bas==true && Gauche==true) image(Lavebetg, x*50, y*50);
+        if (Haut==true && Droite==true) image(ContHD, x*50, y*50);
+        if (Haut==true && Gauche==true) image(ContHG, x*50, y*50);
+        if (Bas==true && Droite==true) image(ContBD, x*50, y*50);
+        if (Bas==true && Gauche==true) image(ContBG, x*50, y*50);
 
         //Remise a 0 de la détection des tiles autours du blocs de lave
         Bas= false;

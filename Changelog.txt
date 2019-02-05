@@ -91,4 +91,8 @@ v. 1.2.2, 4/02/19 à 09h30, Benjamin
  - Préparation de rajout de la saison Hiver
 
 ------------------------------------
+ v. 1.2.3, 5/02/19 à 21h22, Benjamin
  
+ - Rajout des textures Hiver
+ - Compactage variable 
+------------------------------------
