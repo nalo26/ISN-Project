@@ -8,62 +8,24 @@ JSONObject dataO;
 
 boolean IsMulti = false;
 boolean AmIServer = false;
+boolean AmIClient = false;
+
+int Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, DefaultLife = 5;
+
+String dataIn;
+String [] SdataList = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
+String [] CdataList = {"0", "0", "0", "0", "0", "0"};
 
 void ServerCreate() {
-
+  DefaultLife = vietank1;
   // Essaie de démarrer un serveur sur ce pc hébergé sur le port 'ServerPort'
- // try {
+  if (AmIServer == false) {
     myServer = new Server(this, ServerPort);
+    IsMulti = true;
     AmIServer = true;
- // } 
-  // Si erreur lors de la création, alors afficher l'erreur
- // catch (IOException e) {
-  //  e.printStackTrace();
-    fill(255, 10, 10);
-    text("Error while attempting to create the server", 250, 250);
-    fill(255);
-    AmIServer = false;
-//  }
-  // Creation du fichier serveur
-  dataO = new JSONObject();
-  dataO.setInt("id", 1);
-  dataO.setInt("Vie", 0);
-  dataO.setInt("PosX", 0);
-  dataO.setInt("PosY", 0);
-  dataO.setBoolean("Feu", false);
-  dataO.setInt("DistFeu", 0);
-  dataO.setInt("Direction", 0);
-  data.setJSONObject(1, dataO);
-
-  dataO = new JSONObject();
-  dataO.setInt("id", 2);
-  dataO.setInt("Vie", 0);
-  dataO.setInt("PosX", 0);
-  dataO.setInt("PosY", 0);
-  dataO.setBoolean("Feu", false);
-  dataO.setInt("DistFeu", 0);
-  dataO.setInt("Direction", 0);
-  data.setJSONObject(2, dataO);
-
-  /* dataO = new JSONObject();
-   StrCollision = str(Collision);
-   dataO.setString("map", ""+StrCollision);
-   data.setJSONObject(3, dataO);*/
-
-  dataO = new JSONObject();
-  dataO.setInt("tour", 1);
-  data.setJSONObject(4, dataO);
-
-  dataO = new JSONObject();
-  dataO.setString("state", "");
-  data.setJSONObject(5, dataO);
-
-  dataO = new JSONObject();
-  dataO.setInt("winner", 0);
-  data.setJSONObject(6, dataO);
-  
-  //enregistrement du fichier serveur
-  saveJSONArray(data, "data/data.json");
+    AmIClient = false;
+    toshow = "MenuMaps";
+  }
 }
 
 void ServerJoin() {
@@ -74,30 +36,15 @@ void ServerJoin() {
   text(ServerIP, 250, 250);
   if (CanJoin == true) {
     CanJoin = false;
-    println("joining server");
-  //  try {
-      myClient = new Client(this, ServerIP, ServerPort);
-      IsMulti = true;
-  //  }
-  //  catch (IOException e) {
-     // e.printStackTrace();
-      fill(250, 10, 10);
-      text("error while attempting to join the server.", 250, 250);
-      fill(255);
-   // }
+    //println("joining server");
+    myClient = new Client(this, ServerIP, ServerPort);
+    IsMulti = true;
+    AmIClient = true;
+    AmIServer = false;
+    toshow = "Game";
   }
 }
 
-/*
-JSON format :
-
-1 : Data Player 1
-2 : Data Player 2
-3 : Map (pas encore implémenté)
-4 : Joueur qui doit jouer
-5 : Etat de la partie (en cours / fini...)
-6 : Gagnant de la partie si fini (0 sinon)
-*/
 
 
 /*

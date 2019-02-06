@@ -96,3 +96,11 @@ v. 1.2.2, 4/02/19 à 09h30, Benjamin
  - Rajout des textures Hiver
  - Compactage variable 
 ------------------------------------
+v. 1.2.4, 6/02/19 à 17h38, Nathan
+ 
+ - Ajouts sur le serveur:
+   - Incrémentation de l'envoie ET reception des données
+   (/!\ La map n'est pas encore envoyé /!\ c'est le plus dur à faire, je le ferais plus tard)
+   - EN COURS : incrémentation du serveur DANS le jeu
+   (affichage en fonction des coordonées envoyées, si le joueur tire et à quelle distance, ...)
+------------------------------------

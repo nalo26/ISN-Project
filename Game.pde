@@ -1,10 +1,13 @@
 /*
-v. 1.2.3, 5/02/19 à 21h22, Benjamin
+v. 1.2.4, 6/02/19 à 17h38, Nathan
  
  Changelog :
  
- - Rajout des textures Hiver
- - Compactage variable 
+ - Ajouts sur le serveur:
+   - Incrémentation de l'envoie ET reception des données
+   (/!\ La map n'est pas encore envoyé /!\ c'est le plus dur à faire, je le ferais plus tard)
+   - EN COURS : incrémentation du serveur DANS le jeu
+   (affichage en fonction des coordonées envoyées, si le joueur tire et à quelle distance, ...)
  
  */
 String GameName = "Tank Game";
@@ -26,7 +29,7 @@ int choix2=0;//Choix entre Attaque ou Déplacement
 int choix3=0;//Anti Enter*2 ( effet d'un key pressed pour enter car non ascii)
 int xbasem = 0; // Emplacement balle
 int ybasem = 0;
-float CB = 0; //Compteur Balle
+int CB = 0; //Compteur Balle
 int MLock = 0;
 int lock=0; //touche de tire vérouillée
 int lock2=0; //direction du tir
@@ -96,8 +99,9 @@ int [] Collision = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+//Chargement des images du jeu
 PImage arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG;
-PImage arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW,  ContHDW, ContHGW, ContBDW, ContBGW;
+PImage arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW;
 PImage STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
 import processing.sound.*; 
 SoundFile Fire; 
@@ -325,190 +329,248 @@ void AffTank () {//Affiche le tank
           if (Design==2)image(ContDW, x*50, y*50);
           Droite=true;
         }
-                  //Coins/angles lave
-          //Eté
-          if (Haut==true && Droite==true && Design==1) image(ContHD, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==1) image(ContHG, x*50, y*50);
-          if (Bas==true && Droite==true && Design==1) image(ContBD, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==1) image(ContBG, x*50, y*50);
-          
-          if (Haut==true && Droite==true && Design==2) image(ContHDW, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==2) image(ContHGW, x*50, y*50);
-          if (Bas==true && Droite==true && Design==2) image(ContBDW, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==2) image(ContBGW, x*50, y*50);
+        //Coins/angles lave
+        //Eté
+        if (Haut==true && Droite==true && Design==1) image(ContHD, x*50, y*50);
+        if (Haut==true && Gauche==true && Design==1) image(ContHG, x*50, y*50);
+        if (Bas==true && Droite==true && Design==1) image(ContBD, x*50, y*50);
+        if (Bas==true && Gauche==true && Design==1) image(ContBG, x*50, y*50);
 
-          //Remise a 0 de la détection des tiles autours du blocs de lave
-          Bas= false;
-          Haut= false;
-          Droite= false;
-          Gauche= false;
+        if (Haut==true && Droite==true && Design==2) image(ContHDW, x*50, y*50);
+        if (Haut==true && Gauche==true && Design==2) image(ContHGW, x*50, y*50);
+        if (Bas==true && Droite==true && Design==2) image(ContBDW, x*50, y*50);
+        if (Bas==true && Gauche==true && Design==2) image(ContBGW, x*50, y*50);
+
+        //Remise a 0 de la détection des tiles autours du blocs de lave
+        Bas= false;
+        Haut= false;
+        Droite= false;
+        Gauche= false;
+      }
+
+      if (Collision [A] ==3) {
+        //Lave
+        if (Design==1)image(Lave, x*50, y*50);
+        if (Design==2)image(LaveW, x*50, y*50);
+        //rebors lave
+        if (A>10 && Collision [A-10] !=3) {
+          if (Design==1)image(ContH, x*50, y*50);
+          if (Design==2)image(ContHW, x*50, y*50);
+          Haut=true;
+        }
+        if (A<90 && Collision [A+10] !=3) {
+          if (Design==1)image(ContB, x*50, y*50);
+          if (Design==2)image(ContBW, x*50, y*50);
+          Bas=true;
+        }
+        if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=3) {
+          if (Design==1)image(ContG, x*50, y*50);
+          if (Design==2)image(ContGW, x*50, y*50);
+          Gauche=true;
+        }
+        if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=3) {
+          if (Design==1)image(ContD, x*50, y*50);
+          if (Design==2)image(ContDW, x*50, y*50);
+          Droite=true;
         }
 
-        if (Collision [A] ==3) {
-          //Lave
-          if (Design==1)image(Lave, x*50, y*50);
-          if (Design==2)image(LaveW, x*50, y*50);
-          //rebors lave
-          if (A>10 && Collision [A-10] !=3) {
-            if (Design==1)image(ContH, x*50, y*50);
-            if (Design==2)image(ContHW, x*50, y*50);
-            Haut=true;
-          }
-          if (A<90 && Collision [A+10] !=3) {
-            if (Design==1)image(ContB, x*50, y*50);
-            if (Design==2)image(ContBW, x*50, y*50);
-            Bas=true;
-          }
-          if (A!=0 && A!=10 && A!=20 && A!=30 && A!=40 && A!=50 && A!=60 && A!=70 && A!=80 && A!=90 && Collision [A-1] !=3) {
-            if (Design==1)image(ContG, x*50, y*50);
-            if (Design==2)image(ContGW, x*50, y*50);
-            Gauche=true;
-          }
-          if (A!=9 &&A!=19 && A!=29 && A!=39 && A!=49 && A!=59 && A!=69 && A!=79 && A!=89 && A!=99 && Collision [A+1] !=3) {
-            if (Design==1)image(ContD, x*50, y*50);
-            if (Design==2)image(ContDW, x*50, y*50);
-            Droite=true;
-          }
+        //Coins/angles lave
+        if (Haut==true && Droite==true && Design==1) image(ContHD, x*50, y*50);
+        if (Haut==true && Gauche==true && Design==1) image(ContHG, x*50, y*50);
+        if (Bas==true && Droite==true && Design==1) image(ContBD, x*50, y*50);
+        if (Bas==true && Gauche==true && Design==1) image(ContBG, x*50, y*50);
 
-          //Coins/angles lave
-          if (Haut==true && Droite==true && Design==1) image(ContHD, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==1) image(ContHG, x*50, y*50);
-          if (Bas==true && Droite==true && Design==1) image(ContBD, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==1) image(ContBG, x*50, y*50);
-          
-          if (Haut==true && Droite==true && Design==2) image(ContHDW, x*50, y*50);
-          if (Haut==true && Gauche==true && Design==2) image(ContHGW, x*50, y*50);
-          if (Bas==true && Droite==true && Design==2) image(ContBDW, x*50, y*50);
-          if (Bas==true && Gauche==true && Design==2) image(ContBGW, x*50, y*50);
+        if (Haut==true && Droite==true && Design==2) image(ContHDW, x*50, y*50);
+        if (Haut==true && Gauche==true && Design==2) image(ContHGW, x*50, y*50);
+        if (Bas==true && Droite==true && Design==2) image(ContBDW, x*50, y*50);
+        if (Bas==true && Gauche==true && Design==2) image(ContBGW, x*50, y*50);
 
-          //Remise a 0 de la détection des tiles autours du blocs de lave
-          Bas= false;
-          Haut= false;
-          Droite= false;
-          Gauche= false;
-        }//Couleur Lave
+        //Remise a 0 de la détection des tiles autours du blocs de lave
+        Bas= false;
+        Haut= false;
+        Droite= false;
+        Gauche= false;
+      }//Couleur Lave
 
-        //Foret/arbre en bas pour recouvrir les tank
-        if (Collision [A] ==4 && Design==1) image(arbre, x*50, y*50);
-        if (Collision [A] ==4 && Design==2) image(arbreW, x*50, y*50);
-        //Couleur Foret
+      //Foret/arbre en bas pour recouvrir les tank
+      if (Collision [A] ==4 && Design==1) image(arbre, x*50, y*50);
+      if (Collision [A] ==4 && Design==2) image(arbreW, x*50, y*50);
+      //Couleur Foret
+    }
+  }
+
+  //Selection entourage tank
+  if (Player==1) image(STank1, xbase, ybase);
+  if (Player==2) image(STank2, xbase2, ybase2);
+
+
+  //Affichage Tank
+  if (Direction == 1) { 
+    Tank1 = Tank1u; 
+    image(Tank1, xbase, ybase);
+  }
+  if (Direction == 2) { 
+    Tank1 = Tank1d; 
+    image(Tank1, xbase, ybase);
+  }
+  if (Direction == 3) { 
+    Tank1 = Tank1l; 
+    image(Tank1, xbase, ybase);
+  }
+  if (Direction == 4) { 
+    Tank1 = Tank1r; 
+    image(Tank1, xbase, ybase);
+  }
+
+  if (Direction2 == 1) { 
+    Tank2 = Tank2u; 
+    image(Tank2, xbase2, ybase2);
+  }
+  if (Direction2 == 2) { 
+    Tank2 = Tank2d; 
+    image(Tank2, xbase2, ybase2);
+  }
+  if (Direction2 == 3) { 
+    Tank2 = Tank2l; 
+    image(Tank2, xbase2, ybase2);
+  }
+  if (Direction2 == 4) { 
+    Tank2 = Tank2r; 
+    image(Tank2, xbase2, ybase2);
+  }
+
+
+  //Affichage des vies
+  fill(255);
+  textSize(14);
+  text("V1:", 20, 530);
+  text(":V2", 460, 530);
+  for (int viebarre1 = vietank1; viebarre1>0; viebarre1--) {
+    fill(150, 32, 32);
+    image(Vies, 12*viebarre1+40, 523, 8, 8);
+  }
+  for (int viebarre2 = vietank2; viebarre2>0; viebarre2--) {
+    fill(150, 32, 32);
+    image(Vies, -12*viebarre2+460, 523, 8, 8);
+  }
+
+  //Affichage de la Commande pour accéder aux options en jeu
+  textAlign(CENTER);
+  fill(255);
+  text("Press Shift", 250, 520);
+  text("For Options", 250, 540);
+  textAlign(LEFT);
+}
+
+void draw() {
+  MusicBackground(); // On charge la musique du jeu
+
+  if (IsMulti == true) {
+    // Si nous sommes en multijoueur et que je suis serveur, on envoie nos informations au client connecté et on recolte les siennes
+    if (AmIServer == true) {
+      //[Joueur : {id, Vie, PosX, PosY, Feu, DistFeu, Direction}, Info : {Map, Tour, State, Winner, Coeurs, Saison}]
+      //Joueur 1
+      myServer.write(str(vietank1)+"/");    //Vie       (int) (0 < vie < 11)
+      myServer.write(str(xbase)+"/");       //PosX      (int) ()
+      myServer.write(str(ybase)+"/");       //PosY      (int) ()
+      myServer.write(str(IsFire1)+"/");     //Feu       (int) (0 ou 1)
+      myServer.write(str(DistFeu1)+"/");    //DistFeu   (int) (0 < dist < )
+      myServer.write(str(Direction)+"/");   //Direction (int) (1 / 2 / 3 / 4)
+      //Joueur 2
+      Client thisClient = myServer.available();
+      if (thisClient != null) {
+        dataIn = thisClient.readString();
+        CdataList = split(dataIn, '/');
       }
-    }
 
-    //Selection entourage tank
-    if (Player==1) image(STank1, xbase, ybase);
-    if (Player==2) image(STank2, xbase2, ybase2);
-
-
-    //Affichage Tank
-    if (Direction == 1) { 
-      Tank1 = Tank1u; 
-      image(Tank1, xbase, ybase);
+      vietank2 = int(CdataList[0]);
+      xbase2 = int(CdataList[1]);
+      ybase2 = int(CdataList[2]);
+      IsFire2 = int(CdataList[3]);
+      DistFeu2 = int(CdataList[4]);
+      Direction2 = int(CdataList[5]);
+      //Serveur
+      //myServer.write(str(Collision)+"/"); //Map       (int[]) A INTEGRER
+      myServer.write(str(0)+"/");
+      myServer.write(str(Player)+"/");      //Tour      (int) (0 < tour)
+      myServer.write(str(0)+"/");           //State     (str) (?)
+      myServer.write(str(Winner)+"/");      //Winner    (int) (1 ou 2)
+      myServer.write(str(Design));          //Saison    (int) (1 ou 2 / été ou hiver)
+      delay(10);
     }
-    if (Direction == 2) { 
-      Tank1 = Tank1d; 
-      image(Tank1, xbase, ybase);
-    }
-    if (Direction == 3) { 
-      Tank1 = Tank1l; 
-      image(Tank1, xbase, ybase);
-    }
-    if (Direction == 4) { 
-      Tank1 = Tank1r; 
-      image(Tank1, xbase, ybase);
-    }
+    // Si nous sommes en multijoueur et que je suis client, on reçoit les informations envoyées par le serveur et on envoie les notres
+    if (AmIClient == true && myClient.available() > 0) {
+      dataIn = myClient.readString();
+      SdataList = split(dataIn, '/');
+      
+      //Joueur 1
+      vietank1 = int(SdataList[0]);
+      xbase = int(SdataList[1]);
+      ybase = int(SdataList[2]);
+      IsFire1 = int(SdataList[3]);
+      DistFeu1 = int(SdataList[4]);
+      Direction = int(SdataList[5]);
+      //Joueur 2
+      myClient.write(str(vietank2)+"/");    //Vie       (int) (0 < vie < 11)
+      myClient.write(str(xbase2)+"/");      //PosX      (int) ()
+      myClient.write(str(ybase2)+"/");      //PosY      (int) ()
+      myClient.write(str(IsFire2)+"/");     //Feu       (int) (0 ou 1)
+      myClient.write(str(DistFeu2)+"/");    //DistFeu   (int) (0 < dist < )
+      myClient.write(str(Direction2)+"/");  //Direction (int) (1 / 2 / 3 / 4)
+      //Serveur
+      //Collision = int[](dataList[6]); A INTEGRER
+      Player = int(SdataList[7]);
 
-    if (Direction2 == 1) { 
-      Tank2 = Tank2u; 
-      image(Tank2, xbase2, ybase2);
-    }
-    if (Direction2 == 2) { 
-      Tank2 = Tank2d; 
-      image(Tank2, xbase2, ybase2);
-    }
-    if (Direction2 == 3) { 
-      Tank2 = Tank2l; 
-      image(Tank2, xbase2, ybase2);
-    }
-    if (Direction2 == 4) { 
-      Tank2 = Tank2r; 
-      image(Tank2, xbase2, ybase2);
-    }
-
-
-    //Affichage des vies
-    fill(255);
-    textSize(14);
-    text("V1:", 20, 530);
-    text(":V2", 460, 530);
-    for (int viebarre1 = vietank1; viebarre1>0; viebarre1--) {
-      fill(150, 32, 32);
-      image(Vies, 12*viebarre1+40, 523, 8, 8);
-    }
-    for (int viebarre2 = vietank2; viebarre2>0; viebarre2--) {
-      fill(150, 32, 32);
-      image(Vies, -12*viebarre2+460, 523, 8, 8);
-    }
-
-    //Affichage de la Commande pour accéder aux options en jeu
-    textAlign(CENTER);
-    fill(255);
-    text("Press Shift", 250, 520);
-    text("For Options", 250, 540);
-    textAlign(LEFT);
-  }
-
-  void draw() {
-
-    if (toshow == "Menu") Menu();
-    if (toshow == "MenuPlay") MenuPlay();
-    if (toshow == "MenuEditor") MenuEditor();
-    if (toshow == "MenuOption") MenuOption();
-    if (toshow == "Game") Game();
-    if (toshow == "ServerJoin") ServerJoin();
-    if (toshow == "ServerCreate") ServerCreate();
-    if (toshow == "MenuMaps") MenuMaps();
-    if (toshow == "Options") Options();
-    MusicBackground();
-  }
-
-  void MusicBackground() {
-
-    //Volume du son
-    MusicBackground.amp((float)MusicVOL/1000);
-    //Boucle musique de fond
-    DecompteMusique--;
-    if (DecompteMusique<0 || DecompteMusique==(19*FrameRate)) {
-      MusicBackground.play();
-      DecompteMusique=(19*FrameRate);
+      Winner = int(SdataList[9]);
+      Design = int(SdataList[10]);
+      delay(10);
     }
   }
 
-  void Game() {
-    Move.amp((float)SoundVOL/1000);
-    Fire.amp((float)SoundVOL/1000);
+  // Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
+  if (toshow == "Menu") Menu();
+  if (toshow == "MenuPlay") MenuPlay();
+  if (toshow == "MenuEditor") MenuEditor();
+  if (toshow == "MenuOption") MenuOption();
+  if (toshow == "Game") Game();
+  if (toshow == "ServerJoin") ServerJoin();
+  if (toshow == "ServerCreate") ServerCreate();
+  if (toshow == "MenuMaps") MenuMaps();
+  if (toshow == "Options") Options();
+}
 
-    textAlign(LEFT);
+void MusicBackground() {
+
+  //Volume du son
+  MusicBackground.amp((float)MusicVOL/1000);
+  //Boucle musique de fond
+  DecompteMusique--;
+  if (DecompteMusique<0 || DecompteMusique==(19*FrameRate)) {
+    MusicBackground.play();
+    DecompteMusique=(19*FrameRate);
+  }
+}
+
+void Game() {
+  Move.amp((float)SoundVOL/1000);
+  Fire.amp((float)SoundVOL/1000);
+  textAlign(LEFT);
+  if (IsMulti == false || IsMulti == true && AmIServer == true) {
     if (Player==0 && Act==0 && vietank1>0 && vietank2>0 || Player==2 && Act==0 && vietank1>0 && vietank2>0) {
       background(0);
-      //textSize(40);
-      //text("Player 1", 160, 220);
-      //text("Press Down", 130, 270);
       stroke(0);
       fill(0, 0, 255);
       textSize(40);
       text("Player 1", 160, 220);
       text("Press Down", 130, 270);
       if (keyPressed==true && keyCode==DOWN) {
-        Player=1; 
+        Player=1;
         Act=3;
-        if (IsMulti == true) {
-          dataO.setInt("tour", 1);
-          data.setJSONObject(4, dataO);
-        }
       }
     }
+  }
 
+  if (IsMulti == false || IsMulti == true && AmIClient == true) {
     if (Player==1 && Act==0 && vietank1>0 && vietank2>0) {
       background(0);  
       fill(255, 0, 0);
@@ -518,34 +580,27 @@ void AffTank () {//Affiche le tank
       if (keyPressed==true && keyCode==DOWN) {
         Player=2; 
         Act=3;
-        if (IsMulti == true) {
-          dataO.setInt("tour", 2);
-          data.setJSONObject(4, dataO);
-        }
       }
     }
+  }
 
-    if (vietank1<1) {
-      background(0);
-      fill(255, 0, 0);
-      textSize(40);
-      text("Player 2 WIN", 130, 220);
-      if (IsMulti == true) {
-        dataO.setInt("winner", 2);
-        data.setJSONObject(6, dataO);
-      }
-    }
-    if (vietank2<1) {
-      background(0);
-      fill(0, 0, 255);
-      textSize(40);
-      text("Player 1 WIN", 130, 220);
-      if (IsMulti == true) {
-        dataO.setInt("winner", 1);
-        data.setJSONObject(6, dataO);
-      }
-    }
-    //début modification (et sécurité ctrl + Z)
+  if (vietank1<1 || IsMulti == true && Winner == 2) {
+    background(0);
+    fill(255, 0, 0);
+    textSize(40);
+    text("Player 2 WIN", 130, 220);
+    Winner = 2;
+  }
+  if (vietank2<1 || IsMulti == true && Winner == 1) {
+    background(0);
+    fill(0, 0, 255);
+    textSize(40);
+    text("Player 1 WIN", 130, 220);
+    Winner = 1;
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  if (IsMulti == false || IsMulti == true && (AmIServer == true && Player == 1 || AmIClient == true && Player == 2)) {
     if (Act>0) {
 
       AffTank();
@@ -606,14 +661,10 @@ void AffTank () {//Affiche le tank
       if (choix==1) {//Shoot
 
         if (CB<1 || lock==0) {
-          CB = random(10);
-          CB = int(CB);
-          println(CB);
-          if (IsMulti == true) {
-            dataO.setInt("DistFeu", int(CB));
-            if (Player == 1) data.setJSONObject(1, dataO);
-            if (Player == 2) data.setJSONObject(2, dataO);
-          }
+          CB = (int)random(0, 10);
+          // println(CB);
+          if (Player == 1) DistFeu1 = CB;
+          if (Player == 2) DistFeu2 = CB;
 
           if (Player == 1) {
             xbasem=xbase;
@@ -667,22 +718,8 @@ void AffTank () {//Affiche le tank
             Fire.play(3);
             lock=lock2;
             lock3=0;
-            if (IsMulti == true) {
-              dataO.setBoolean("Feu", true);
-              if (Player == 1) data.setJSONObject(1, dataO);
-              if (Player == 2) data.setJSONObject(2, dataO);
-            }
-          }
-
-          if (IsMulti == true) {
-            if (Player == 1) {
-              dataO.setInt("Direction", Direction);
-              data.setJSONObject(1, dataO);
-            }
-            if (Player == 2) {
-              dataO.setInt("Direction", Direction2);
-              data.setJSONObject(2, dataO);
-            }
+            if (Player == 1) IsFire1 = 1;
+            if (Player == 2) IsFire2 = 1;
           }
         }
 
@@ -754,12 +791,12 @@ void AffTank () {//Affiche le tank
 
 
     if (choix==2) {//Move
-      println(CP);
+      //println(CP);
       //Initialisation du dès de déplacements
       if (CP<1) {
         CP = random(10);
         CP = int(CP);
-        println(CP);
+        //println(CP);
       }
 
       //Déplacements lorsque CP est != de 0 (Joueur a encore des déplacements)
@@ -830,25 +867,13 @@ void AffTank () {//Affiche le tank
           CP=CP+1;
           TestCadriD=1;
         }
-        if (IsMulti == true) {
-          if (Player == 1) {
-            dataO.setInt("PosX", xbase);
-            dataO.setInt("PosY", ybase);
-            data.setJSONObject(1, dataO);
-          }
-          if (Player == 2) {
-            dataO.setInt("PosX", xbase2);
-            dataO.setInt("PosY", ybase2);
-            data.setJSONObject(2, dataO);
-          }
-        }
 
         AffTank();
         fill(200);
 
         textSize(50);
         text(CP, 450, 490, 500);
-        println(CP);
+        // println(CP);
       }
 
       //Déplacements lorsque CP est inférieur à 0 (Joueur n'a plus de déplacements)
@@ -857,4 +882,5 @@ void AffTank () {//Affiche le tank
         Act=Act-1;
       }
     }
-  }
+  } else AffTank();
+}

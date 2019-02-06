@@ -21,10 +21,7 @@ void keyPressed() {
     if (keyCode==TAB) toshow = "Menu"; //Touche retour, pour revenir sur le menu principal
     if (Menu == 1 && keyCode == ENTER) toshow = "MenuMaps"; //Lancer le jeu
     if (Menu == 2 && keyCode == ENTER) toshow = "ServerCreate"; //Afficher la page de création de serveur
-    if (Menu == 3 && keyCode == ENTER) {
-      toshow = "ServerJoin"; //Afficher la page pour rejoindre le serveur
-      delay(300);
-    }
+    if (Menu == 3 && keyCode == ENTER) toshow = "ServerJoin"; //Afficher la page pour rejoindre le serveur
   }
 
   if (toshow == "ServerJoin") { //récupérer l'entré des touches pour taper l'adresse ip du serveur à rejoindre
