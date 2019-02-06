@@ -3,8 +3,14 @@ boolean CanJoin = false;
 //Si une touche est appuyé, faire ce qui est demandé en fonction du menu affiché
 void keyPressed() {
   if (toshow == "Menu") { //Si le jeu est sur le menu principal
-    if (keyCode==RIGHT) Menu++;
-    if (keyCode==LEFT) Menu--;
+    if (keyCode==UP && Menu==2) Menu=1;
+    if (keyCode==UP && Menu==4) Menu=3;
+    if (keyCode==DOWN && Menu==1) Menu=2;
+    if (keyCode==DOWN && Menu==3) Menu=4;
+    if (keyCode==RIGHT && Menu==1) Menu=3;
+    if (keyCode==RIGHT && Menu==2) Menu=4;
+    if (keyCode==LEFT && Menu==3) Menu=1;
+    if (keyCode==LEFT && Menu==4) Menu=2;
     if (Menu==1 && keyCode==ENTER) { //Lancer le menu de choix de jeu
       toshow = "MenuPlay";
       Menu = 0;

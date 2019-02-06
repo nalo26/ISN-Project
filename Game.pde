@@ -1,16 +1,12 @@
 /*
-v. 1.2.4, 6/02/19 à 17h38, Nathan
+v. 1.2.5, 6/02/19 à 22h13, Benjamin
  
  Changelog :
  
- - Ajouts sur le serveur:
-   - Incrémentation de l'envoie ET reception des données
-   (/!\ La map n'est pas encore envoyé /!\ c'est le plus dur à faire, je le ferais plus tard)
-   - EN COURS : incrémentation du serveur DANS le jeu
-   (affichage en fonction des coordonées envoyées, si le joueur tire et à quelle distance, ...)
+-Modification esthétique et rajout des crédits pour le Menu Principal
  
  */
-String GameName = "Tank Game";
+String GameName = "Season Tank";
 int Player = 0; //Joueur 1 et 2 changement
 int Act = 0;
 int xbase = 0; // Emplacement tank 1
