@@ -5,12 +5,13 @@ void MenuMaps() {
   if (InteracMap==0) {
     background(0);
     textAlign(CENTER);
-    text("Selection of Maps", 250, 50);
-    text("Select Map N°1", 250, 100);
-    text("Select Map N°2", 250, 200);
-    text("Select Map N°3", 250, 300);
-    text("Press Up or Down arrows to select your folder", 250, 400);
-    text("And Press Right arrow  to load file", 250, 450);
+    image(BackgMenu,0,0);
+    textSize(20);
+    text("Play with Map N°1", 250, 200);
+    text("Play with Map N°2", 250, 300);
+    text("Play with Map N°3", 250, 400);
+    textSize(14);
+    text("Press arrows to select your folder and press RIGHT to load file", 250, 515);
     textAlign(LEFT);
 
     CurseurMenuMaps();
@@ -35,11 +36,14 @@ void MenuMaps() {
   if (InteracMap==1) {
     background(0);
     textAlign(CENTER);
-    text("Remplace Map N°1", 250, 100);
-    text("Remplace Map N°2", 250, 200);
-    text("Remplace Map N°3", 250, 300);
-    text("Press Up or Down arrows to select a backup location", 250, 400);
-    text("And Press Enter to save file", 250, 450);
+    image(BackgMenu,0,0);
+    fill(101,149,99);
+    textSize(20);
+    text("Remplace Map N°1", 250, 200);
+    text("Remplace Map N°2", 250, 300);
+    text("Remplace Map N°3", 250, 400);
+    textSize(13);
+    text("Press arrows to select a backup location and press Enter to save file", 250, 515);
     textAlign(LEFT);
 
     CurseurMenuMaps();
@@ -80,5 +84,6 @@ void CurseurMenuMaps() {
   }
 
   //Souligne le choix du joueur
-  rect(150, SelectMap*100+10, 200, 5);
+  image(BalleR, 100, SelectMap*100+70);
+  image(BalleL, 350, SelectMap*100+70);
 }

@@ -107,3 +107,9 @@ v. 1.2.4, 6/02/19 à 17h38, Nathan
 v. 1.2.5, 6/02/19 à 22h13, Benjamin
 
 -Modification esthétique et rajout des crédits pour le Menu Principal
+
+------------------------------------
+v. 1.2.6, 7/02/19 à 21h56, Benjamin
+
+-Modification esthétique des Menu
+ 

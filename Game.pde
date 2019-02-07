@@ -1,12 +1,11 @@
 /*
-v. 1.2.5, 6/02/19 à 22h13, Benjamin
+v. 1.2.6, 7/02/19 à 21h56, Benjamin
  
  Changelog :
  
--Modification esthétique et rajout des crédits pour le Menu Principal
+-Modification esthétique des Menu
  
  */
-String GameName = "Season Tank";
 int Player = 0; //Joueur 1 et 2 changement
 int Act = 0;
 int xbase = 0; // Emplacement tank 1
@@ -96,6 +95,7 @@ int [] Collision = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 //Chargement des images du jeu
+PImage BackgMenu;
 PImage arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG;
 PImage arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW;
 PImage STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
@@ -109,6 +109,8 @@ void setup() {
   background(0);
   //A changer pour changer la rapidité du jeu
   frameRate(60);
+
+  BackgMenu = loadImage("BackMenu.png");
 
   arbre = loadImage("arbre.png");
   Montagne = loadImage("Montagne.png");

@@ -22,8 +22,8 @@ void keyPressed() {
   }
 
   if (toshow == "MenuPlay") { //Si le jeu est sur la sélection de type de jeu
-    if (keyCode==RIGHT) Menu++;
-    if (keyCode==LEFT) Menu--;
+    if (keyCode==DOWN) Menu++;
+    if (keyCode==UP) Menu--;
     if (keyCode==TAB) toshow = "Menu"; //Touche retour, pour revenir sur le menu principal
     if (Menu == 1 && keyCode == ENTER) toshow = "MenuMaps"; //Lancer le jeu
     if (Menu == 2 && keyCode == ENTER) toshow = "ServerCreate"; //Afficher la page de création de serveur
