@@ -19,6 +19,7 @@ void keyPressed() {
     if (Menu==3 && keyCode==ENTER) {
       toshow = "Options";
     }//Lancer le menu d'option
+    if (Menu==4 && keyCode==ENTER) toshow = "Credits";
   }
 
   if (toshow == "MenuPlay") { //Si le jeu est sur la sélection de type de jeu
@@ -40,13 +41,20 @@ void keyPressed() {
     toshow = "MenuMaps";
     InteracMap = 1;
   }
+  if (toshow == "MenuMaps" && keyCode == SHIFT) {
+    toshow = "Menu";
+    InteracMap = 0;
+  }
+
   if ( toshow == "Options" && keyCode == TAB && MenuOpt==0 && Link==0)toshow ="Menu";
   if ( toshow == "Options" && keyCode == TAB && MenuOpt==0 && Link==1)toshow ="Game";
   if ( toshow == "Options" && keyCode == RIGHT && MenuOpt==0)MenuOpt=SMenuOpt;
   if ( toshow == "Options" && keyCode == TAB && MenuOpt>0)MenuOpt=0;
 
-    if (toshow == "Game" && keyCode==SHIFT) {
-      toshow = "Options";
-      Link=1;
-    }
+  if (toshow == "Game" && keyCode==SHIFT) {
+    toshow = "Options";
+    Link=1;
   }
+
+  if ( toshow == "Credits" && keyCode == TAB) toshow = "Menu";
+}

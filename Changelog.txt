@@ -106,10 +106,15 @@ v. 1.2.4, 6/02/19 à 17h38, Nathan
 ------------------------------------
 v. 1.2.5, 6/02/19 à 22h13, Benjamin
 
--Modification esthétique et rajout des crédits pour le Menu Principal
+- Modification esthétique et rajout des crédits pour le Menu Principal
 
 ------------------------------------
 v. 1.2.6, 7/02/19 à 21h56, Benjamin
 
--Modification esthétique des Menu
+- Modification esthétique des Menu
  
+------------------------------------
+v. 1.2.7, 8/02/19 à 20h50, Benjamin
+
+- Modification esthétique des Menu 
+- Modifications du menu maps pour ne pas sauvegarder si on ne le souhaite pas

@@ -6,6 +6,11 @@
 
 void MenuEditor() {
   AffEditeur();
+  textSize(10);
+  text("SHIFT=Print",450,515);
+  text("ENTER=Switch",450,525);
+  text("TAB=Save",450,535);
+  text("TAB+SHIFT=Menu",450,545);
 
   //Enter permet d'accéder au choix des types de terrains (ex:montagne,lave...) qui vont remplacer ceux choisit par le curseur  
   if (keyCode==ENTER && Selectile==0 && LockTile==0) {
@@ -126,17 +131,17 @@ void AffEditeur () {//Affiche l'éditeur
   }
   //Affiche les terrains proposées en barre d'info
   fill(45, 139, 97);
-  rect(60, 505, 50, 50);
-  image(Montagne, 140, 505);
-  image(Eau, 220, 505);
-  image(Lave, 300, 505);
-  image(arbre, 380, 505);
+  rect(20, 505, 50, 50);
+  image(Montagne, 100, 505);
+  image(Eau, 180, 505);
+  image(Lave, 260, 505);
+  image(arbre, 340, 505);
 
   //Affichage selection dans la barre d'info lors du choix de la texture
   if (Selectile!=0) {
     PImage STile; 
     STile = loadImage("Selection Tank2.png");
-    image(STile, Selectile*80-20, 505);
+    image(STile, Selectile*80-60, 505);
   }
   //Affichage curseur sur la map pour le changement des textures
   if (Selectile==0) {

@@ -1,9 +1,10 @@
 /*
-v. 1.2.6, 7/02/19 à 21h56, Benjamin
+v. 1.2.7, 8/02/19 à 20h50, Benjamin
  
  Changelog :
  
--Modification esthétique des Menu
+- Modification esthétique des Menu
+- Modifications du menu maps pour ne pas sauvegarder si on ne le souhaite pas
  
  */
 int Player = 0; //Joueur 1 et 2 changement
@@ -95,7 +96,7 @@ int [] Collision = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 //Chargement des images du jeu
-PImage BackgMenu;
+PImage BackgMenu, BackOpt, Credits;
 PImage arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG;
 PImage arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW;
 PImage STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, Balle, BalleU, BalleD, BalleR, BalleL, BalleExplosion;
@@ -111,6 +112,8 @@ void setup() {
   frameRate(60);
 
   BackgMenu = loadImage("BackMenu.png");
+  BackOpt = loadImage("Options.png");
+  Credits = loadImage("Crédits.png");
 
   arbre = loadImage("arbre.png");
   Montagne = loadImage("Montagne.png");
@@ -535,6 +538,7 @@ void draw() {
   if (toshow == "ServerCreate") ServerCreate();
   if (toshow == "MenuMaps") MenuMaps();
   if (toshow == "Options") Options();
+  if (toshow == "Credits") Credits();
 }
 
 void MusicBackground() {
