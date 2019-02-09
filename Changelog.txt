@@ -118,3 +118,12 @@ v. 1.2.7, 8/02/19 à 20h50, Benjamin
 
 - Modification esthétique des Menu 
 - Modifications du menu maps pour ne pas sauvegarder si on ne le souhaite pas
+
+------------------------------------
+v. 1.2.8, 10/02/19 à 00h23, Benjamin
+
+ - Nouvelles Fonctionnalités de terrain pour l'Hiver
+ - Glace = Laisse glisser le tank jusqu'a un bord ou un autre type de terrain
+ - Montagne = Peut être détriute par un missile
+ - Lave = on peux rouler dessus mais on prend des dégats
+ - Forêt = Nous cache seulement en Hiver

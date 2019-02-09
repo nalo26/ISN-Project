@@ -1,10 +1,13 @@
 /*
-v. 1.2.7, 8/02/19 à 20h50, Benjamin
+v. 1.2.8, 10/02/19 à 00h23, Benjamin
  
  Changelog :
  
-- Modification esthétique des Menu
-- Modifications du menu maps pour ne pas sauvegarder si on ne le souhaite pas
+ - Nouvelles Fonctionnalités de terrain pour l'Hiver
+ -Glace = Laisse glisser le tank jusqu'a un bord ou un autre type de terrain
+ -Montagne = Peut être détriute par un missile
+ -Lave = on peux rouler dessus mais on prend des dégats
+ -Forêt = Nous cache seulement en Hiver
  
  */
 int Player = 0; //Joueur 1 et 2 changement
@@ -39,7 +42,8 @@ boolean Gauche= false;
 boolean end = false;
 String toshow = "Menu";
 int Menu=1;
-
+boolean bord = false;
+boolean DegatsLaveTank=false;
 // Parties valeurs MenuEditeur
 int Selectile=0;
 int Selectedtile=0;
@@ -71,30 +75,30 @@ int FrameRate = 60;
 int DecompteMusique = 19 * FrameRate + 1;
 
 //Maps de base lorsqu'on édite une map dans le menu editeur
-/*int [] Collision = {
- 0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
- 0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
- 0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
- 0, 1, 2, 2, 2, 0, 0, 0, 1, 1, 
- 0, 0, 2, 2, 2, 2, 0, 0, 0, 1, 
- 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 
- 1, 1, 0, 0, 0, 2, 2, 2, 1, 0, 
- 0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
- 3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
- 3, 1, 1, 0, 0, 4, 4, 2, 2, 0
- };*/
 int [] Collision = {
-  0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
+  0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
+  0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
+  0, 1, 2, 2, 2, 0, 0, 0, 1, 1, 
+  0, 0, 2, 2, 2, 2, 0, 0, 0, 1, 
+  1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 
+  1, 1, 0, 0, 0, 2, 2, 2, 1, 0, 
+  0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
+  3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
+  3, 1, 1, 0, 0, 4, 4, 2, 2, 0
 };
+//int [] Collision = {
+//  0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+//};
 //Chargement des images du jeu
 PImage BackgMenu, BackOpt, Credits;
 PImage arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG;
@@ -167,6 +171,8 @@ void CDD() {
   int CDDx = xbase/50;
   int CDDy = ybase/50*10;
   int CDD = CDDx + CDDy;
+  //Permet de fixer des limites pour la glisse sur la glace
+  bord = false;
 
   //Colisions cotés de terrain (Déplacements)        si le tank rencontre la limite et qu'il se trouve sur de l'eau CP a besoin de +2 pour revenir a son etat initial
   if (CDDx<0) {
@@ -201,18 +207,90 @@ void CDD() {
     TD2=1;
   }
   //Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
-  if (Collision [CDD] ==3) {
+  if (Collision [CDD] ==3 && Design == 1) {
     TestCadriD=0;
     TD2=1;
   }
+  if (Collision [CDD] ==3 && Design == 2) {
+    TestCadriD=1;
+    TD2=1;
+    vietank1--;
+    DegatsLaveTank  =true;
+  } else DegatsLaveTank=false;
   //Si le tank va dans l'eau (Il est alors ralenti)
-  if (Collision [CDD] ==2) CP=CP-1;
+  if (Collision [CDD] ==2 && Design ==1) CP=CP-1;
+  //Si le Tank va sur la glace (Il glisse jusqu'à un rebord ou un terrain différent de la glace)
+  if (Collision [CDD] ==2 && Design ==2) {
+
+    while (Collision [CDD] ==2 && keyCode==RIGHT && bord ==false) {
+      xbase=xbase+50; 
+      if (xbase<=450)CDDx = xbase/50; 
+      else { 
+        bord = true ; 
+        xbase=xbase-50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        xbase=xbase-50;
+      }
+      AffTank();
+    }
+
+    while (Collision [CDD] ==2 && keyCode==LEFT && bord ==false) {
+      xbase=xbase-50; 
+      if (xbase>=0)CDDx = xbase/50; 
+      else { 
+        bord = true ; 
+        xbase=xbase+50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        xbase=xbase+50;
+      }
+      AffTank();
+    }
+
+    while (Collision[CDD] ==2 && keyCode==UP && bord ==false) {
+      ybase=ybase-50; 
+      if (ybase>=0)CDDy = ybase/50*10; 
+      else { 
+        bord = true ; 
+        ybase=ybase+50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        ybase=ybase+50;
+      }
+      AffTank();
+    }
+
+    while (Collision [CDD] ==2 && keyCode==DOWN && bord ==false) {
+      ybase=ybase+50; 
+      if (ybase<=450)CDDy = ybase/50*10; 
+      else { 
+        bord = true ; 
+        ybase=ybase-50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        ybase=ybase-50;
+      }
+      AffTank();
+    }
+  }
 }
+
 void CDD2() {
   //Cadrillage Des Déplacements (Tanks)
   int CDDx = xbase2/50;
   int CDDy = ybase2/50*10;
   int CDD = CDDx + CDDy;
+  //Permet de fixer les bug sur les déplacements avec la glace
+  bord = false;
 
   //Colisions cotés de terrain (Déplacements)        si le tank rencontre la limite et qu'il se trouve sur de l'eau CP a besoin de +2 pour revenir a son etat initial
   if (CDDx<0) {
@@ -241,18 +319,82 @@ void CDD2() {
   }
 
 
-  //Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
-  if (Collision [CDD] ==1) {
-    TestCadriD=0;
-    TD2=1;
-  }
   //Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
-  if (Collision [CDD] ==3) {
+  if (Collision [CDD] ==3 && Design == 1) {
     TestCadriD=0;
     TD2=1;
   }
+  if (Collision [CDD] ==3 && Design == 2) {
+    TestCadriD=1;
+    TD2=1;
+    vietank2--;
+    DegatsLaveTank  =true;
+  } else DegatsLaveTank=false;
   //Si le tank va dans l'eau (Il est alors ralenti)
-  if (Collision [CDD] ==2) CP=CP-1;
+  if (Collision [CDD] ==2 && Design ==1) CP=CP-1;
+  //Si le Tank va sur la glace (Il glisse jusqu'à un rebord ou un terrain différent de la glace)
+  if (Collision [CDD] ==2 && Design ==2) {
+
+    while (Collision [CDD] ==2 && keyCode==RIGHT && bord ==false) {
+      xbase2=xbase2+50; 
+      if (xbase2<=450)CDDx = xbase2/50; 
+      else { 
+        bord = true ; 
+        xbase2=xbase2-50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        xbase2=xbase2-50;
+      }
+      AffTank();
+    }
+
+    while (Collision [CDD] ==2 && keyCode==LEFT && bord ==false) {
+      xbase2=xbase2-50; 
+      if (xbase2>=0)CDDx = xbase2/50; 
+      else { 
+        bord = true ; 
+        xbase2=xbase2+50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        xbase2=xbase2+50;
+      }
+      AffTank();
+    }
+
+    while (Collision[CDD] ==2 && keyCode==UP && bord ==false) {
+      ybase2=ybase2-50; 
+      if (ybase2>=0)CDDy = ybase2/50*10; 
+      else { 
+        bord = true ; 
+        ybase2=ybase2+50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        ybase2=ybase2+50;
+      }
+      AffTank();
+    }
+
+    while (Collision [CDD] ==2 && keyCode==DOWN && bord ==false) {
+      ybase2=ybase2+50; 
+      if (ybase2<=450)CDDy = ybase2/50*10; 
+      else { 
+        bord = true ; 
+        ybase2=ybase2-50;
+      }
+      CDD = CDDx + CDDy;
+      if (Collision [CDD]==1) {
+        bord = true ; 
+        ybase2=ybase2-50;
+      }
+      AffTank();
+    }
+  }
 }
 void CDA() {
   //Cadrillage Des Attaques (Bullets)
@@ -280,6 +422,7 @@ void CDA() {
 
   //Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
   if (Collision [CDA] ==1) CB=0;
+  if (Collision [CDA] ==1 && Design==2)Collision [CDA]=0;
   //Si le tank veux aller dans un endroit qu'il ne peux traverser (Foret)
   if (Collision [CDA] ==4) CB=0;
 }
@@ -400,46 +543,56 @@ void AffTank () {//Affiche le tank
     }
   }
 
+  //Affichage dégats lave
+  if (DegatsLaveTank==true) {
+    fill(255, 0, 0, 100);
+    rect(0, 0, 500, 500);
+  }
+
   //Selection entourage tank
   if (Player==1) image(STank1, xbase, ybase);
   if (Player==2) image(STank2, xbase2, ybase2);
 
-
   //Affichage Tank
-  if (Direction == 1) { 
-    Tank1 = Tank1u; 
-    image(Tank1, xbase, ybase);
-  }
-  if (Direction == 2) { 
-    Tank1 = Tank1d; 
-    image(Tank1, xbase, ybase);
-  }
-  if (Direction == 3) { 
-    Tank1 = Tank1l; 
-    image(Tank1, xbase, ybase);
-  }
-  if (Direction == 4) { 
-    Tank1 = Tank1r; 
-    image(Tank1, xbase, ybase);
-  }
-
-  if (Direction2 == 1) { 
-    Tank2 = Tank2u; 
-    image(Tank2, xbase2, ybase2);
-  }
-  if (Direction2 == 2) { 
-    Tank2 = Tank2d; 
-    image(Tank2, xbase2, ybase2);
-  }
-  if (Direction2 == 3) { 
-    Tank2 = Tank2l; 
-    image(Tank2, xbase2, ybase2);
-  }
-  if (Direction2 == 4) { 
-    Tank2 = Tank2r; 
-    image(Tank2, xbase2, ybase2);
+  if (Collision[xbase/50+ybase/50*10]==4 && Design==2) {
+  } else {
+    if (Direction == 1) { 
+      Tank1 = Tank1u; 
+      image(Tank1, xbase, ybase);
+    }
+    if (Direction == 2) { 
+      Tank1 = Tank1d; 
+      image(Tank1, xbase, ybase);
+    }
+    if (Direction == 3) { 
+      Tank1 = Tank1l; 
+      image(Tank1, xbase, ybase);
+    }
+    if (Direction == 4) { 
+      Tank1 = Tank1r; 
+      image(Tank1, xbase, ybase);
+    }
   }
 
+  if (Collision[xbase2/50+ybase2/50*10]==4 && Design==2) {
+  } else {
+    if (Direction2 == 1) { 
+      Tank2 = Tank2u; 
+      image(Tank2, xbase2, ybase2);
+    }
+    if (Direction2 == 2) { 
+      Tank2 = Tank2d; 
+      image(Tank2, xbase2, ybase2);
+    }
+    if (Direction2 == 3) { 
+      Tank2 = Tank2l; 
+      image(Tank2, xbase2, ybase2);
+    }
+    if (Direction2 == 4) { 
+      Tank2 = Tank2r; 
+      image(Tank2, xbase2, ybase2);
+    }
+  }
 
   //Affichage des vies
   fill(255);
@@ -503,7 +656,7 @@ void draw() {
     if (AmIClient == true && myClient.available() > 0) {
       dataIn = myClient.readString();
       SdataList = split(dataIn, '/');
-      
+
       //Joueur 1
       vietank1 = int(SdataList[0]);
       xbase = int(SdataList[1]);
