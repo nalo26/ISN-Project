@@ -1,6 +1,6 @@
 void Options() {
-  image(BackOpt,0,0);
-  fill(101,149,99);
+  image(BackOpt, 0, 0);
+  fill(101, 149, 99);
   textAlign(LEFT);
   text("Music:", 100, 150+30);
   text("Sound effect:", 100, 230+30);
@@ -18,22 +18,22 @@ void Options() {
   if (MenuOpt==0) {
     if (keyPressed==true && keyCode == DOWN && SMenuOpt < 5)SMenuOpt++;
     if (keyPressed==true && keyCode == UP && SMenuOpt > 1)SMenuOpt--;
-    image(BalleR,40, 70+80*SMenuOpt);
+    image(BalleR, 40, 70+80*SMenuOpt);
     delay(100);
   }
 
   //Fond des barres de volume
 
-  fill(55,77,54);
+  fill(55, 77, 54);
   rect(318, 130+28, 104, 24);
   rect(318, 210+28, 104, 24);
-  fill(55,77,54);
+  fill(55, 77, 54);
   rect(320, 130+30, 100, 20);
   rect(320, 210+30, 100, 20);
 
   //Interface Musique
 
-  fill(101,149,99);
+  fill(101, 149, 99);
   if (MenuOpt==1) {
     if (keyPressed == true && keyCode == RIGHT && MusicVOL<100)MusicVOL++;
     if (keyPressed == true && keyCode == LEFT && MusicVOL>0)MusicVOL--;
@@ -47,7 +47,7 @@ void Options() {
 
   //Interface Effets Sonores
 
-  fill(101,149,99);
+  fill(101, 149, 99);
   if (MenuOpt==2) {
     if (keyPressed == true && keyCode == RIGHT && SoundVOL<100)SoundVOL++;
     if (keyPressed == true && keyCode == LEFT && SoundVOL>0)SoundVOL--;
@@ -61,7 +61,7 @@ void Options() {
 
   // Interface nombre de vie
 
-  fill(101,149,99);
+  fill(101, 149, 99);
   //Dans le cas ou on arrive au menu option par le Menu principal
   if (MenuOpt==3 && Link==0) {
     if (keyPressed == true && keyCode == RIGHT && vietank1<10) {
@@ -76,42 +76,91 @@ void Options() {
     triangledeselction();
     delay(100);
   }
-  //Dans le cas ou on arrive au menu option par le Jeu
-  if (MenuOpt==3 && Link==1) {
-    fill(255, 0, 0);
-    text("You can't change the number ", 280, 280+30);
-    text("Tank's Health now", 310, 330+30);
-    triangledeselction();
-  }
+
   for (int i=0; i<vietank1; i++)image(Vies, 320+vietank1*i, 290+30);
 
   // Interface Type de son
 
-  fill(101,149,99);
-  if (MenuOpt==4) {
-    if (keyPressed == true && keyCode == RIGHT && TypeDeSon<2)TypeDeSon++;
-    if (keyPressed == true && keyCode == LEFT && TypeDeSon>1)TypeDeSon--;
-    triangledeselction();
-    fill(247, 153, 0);
-  }
-  textSize(15);
-  if (TypeDeSon==1)text("Default", 330, 390+30);
-  if (TypeDeSon==2)text("Crazy", 330, 390+30);
+  fill(101, 149, 99);
+  
+    if (MenuOpt==4) {
+      if (keyPressed == true && keyCode == RIGHT && TypeDeSon<2)TypeDeSon++;
+      if (keyPressed == true && keyCode == LEFT && TypeDeSon>1)TypeDeSon--;
+      triangledeselction();
+      fill(247, 153, 0);
+    }
+    textSize(15);
+    if (TypeDeSon==1)text("Default", 330, 390+30);
+    if (TypeDeSon==2)text("Crazy", 330, 390+30);
 
-  // Interface Design
+    // Interface Design
 
-  fill(101,149,99);
-  if (MenuOpt==5) {
-    if (keyPressed == true && keyCode == RIGHT && Design<2)Design++;
-    if (keyPressed == true && keyCode == LEFT && Design>1)Design--;
+    fill(101, 149, 99);
+    if (MenuOpt==5 && Link==0) {
+      if (keyPressed == true && keyCode == RIGHT && Design<4) {
+        Design++;
+        delay(100);
+      }
+      if (keyPressed == true && keyCode == LEFT && Design>1) {
+        Design--;
+        delay(100);
+      }
+      triangledeselction();
+      fill(247, 153, 0);
+    }
+    if (Design==3 && MenuOpt==5 && Link==0) {
+      triangle(280, 470, 290, 460, 300, 470);
+      triangle(280, 510, 290, 520, 300, 510);
+      if (keyPressed == true && keyCode == UP && SummerDay<99) {
+        SummerDay++;
+        delay(100);
+      }
+      if (keyPressed == true && keyCode == DOWN && SummerDay>1) {
+        SummerDay--;
+        delay(100);
+      }
+    }
+    if (Design==4 && MenuOpt==5 && Link==0) {
+      triangle(380, 470, 390, 460, 400, 470);
+      triangle(380, 510, 390, 520, 400, 510);
+      if (keyPressed == true && keyCode == UP && WinterDay<99) {
+        WinterDay++;
+        delay(100);
+      }
+      if (keyPressed == true && keyCode == DOWN && WinterDay>1) {
+        WinterDay--;
+        delay(100);
+      }
+    }
+    if (Design==1 && Link==0)text("Summer", 330, 470+30);
+    if (Design==2 && Link==0)text("Winter", 330, 470+30);
+    if (Design==1 && Link==0 || Design==2 && Link==0)Changementok = false;
+    if (Design>2 && Link==0) {
+      text("Summer: "+SummerDay+" & Winter: "+WinterDay, 243, 465+30);
+      Changementok = true;
+    }
+
+  if (Design==1 && Link==1 && Changementok == false)text("Summer", 330, 470+30);
+  if (Design==2 && Link==1 && Changementok == false)text("Winter", 330, 470+30);
+  if(Changementok == true)text("Summer: "+SummerDay+" & Winter: "+WinterDay, 243, 465+30);
+  
+    //Dans le cas ou on arrive au menu option par le Jeu
+  //if (MenuOpt==3 && Link==1) {
+  //  fill(255, 0, 0);
+  //  text("You can't change the number ", 280, 280+30);
+  //  text("Tank's Health now", 310, 330+30);
+  //  triangledeselction();
+  //}
+  if (Link==1 && MenuOpt==5 || MenuOpt==3 && Link==1) {
+    fill(255,0,0);
+    textAlign(CENTER);
+    text("You can't change this one in game", 250, 490+30);
+    textAlign(LEFT);
     triangledeselction();
-    fill(247, 153, 0);
   }
-  if (Design==1)text("Summer", 330, 470+30);
-  if (Design==2)text("Winter", 330, 470+30);
 
   //Affichage des Paramêtre
-  fill(136,222,145);
+  fill(136, 222, 145);
   textSize(15);
   if (MusicVOL<10)text(MusicVOL, 410, 150+30);
   else if (MusicVOL==100)text(MusicVOL, 390, 150+30);
@@ -124,6 +173,7 @@ void Options() {
 }
 
 void triangledeselction() {
-  triangle(300, 50+80*SMenuOpt+10+30, 310, 50+80*SMenuOpt+30, 310, 50+80*SMenuOpt+20+30);
+  if (Design>2 || Changementok == true) triangle(230, 50+80*SMenuOpt+10+30, 240, 50+80*SMenuOpt+30, 240, 50+80*SMenuOpt+20+30);
+  else triangle(300, 50+80*SMenuOpt+10+30, 310, 50+80*SMenuOpt+30, 310, 50+80*SMenuOpt+20+30);
   triangle(430, 50+80*SMenuOpt+30, 430, 50+80*SMenuOpt+20+30, 440, 50+80*SMenuOpt+10+30);
 }

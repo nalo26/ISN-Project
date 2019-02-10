@@ -1,13 +1,11 @@
 /*
-v. 1.2.8, 10/02/19 à 00h23, Benjamin
+v. 1.3.0, 10/02/19 à 20h25, Benjamin
  
  Changelog :
  
- - Nouvelles Fonctionnalités de terrain pour l'Hiver
- -Glace = Laisse glisser le tank jusqu'a un bord ou un autre type de terrain
- -Montagne = Peut être détriute par un missile
- -Lave = on peux rouler dessus mais on prend des dégats
- -Forêt = Nous cache seulement en Hiver
+ - Changements Ete Hiver terminés a 100%
+ - Fix collision
+ - Accès au Saison modifiées depuis le jeu
  
  */
 int Player = 0; //Joueur 1 et 2 changement
@@ -44,6 +42,9 @@ String toshow = "Menu";
 int Menu=1;
 boolean bord = false;
 boolean DegatsLaveTank=false;
+int ChangementSaison = 0;
+boolean Changementok = false ;
+
 // Parties valeurs MenuEditeur
 int Selectile=0;
 int Selectedtile=0;
@@ -67,6 +68,8 @@ int MusicVOL = 50;
 int SoundVOL = 50;
 int TypeDeSon = 1;
 int Design = 1;
+int SummerDay = 1 ;
+int WinterDay = 1 ;
 //Permet d'accéder au parametres de son en jeu
 int Link =0;
 
@@ -75,30 +78,30 @@ int FrameRate = 60;
 int DecompteMusique = 19 * FrameRate + 1;
 
 //Maps de base lorsqu'on édite une map dans le menu editeur
-int [] Collision = {
-  0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
-  0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
-  0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
-  0, 1, 2, 2, 2, 0, 0, 0, 1, 1, 
-  0, 0, 2, 2, 2, 2, 0, 0, 0, 1, 
-  1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 
-  1, 1, 0, 0, 0, 2, 2, 2, 1, 0, 
-  0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
-  3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
-  3, 1, 1, 0, 0, 4, 4, 2, 2, 0
-};
 //int [] Collision = {
-//  0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-//  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+//  0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
+//  0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
+//  0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
+//  0, 1, 2, 2, 2, 0, 0, 0, 1, 1, 
+//  0, 0, 2, 2, 2, 2, 0, 0, 0, 1, 
+//  1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 
+//  1, 1, 0, 0, 0, 2, 2, 2, 1, 0, 
+//  0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
+//  3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
+//  3, 1, 1, 0, 0, 4, 4, 2, 2, 0
 //};
+int [] Collision = {
+  0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
 //Chargement des images du jeu
 PImage BackgMenu, BackOpt, Credits;
 PImage arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG;
@@ -318,7 +321,11 @@ void CDD2() {
     if (Collision [CDD] ==2) CP=CP+1;
   }
 
-
+  //Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
+  if (Collision [CDD] ==1) {
+    TestCadriD=0;
+    TD2=1;
+  }
   //Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
   if (Collision [CDD] ==3 && Design == 1) {
     TestCadriD=0;
@@ -940,6 +947,7 @@ void Game() {
           Balle =  BalleExplosion;
           image(Balle, xbasem, ybasem);
           Act=Act-1;
+          ChangementSaison++;
         }
       }
     }
@@ -1035,7 +1043,18 @@ void Game() {
       if (CP<1) {
         choix=0;
         Act=Act-1;
+        ChangementSaison++;
       }
     }
   } else AffTank();
+  
+  if (Design==1 && Changementok == true && ChangementSaison==SummerDay){
+    Design=2;
+    ChangementSaison=0;
+  }
+  if (Design==2 && Changementok == true && ChangementSaison==WinterDay){
+    Design=1;
+    ChangementSaison=0;
+  }
+  if (Design>2)Design=1;
 }

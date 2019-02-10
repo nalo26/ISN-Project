@@ -127,3 +127,12 @@ v. 1.2.8, 10/02/19 à 00h23, Benjamin
  - Montagne = Peut être détriute par un missile
  - Lave = on peux rouler dessus mais on prend des dégats
  - Forêt = Nous cache seulement en Hiver
+
+-------------------------------------
+v. 1.3.0, 10/02/19 à 20h25, Benjamin
+
+ - Changements Ete Hiver terminés a 100%
+ - Fix collision
+ - Accès au Saison modifiées depuis le jeu
+
+-------------------------------------
