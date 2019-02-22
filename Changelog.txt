@@ -1,77 +1,77 @@
 ﻿v. 1.1.2, 09/01/19 à 17h38, Nathan
 
-- Reorganisation du menu en sous parties
-- Reajout de la touche ENTREE
-- Optimisation de certaines parties
-Fix en cours (attention ne pas toucher !):
-- Changement de toutes les demandes de touches dans la partie keyPressed()
-- Création du serveur
+ - Reorganisation du menu en sous parties
+ - Reajout de la touche ENTREE
+ - Optimisation de certaines parties
+ - Fix en cours (attention ne pas toucher !):
+	- Changement de toutes les demandes de touches dans la partie keyPressed()
+	- Création du serveur
 
 ----------------------------------------
 v. 1.1.4, 10/01/19 à 22h51, Benj
 
-- Changement de la taille de l'affichage pour :
-Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectionées dans le menu éditeur)
-- Fix de problèmes en liens avec la couleurs de certains textes
-- Base du menu éditeur effectuée (Il reste a voir pour les problèmes de lag et un rendu plus esthétique)
-- Rajout de certaines variables pour le MenuEditeur dans menu /!\ Voir si leurs emplacement te conviens /!\
+ - Changement de la taille de l'affichage pour :
+ - Rajout d'une barre d'info (pour un mieux voir les vies/les textures sélectionées dans le menu éditeur)
+ - Fix de problèmes en liens avec la couleurs de certains textes
+ - Base du menu éditeur effectuée (Il reste a voir pour les problèmes de lag et un rendu plus esthétique)
+ - Rajout de certaines variables pour le MenuEditeur dans menu /!\ Voir si leurs emplacement te conviens /!\
 
 ----------------------------------------
 v. 1.1.5, 11/01/19 à 16h53, Nathan
 
-- Ajout de la fonction de création / rejoindre le serveur (en cours)
-- Modifier la mise en page de quelques bug sur le menu
+ - Ajout de la fonction de création / rejoindre le serveur (en cours)
+ - Modifier la mise en page de quelques bug sur le menu
 
 ----------------------------------------
 v. 1.1.6, 12/01/19 à 18h21, Nathan
  
-- Ajout de la sauvegarde des données serveur (juste sauvegarde, pas lecture)
-- Compression des deux blocs de codes des deux joueurs en un seul (test du joueur à chaque évenement) (y'avait beaucoup de boulot)
+ - Ajout de la sauvegarde des données serveur (juste sauvegarde, pas lecture)
+ - Compression des deux blocs de codes des deux joueurs en un seul (test du joueur à chaque évenement) (y'avait beaucoup de boulot)
 
 ----------------------------------------
 v. 1.1.7, 13/01/19 à 19h00, Benjamin
 
-- Rajout de la texture d'explosion de la balle
-- Modification du code pour l'intégrer
-- Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
+ - Rajout de la texture d'explosion de la balle
+ - Modification du code pour l'intégrer
+ - Test en ayant téléchargé la version github et bug a partir du deuxieme déplacement de la Balle (/!\C'EST PAS NORMAL/!\)
 
 ----------------------------------------
 v. 1.1.8, 14/01/19 à 10h46, Benjamin
 
-- Optimisation du MenuEditeur (Loadimage supprimé car déja chargé précédement)
+ - Optimisation du MenuEditeur (Loadimage supprimé car déja chargé précédement)
 
 ----------------------------------------
 v. 1.1.9, 14/01/19 à 16h51, Nathan
  
-- Optimisation du nombre de ligne de l'éditeur
+ - Optimisation du nombre de ligne de l'éditeur
 
 ----------------------------------------
 v. 1.1.10, 15/01/19 à 21h51, Benj
  
-- Début du Menu de maps et de la sauvegarde des maps
+ - Début du Menu de maps et de la sauvegarde des maps
 
 ----------------------------------------
 v. 1.1.11, 16/01/19 à 18h50, Benj
  
-- MenuMaps finit dans les grandes lignes
+ - MenuMaps finit dans les grandes lignes
 
 ----------------------------------------
 v. 1.1.12, 27/01/19 à 1h50, Benjamin
  
-- Options finis (il ne reste plus qu'a rajouter le programme jouant la musique et le effets sonores)
-- Avec les options il est possible de changer l'intensité sonores de la musique et des effets sonres ainsi que de choisir le nombre de vie au début de la partie
+ - Options finis (il ne reste plus qu'a rajouter le programme jouant la musique et le effets sonores)
+ - Avec les options il est possible de changer l'intensité sonores de la musique et des effets sonres ainsi que de choisir le nombre de vie au début de la partie
 
 ---------------------------------------
 v. 1.1.13, 27/01/19 à 12h28, Benjamin
  
-- Bruitages et options de bruitage fonctionels (Tir et Déplacement)
+ - Bruitages et options de bruitage fonctionels (Tir et Déplacement)
  
 
 ---------------------------------------
 v. 1.1.14, 27/01/19 à 16h08, Benjamin
 
-- Accès au MenuOption en jeu
-- Dévellopement Interface
+ - Accès au MenuOption en jeu
+ - Dévellopement Interface
 
 --------------------------------------
 v. 1.2.0, 01/02/19 à 21h16, Benjamin
@@ -106,27 +106,27 @@ v. 1.2.4, 6/02/19 à 17h38, Nathan
 ------------------------------------
 v. 1.2.5, 6/02/19 à 22h13, Benjamin
 
-- Modification esthétique et rajout des crédits pour le Menu Principal
+ - Modification esthétique et rajout des crédits pour le Menu Principal
 
 ------------------------------------
 v. 1.2.6, 7/02/19 à 21h56, Benjamin
 
-- Modification esthétique des Menu
+ - Modification esthétique des Menu
  
 ------------------------------------
 v. 1.2.7, 8/02/19 à 20h50, Benjamin
 
-- Modification esthétique des Menu 
-- Modifications du menu maps pour ne pas sauvegarder si on ne le souhaite pas
+ - Modification esthétique des Menu 
+ - Modifications du menu maps pour ne pas sauvegarder si on ne le souhaite pas
 
 ------------------------------------
 v. 1.2.8, 10/02/19 à 00h23, Benjamin
 
- - Nouvelles Fonctionnalités de terrain pour l'Hiver
- - Glace = Laisse glisser le tank jusqu'a un bord ou un autre type de terrain
- - Montagne = Peut être détriute par un missile
- - Lave = on peux rouler dessus mais on prend des dégats
- - Forêt = Nous cache seulement en Hiver
+ - Nouvelles Fonctionnalités de terrain pour l'Hiver:
+	- Glace = Laisse glisser le tank jusqu'a un bord ou un autre type de terrain
+	- Montagne = Peut être détriute par un missile
+	- Lave = on peux rouler dessus mais on prend des dégats
+	- Forêt = Nous cache seulement en Hiver
 
 -------------------------------------
 v. 1.3.0, 10/02/19 à 20h25, Benjamin
@@ -136,3 +136,18 @@ v. 1.3.0, 10/02/19 à 20h25, Benjamin
  - Accès au Saison modifiées depuis le jeu
 
 -------------------------------------
+v. 1.3.1, 22/02/19 à 11h46, Nathan
+ 
+ - Ajout de l'IA:
+   # -- TOUT CECI EST ENCORE EN FASE EXPERIMENTALE, A MANIER AVEC D'EXTREMES PRECAUTIONS -- #
+
+   - Ajout d'une option dans le menu de jeu pour jouer avec elle
+   - Modification du jeu pour l'intégrer ( void game(){ )
+   - Ajout du "void IA(){" pour la gérer
+   - Elle sait choisir quelle action faire quand c'est à elle de jouer
+   - Elle sait tirer dans la bonne direction quand elle le peut
+   - Elle sait s'échapper quand elle est en difficulté
+   - ELLE NE SAIT PAS ENCORE SE DEPLACER, C'EST ENCORE PUREMENT DE L'ALEATOIRE
+   - (btw elle a encore le pouvoir de monter sur les cailloux & de sortir de la carte)
+ - Quelques modifications minimes d'optimisations
+   

@@ -32,21 +32,18 @@ void Menu() {
 
 void MenuPlay() {
   if (Menu<1) Menu=1;
-  if (Menu>3) Menu=3;
+  if (Menu>4) Menu=4;
   background(0);
   textSize(20);
   textAlign(CENTER);
   image(BackgMenu,0,0);
-  text("Solo vs Solo", 250, 200);
-  text("Create Server", 250, 300);
-  text("Join Server", 250, 400);
-  text("", 250, 350);
+  text("1 vs 1 Local", 250, 200);
+  text("1 vs IA Local", 250, 270);
+  text("Create Server", 250, 340);
+  text("Join Server", 250, 410);
   textSize(15);
   text("Select with arrows and enter and press tab to back", 250, 515);
-  image(BalleR, 100, Menu*100+70);
-  image(BalleL, 350, Menu*100+70);
+  image(BalleR, 100, Menu*70+100);
+  image(BalleL, 350, Menu*70+100);
   delay(10);
-}
-
-void MenuOption() {
 }

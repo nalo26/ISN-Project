@@ -1,11 +1,22 @@
 /*
-v. 1.3.0, 10/02/19 à 20h25, Benjamin
+v. 1.3.1, 22/02/19 à 11h46, Nathan
  
  Changelog :
  
- - Changements Ete Hiver terminés a 100%
- - Fix collision
- - Accès au Saison modifiées depuis le jeu
+ - Ajout de l'IA:
+   # -- TOUT CECI EST ENCORE EN FASE EXPERIMENTALE, A MANIER AVEC D'EXTREMES PRECAUTIONS DONC -- #
+   
+   - Ajout d'une option dans le menu de jeu pour jouer avec elle
+   - Modification du jeu pour l'intégrer ( void game(){ )
+   - Ajout du "void IA(){" pour la gérer
+   - Elle sait choisir quelle action faire quand c'est à elle de jouer
+   - Elle sait tirer dans la bonne direction quand elle le peut
+   - Elle sait s'échapper quand elle est en difficulté
+   - ELLE NE SAIT PAS ENCORE SE DEPLACER, C'EST ENCORE PUREMENT DE L'ALEATOIRE
+   - (btw elle a le pouvoir de monter sur les cailloux & de sortir de la carte)
+ - Quelques modifications minimes d'optimisations
+   
+   
  
  */
 int Player = 0; //Joueur 1 et 2 changement
@@ -18,7 +29,7 @@ int vietank1 = 5; //Vie des tanks
 int vietank2 = 5;
 int Direction = 2; //Direction des sprites des tanks
 int Direction2 = 2;
-float CP = 0; //Compteur Placement
+int CP = 0; //Compteur Placement
 int turn=0; //Un décompte de random éffectué
 int arrows=0; //Empèche le joueur de maintenir les flèches pour se déplacer ( un appui = un déplacement )
 int choix=0; //Validation Choix
@@ -64,7 +75,7 @@ int SelectMap = 1;
 //Menu option
 int MenuOpt = 0;
 int SMenuOpt = 1;
-int MusicVOL = 50;
+int MusicVOL = 1; //  <---------------------------------------------------------------------
 int SoundVOL = 50;
 int TypeDeSon = 1;
 int Design = 1;
@@ -692,7 +703,6 @@ void draw() {
   if (toshow == "Menu") Menu();
   if (toshow == "MenuPlay") MenuPlay();
   if (toshow == "MenuEditor") MenuEditor();
-  if (toshow == "MenuOption") MenuOption();
   if (toshow == "Game") Game();
   if (toshow == "ServerJoin") ServerJoin();
   if (toshow == "ServerCreate") ServerCreate();
@@ -739,7 +749,7 @@ void Game() {
       textSize(40);
       text("Player 2", 160, 220);
       text("Press Down", 130, 270);
-      if (keyPressed==true && keyCode==DOWN) {
+      if (IA == false && keyPressed==true && keyCode==DOWN || IA == true) {
         Player=2; 
         Act=3;
       }
@@ -768,291 +778,287 @@ void Game() {
       AffTank();
 
       if (choix==0) {//Choix des actions (Left=Shoot/Right=Move)
+        if (IA == false || IA == true && Player == 1) { //Si nous sommes en 1v1 contre l'IA et que c'est à nous de jouer
 
-        if (keyCode==LEFT) {//Lorsque le curseur est sur Shoot
-          choix2=1;
-          choix3=1;
-          fill(255, 255, 255, 100);//Souligne en rouge le choix Left
-          rect(55, 227, 180, 30);
-        }
+          if (keyCode==LEFT) {//Lorsque le curseur est sur Shoot
+            choix2=1;
+            choix3=1;
+            fill(255, 255, 255, 100);//Souligne en rouge le choix Left
+            rect(55, 227, 180, 30);
+          }
 
-        if (keyCode==RIGHT) {//Lorsque le curseur est sur Move
-          choix2=2;
-          choix3=1;
-          fill(255, 255, 255, 100);//Souligne en rouge le choix Right
-          rect(263, 227, 180, 30);
-        }
+          if (keyCode==RIGHT) {//Lorsque le curseur est sur Move
+            choix2=2;
+            choix3=1;
+            fill(255, 255, 255, 100);//Souligne en rouge le choix Right
+            rect(263, 227, 180, 30);
+          }
 
-        if (choix3==1 && keyCode==ENTER) {
-          choix=choix2;
-          choix3=0;
-        }//Lorsque l'action est choisie par Enter
+          if (choix3==1 && keyCode==ENTER) {
+            choix=choix2;
+            choix3=0;
+          }//Lorsque l'action est choisie par Enter
 
 
-        //Affichage du choix des Actions (shoot ou move)
-        fill(0, 0, 0, 125);
-        rect(0, 175, 500, 140);
+          //Affichage du choix des Actions (shoot ou move)
+          fill(0, 0, 0, 125);
+          rect(0, 175, 500, 140);
 
-        fill(0, 0, 0, 65);
-        rect(0, 175+140, 500, 500-(175+140));
-        rect(0, 0, 500, 175);
+          fill(0, 0, 0, 65);
+          rect(0, 175+140, 500, 500-(175+140));
+          rect(0, 0, 500, 175);
 
-        fill(255, 255, 255, 30);
-        rect(0, 175+140, 500, 3);
-        rect(0, 172, 500, 3);
+          fill(255, 255, 255, 30);
+          rect(0, 175+140, 500, 3);
+          rect(0, 172, 500, 3);
 
-        textAlign(CENTER);
-        textSize(45);
-        fill(255, 255, 255, 200);
-        ellipse(480, 190, 15, 15);
-        if (Player==1)fill(0, 0, 255);
-        if (Player==2)fill(255, 0, 0);
-        ellipse(480, 190, 10, 10);
+          textAlign(CENTER);
+          textSize(45);
+          fill(255, 255, 255, 200);
+          ellipse(480, 190, 15, 15);
+          if (Player==1)fill(0, 0, 255);
+          if (Player==2)fill(255, 0, 0);
+          ellipse(480, 190, 10, 10);
 
-        textSize(23);
-        fill(250, 250, 250, 255);
-        text("Left(for Attack)     Right(for move)", 250, 250);
-        fill(255);
-        textSize(20);
-        text("Press arrow", 250, 200);
-        text("And then press Enter", 250, 300);
-        textAlign(LEFT);
+          textSize(23);
+          fill(250, 250, 250, 255);
+          text("Left(for Attack)     Right(for move)", 250, 250);
+          fill(255);
+          textSize(20);
+          text("Press arrow", 250, 200);
+          text("And then press Enter", 250, 300);
+          textAlign(LEFT);
+        } else if (IA == true && Player == 2) choix = IA("choix"); //Si nous jouons contre l'IA et que c'est à elle de jouer, nous lui demandons son choix
       }
 
 
-      if (choix==1) {//Shoot
+      if (choix == 1) {//Shoot
 
-        if (CB<1 || lock==0) {
+        if (CB<1 || lock == 0) {
           CB = (int)random(0, 10);
           // println(CB);
           if (Player == 1) DistFeu1 = CB;
           if (Player == 2) DistFeu2 = CB;
 
           if (Player == 1) {
-            xbasem=xbase;
-            ybasem=ybase;
+            xbasem = xbase;
+            ybasem = ybase;
           }
           if (Player == 2) {
-            xbasem=xbase2;
-            ybasem=ybase2;
+            xbasem = xbase2;
+            ybasem = ybase2;
           }
 
           AffTank();
 
-          fill(200);
-          textSize(20);
-          text("Press arrows to shoot your bullet in a direction", 30, 430);
-          text("Then press Enter", 180, 480);
+          if (IsMulti == false || IsMulti == true && (AmIServer == true && Player == 1 || AmIClient == true && Player == 2) || IA == true && Player == 1) {
+            fill(200);
+            textSize(20);
+            text("Press arrows to shoot your bullet in a direction", 30, 430);
+            text("Then press Enter", 180, 480);
+          }
 
-          if ( keyCode==UP) {
-            lock2=1;
-            lock3=1;
+          if (IA == true && Player == 2) Direction2 = IA("shoot"); //Si nous jouons contre l'IA, elle décide dans quelle direction elle veut tirer
+
+          if (IA == false && keyCode == UP || IA == true && (Player == 1 && keyCode ==  UP || Player == 2 && Direction2 == 1)) {
+            lock2 = 1;
+            lock3 = 1;
             if (Player == 1) triangle(xbase+10, ybase-10, xbase+40, ybase-10, xbase+25, ybase-30);
             if (Player == 1) Direction=1;
             if (Player == 2) triangle(xbase2+10, ybase2-10, xbase2+40, ybase2-10, xbase2+25, ybase2-30);
             if (Player == 2) Direction2=1;
           }
-          if ( keyCode==DOWN) {
-            lock2=2;
-            lock3=1;
+          if (IA == false && keyCode == DOWN || IA == true && (Player == 1 && keyCode == DOWN || Player == 2 && Direction2 == 2)) {
+            lock2 = 2;
+            lock3 = 1;
             if (Player == 1) triangle(xbase+10, ybase+60, xbase+40, ybase+60, xbase+25, ybase+80);
             if (Player == 1) Direction=2;
             if (Player == 2) triangle(xbase2+10, ybase2+60, xbase2+40, ybase2+60, xbase2+25, ybase2+80);
             if (Player == 2) Direction2=2;
           }
-          if ( keyCode==LEFT) {
-            lock2=3;
-            lock3=1;
+          if (IA == false && keyCode == LEFT || IA == true && (Player == 1 && keyCode == LEFT || Player == 2 && Direction2 == 3)) {
+            lock2 = 3;
+            lock3 = 1;
             if (Player == 1) triangle(xbase-10, ybase+10, xbase-10, ybase+40, xbase-30, ybase+25);
             if (Player == 1) Direction=3;
             if (Player == 2) triangle(xbase2-10, ybase2+10, xbase2-10, ybase2+40, xbase2-30, ybase2+25);
             if (Player == 2) Direction2=3;
           }
-          if ( keyCode==RIGHT) {
-            lock2=4;
-            lock3=1;
+          if (IA == false && keyCode == RIGHT || IA == true && (Player == 1 && keyCode == RIGHT|| Player == 2 && Direction2 == 4)) {
+            lock2 = 4;
+            lock3 = 1;
             if (Player == 1) triangle(xbase+60, ybase+10, xbase+60, ybase+40, xbase+80, ybase+25);
             if (Player == 1) Direction=4;
             if (Player == 2) triangle(xbase2+60, ybase2+10, xbase2+60, ybase2+40, xbase2+80, ybase2+25);
             if (Player == 2) Direction2=4;
           }
-          if (lock3==1 && keyCode==ENTER) {
+          if (lock3 == 1 && (IA == false && keyCode == ENTER || IA == true && (Player == 1 && keyCode == ENTER || Player == 2 && IsFire2 == 1))) {
             Fire.play(3);
-            lock=lock2;
-            lock3=0;
+            lock = lock2;
+            lock3 = 0;
             if (Player == 1) IsFire1 = 1;
             if (Player == 2) IsFire2 = 1;
+            IsFire1 = 0;
+            IsFire2 = 0;
           }
         }
 
-        if (CB>0 && lock!=0) {
+        if (CB > 0 && lock != 0) {
 
-          CB=CB-1;
+          CB = CB - 1;
 
-          if (lock==1) {
-            ybasem=ybasem-50;
+          if (lock == 1) {
+            ybasem = ybasem-50;
             CDA();
-          }
-          if (lock==2) {
-            ybasem=ybasem+50;
-            CDA();
-          }
-          if (lock==3) {
-            xbasem=xbasem-50;
-            CDA();
-          }
-          if (lock==4) {
-            xbasem=xbasem+50;
-            CDA();
-          }
-          if (Player == 1) {
-            if (xbasem==xbase2 && ybasem==ybase2) {
-              CB=0;
-              vietank2=vietank2-1;
-            }
-          }
-          if (Player == 2) {
-            if (xbasem==xbase && ybasem==ybase) {
-              CB=0;
-              vietank1=vietank1-1;
-            }
-          }
-
-          AffTank();
-          if (lock==1) {
             Balle = BalleU;
             image(Balle, xbasem, ybasem);
           }
-          if (lock==2) {
+          if (lock == 2) {
+            ybasem = ybasem+50;
+            CDA();
             Balle = BalleD;
             image(Balle, xbasem, ybasem);
           }
-          if (lock==3) {
+          if (lock == 3) {
+            xbasem = xbasem-50;
+            CDA();
             Balle = BalleL;
             image(Balle, xbasem, ybasem);
           }
-          if (lock==4) {
+          if (lock == 4) {
+            xbasem = xbasem+50;
+            CDA();
             Balle = BalleR;
             image(Balle, xbasem, ybasem);
           }
+          if (Player == 1 && xbasem == xbase2 && ybasem == ybase2) {
+            CB = 0;
+            vietank2 = vietank2-1;
+          }
+          if (Player == 2 && xbasem == xbase && ybasem == ybase) {
+            CB = 0;
+            vietank1 = vietank1-1;
+          }
+
+          AffTank();
+
           fill(200);
           textSize(50);
           text(CB, 450, 490, 500);
         }
 
         if (CB<1 && lock!=0) {
-          choix=0;
-          lock=0;
+          choix = 0;
+          lock = 0;
           AffTank();
-          Balle =  BalleExplosion;
+          Balle = BalleExplosion;
           image(Balle, xbasem, ybasem);
-          Act=Act-1;
+          Act = Act-1;
+          ChangementSaison++;
+        }
+      }
+
+
+      if (choix==2) {//Move
+        //println(CP);
+        //Initialisation du dès de déplacements
+        if (CP<1) {
+          CP = (int)random(0, 10);
+          //println(CP);
+        }
+        
+        //Déplacements lorsque CP est différent de 0 (Joueur a encore des déplacements)
+        if (CP>0) {
+          if (IA == true && Player == 2) Direction2 = IA("move"); //Si nous jouons contre l'IA, elle décide dans quelle direction elle veut se déplacer
+          
+          if (IA == false && keyPressed == true && keyCode == UP || IA == true && (Player == 1 && keyPressed == true && keyCode == UP || Player == 2 && Direction2 == 1)) {
+            if (Player == 1) ybase = ybase-50;
+            if (Player == 2) ybase2 = ybase2-50;
+            CP = CP-1;
+            if (Player == 1) CDD();
+            if (Player == 2) CDD2();
+            if (Player == 1) Direction = 1;
+            if (Player == 2) Direction2 = 1;
+            Move.play();
+          }
+          if (IA == false && keyPressed == true && keyCode == DOWN || IA == true && (Player == 1 && keyPressed == true && keyCode == DOWN|| Player == 2 && Direction2 == 2)) {
+            if (Player == 1) ybase = ybase+50;
+            if (Player == 2) ybase2 = ybase2+50;
+            CP = CP-1;
+            if (Player == 1) CDD();
+            if (Player == 2) CDD2();
+            if (Player == 1) Direction = 2;
+            if (Player == 2) Direction2 = 2;
+            Move.play();
+          }
+          if (IA == false && keyPressed == true && keyCode == LEFT || IA == true && (Player == 1 && keyPressed == true && keyCode == LEFT || Player == 2 && Direction2 == 3)) {
+            if (Player == 1) xbase = xbase-50;
+            if (Player == 2) xbase2 = xbase2-50;
+            CP = CP-1;
+            if (Player == 1) CDD();
+            if (Player == 2) CDD2();
+            if (Player == 1) Direction = 3;
+            if (Player == 2) Direction2 = 3;
+            Move.play();
+          }
+          if (IA == false && keyPressed == true && keyCode == RIGHT || IA == true && (Player == 1 && keyPressed == true && keyCode == RIGHT || Player == 2 && Direction2 == 4)) {
+            if (Player == 1) xbase = xbase+50;
+            if (Player == 2) xbase2 = xbase2+50;
+            CP = CP-1;
+            if (Player == 1) CDD();
+            if (Player == 2) CDD2();
+            if (Player == 1) Direction = 4;
+            if (Player == 2) Direction2 = 4;
+            Move.play();
+          }
+
+          if (keyCode == UP && TestCadriD == 0) {
+            if (Player == 1) ybase = ybase+50;
+            if (Player == 2) ybase2 = ybase2+50;
+            CP = CP+1;
+            TestCadriD = 1;
+          }
+          if (keyCode == DOWN && TestCadriD == 0) {
+            if (Player == 1) ybase = ybase-50;
+            if (Player == 2) ybase2 = ybase2-50;
+            CP = CP+1;
+            TestCadriD = 1;
+          }
+          if (keyCode == LEFT && TestCadriD == 0) {
+            if (Player == 1) xbase = xbase+50;
+            if (Player == 2) xbase2 = xbase2+50;
+            CP = CP+1;
+            TestCadriD = 1;
+          }
+          if (keyCode == RIGHT && TestCadriD == 0) {
+            if (Player == 1) xbase = xbase-50;
+            if (Player == 2) xbase2 = xbase2-50;
+            CP = CP+1;
+            TestCadriD = 1;
+          }
+
+          AffTank();
+          fill(200);
+
+          textSize(50);
+          text(CP, 450, 490, 500);
+        }
+
+        //Déplacements lorsque CP est inférieur à 0 (Joueur n'a plus de déplacements)
+        if (CP<1) {
+          choix = 0;
+          Act = Act-1;
           ChangementSaison++;
         }
       }
     }
-
-
-    if (choix==2) {//Move
-      //println(CP);
-      //Initialisation du dès de déplacements
-      if (CP<1) {
-        CP = random(10);
-        CP = int(CP);
-        //println(CP);
-      }
-
-      //Déplacements lorsque CP est != de 0 (Joueur a encore des déplacements)
-      if (CP>0) {
-        if (keyPressed==true && keyCode==UP /*&& arrows==0*/) {
-          if (Player == 1) ybase= ybase-50;
-          if (Player == 2) ybase2 = ybase2-50;
-          CP=CP-1;
-          if (Player == 1) CDD();
-          if (Player == 2) CDD2();
-          if (Player == 1) Direction=1;/*arrows=1;*/
-          if (Player == 2) Direction2 = 1;
-          Move.play();
-        }
-        if (keyPressed==true && keyCode==DOWN /*&& arrows==0*/) {
-          if (Player == 1) ybase= ybase+50;
-          if (Player == 2) ybase2 = ybase2+50;
-          CP=CP-1;
-          if (Player == 1) CDD();
-          if (Player == 2) CDD2();
-          if (Player == 1) Direction=2;/*arrows=1;*/
-          if (Player == 2) Direction2=2;
-          Move.play();
-        }
-        if (keyPressed==true && keyCode==LEFT /*&& arrows==0*/) {
-          if (Player == 1) xbase= xbase-50;
-          if (Player == 2) xbase2= xbase2-50;
-          CP=CP-1;
-          if (Player == 1) CDD();
-          if (Player == 2) CDD2();
-          if (Player == 1) Direction=3;/*arrows=1;*/
-          if (Player == 2) Direction2=3;
-          Move.play();
-        }
-        if (keyPressed==true && keyCode==RIGHT /*&& arrows==0*/) {
-          if (Player == 1) xbase= xbase+50;
-          if (Player == 2) xbase2= xbase2+50;
-          CP=CP-1;
-          if (Player == 1) CDD();
-          if (Player == 2) CDD2();
-          if (Player == 1) Direction=4;/*arrows=1;*/
-          if (Player == 2) Direction2=4;
-          Move.play();
-        }
-        //if (keyPressed==false && arrows==1){arrows=0;}
-
-        if (keyCode==UP && TestCadriD==0) {
-          if (Player == 1) ybase= ybase+50;
-          if (Player == 2) ybase2= ybase2+50;
-          CP=CP+1;
-          TestCadriD=1;
-        }
-        if (keyCode==DOWN && TestCadriD==0) {
-          if (Player == 1) ybase= ybase-50;
-          if (Player == 2) ybase2= ybase2-50;
-          CP=CP+1;
-          TestCadriD=1;
-        }
-        if (keyCode==LEFT && TestCadriD==0) {
-          if (Player == 1) xbase= xbase+50;
-          if (Player == 2) xbase2= xbase2+50;
-          CP=CP+1;
-          TestCadriD=1;
-        }
-        if (keyCode==RIGHT && TestCadriD==0) {
-          if (Player == 1) xbase= xbase-50;
-          if (Player == 2) xbase2= xbase2-50;
-          CP=CP+1;
-          TestCadriD=1;
-        }
-
-        AffTank();
-        fill(200);
-
-        textSize(50);
-        text(CP, 450, 490, 500);
-        // println(CP);
-      }
-
-      //Déplacements lorsque CP est inférieur à 0 (Joueur n'a plus de déplacements)
-      if (CP<1) {
-        choix=0;
-        Act=Act-1;
-        ChangementSaison++;
-      }
-    }
   } else AffTank();
-  
-  if (Design==1 && Changementok == true && ChangementSaison==SummerDay){
+
+  if (Design==1 && Changementok == true && ChangementSaison==SummerDay) {
     Design=2;
     ChangementSaison=0;
   }
-  if (Design==2 && Changementok == true && ChangementSaison==WinterDay){
+  if (Design==2 && Changementok == true && ChangementSaison==WinterDay) {
     Design=1;
     ChangementSaison=0;
   }
