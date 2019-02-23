@@ -970,7 +970,10 @@ void Game() {
         
         //Déplacements lorsque CP est différent de 0 (Joueur a encore des déplacements)
         if (CP>0) {
-          if (IA == true && Player == 2) Direction2 = IA("move"); //Si nous jouons contre l'IA, elle décide dans quelle direction elle veut se déplacer
+          if (IA == true && Player == 2){
+            Direction2 = IA("move"); //Si nous jouons contre l'IA, elle décide dans quelle direction elle veut se déplacer
+            delay(200);
+          }
           
           if (IA == false && keyPressed == true && keyCode == UP || IA == true && (Player == 1 && keyPressed == true && keyCode == UP || Player == 2 && Direction2 == 1)) {
             if (Player == 1) ybase = ybase-50;
