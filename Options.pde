@@ -64,20 +64,14 @@ void Options() {
   fill(101, 149, 99);
   //Dans le cas ou on arrive au menu option par le Menu principal
   if (MenuOpt==3 && Link==0) {
-    if (keyPressed == true && keyCode == RIGHT && vietank1<10) {
-      vietank1++;
-      vietank2++;
-    }
-    if (keyPressed == true && keyCode == LEFT && vietank2>1) {
-      vietank1--;
-      vietank2--;
-    }
+    if (keyPressed == true && keyCode == RIGHT && DefaultVie<10) DefaultVie ++;
+    if (keyPressed == true && keyCode == LEFT && DefaultVie>1) DefaultVie --;
     //Triangle de pour montrer comment régler le son
     triangledeselction();
     delay(100);
   }
 
-  for (int i=0; i<vietank1; i++)image(Vies, 320+vietank1*i, 290+30);
+  for (int i=0; i<DefaultVie; i++)image(Vies, 320+DefaultVie*i, 290+30);
 
   // Interface Type de son
 
@@ -168,8 +162,8 @@ void Options() {
   if (SoundVOL<10)text(SoundVOL, 410, 230+30);
   else if (SoundVOL==100)text(SoundVOL, 390, 230+30);
   else if (SoundVOL>9 && SoundVOL!=100)text(SoundVOL, 400, 230+30);
-  if (vietank1<10)text(vietank1, 410, 310+30);
-  else text(vietank1, 400, 310+30);
+  if (DefaultVie<10)text(DefaultVie, 410, 310+30);
+  else text(DefaultVie, 400, 310+30);
 }
 
 void triangledeselction() {

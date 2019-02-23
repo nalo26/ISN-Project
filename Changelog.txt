@@ -150,4 +150,17 @@ v. 1.3.1, 22/02/19 à 11h46, Nathan
    - ELLE NE SAIT PAS ENCORE SE DEPLACER, C'EST ENCORE PUREMENT DE L'ALEATOIRE
    - (btw elle a encore le pouvoir de monter sur les cailloux & de sortir de la carte)
  - Quelques modifications minimes d'optimisations
+ 
+-------------------------------------
+v. 1.3.2, 23/02/19 à 16h00, Nathan
+
+ - Ajout d'une fonction de retour au menu après une partie
+ - Ajout (forcé) d'une fonction Reset() pour réinitialiser les paramètres à ceux par défaut pour relancer une partie
+ - Ajouts sur l'IA:
+   - Calcul du chemin LE PLUS DIRECT pour aller jusqu'à l'adversaire
+   - Déplacement en fonction de la map calculé lors du premier coup (attaque)
+   /!\ ------------------------------ /!\
+     - Ne jouer qu'en MAP VIDE (à créer au préalable), elle ne gère pas encore les obstacles
+     - Pour tester le jeu avec le bot, bien changer la variable boolean 'inDev' (onglet IA) sur 'false', sinon elle utilise l'aléatoire comme avant
+     - Elle ne sait pas encore fuire, le game play n'est donc pas très intéressant ! :D
    

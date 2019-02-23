@@ -50,15 +50,18 @@ void keyPressed() {
     InteracMap = 0;
   }
 
-  if ( toshow == "Options" && keyCode == TAB && MenuOpt==0 && Link==0)toshow ="Menu";
-  if ( toshow == "Options" && keyCode == TAB && MenuOpt==0 && Link==1)toshow ="Game";
-  if ( toshow == "Options" && keyCode == RIGHT && MenuOpt==0)MenuOpt=SMenuOpt;
-  if ( toshow == "Options" && keyCode == TAB && MenuOpt>0)MenuOpt=0;
+  if (toshow == "Options" && keyCode == TAB && MenuOpt==0 && Link==0) Reset();
+  if (toshow == "Options" && keyCode == TAB && MenuOpt==0 && Link==1) toshow = "Game";
+  if (toshow == "Options" && keyCode == RIGHT && MenuOpt==0) MenuOpt = SMenuOpt;
+  if (toshow == "Options" && keyCode == TAB && MenuOpt>0) MenuOpt = 0;
 
-  if (toshow == "Game" && keyCode==SHIFT) {
+  if (toshow == "Game"){
+    if(keyCode == SHIFT) {
     toshow = "Options";
     Link=1;
+    }
+    if (Winner != 0 && keyCode == ' ') Reset();
   }
 
-  if ( toshow == "Credits" && keyCode == TAB) toshow = "Menu";
+  if (toshow == "Credits" && keyCode == TAB) toshow = "Menu";
 }

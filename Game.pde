@@ -1,32 +1,28 @@
 /*
-v. 1.3.1, 22/02/19 à 11h46, Nathan
+v. 1.3.2, 23/02/19 à 16h00, Nathan
  
  Changelog :
  
- - Ajout de l'IA:
-   # -- TOUT CECI EST ENCORE EN FASE EXPERIMENTALE, A MANIER AVEC D'EXTREMES PRECAUTIONS DONC -- #
+ - Ajout d'une fonction de retour au menu après une partie
+ - Ajout (forcé) d'une fonction Reset() pour réinitialiser les paramètres à ceux par défaut pour relancer une partie
+ - Ajouts sur l'IA:
+   - Calcul du chemin LE PLUS DIRECT pour aller jusqu'à l'adversaire
+   - Déplacement en fonction de la map calculé lors du premier coup (attaque)
+   /!\ ------------------------------ /!\
+     - Ne jouer qu'en MAP VIDE (à créer au préalable), elle ne gère pas encore les obstacles
+     - Pour tester le jeu avec le bot, bien changer la variable boolean 'inDev' (onglet IA) sur 'false', sinon elle utilise l'aléatoire comme avant
+     - Elle ne sait pas encore fuire, le game play n'est donc pas très intéressant ! :D
    
-   - Ajout d'une option dans le menu de jeu pour jouer avec elle
-   - Modification du jeu pour l'intégrer ( void game(){ )
-   - Ajout du "void IA(){" pour la gérer
-   - Elle sait choisir quelle action faire quand c'est à elle de jouer
-   - Elle sait tirer dans la bonne direction quand elle le peut
-   - Elle sait s'échapper quand elle est en difficulté
-   - ELLE NE SAIT PAS ENCORE SE DEPLACER, C'EST ENCORE PUREMENT DE L'ALEATOIRE
-   - (btw elle a le pouvoir de monter sur les cailloux & de sortir de la carte)
- - Quelques modifications minimes d'optimisations
-   
-   
- 
  */
 int Player = 0; //Joueur 1 et 2 changement
 int Act = 0;
-int xbase = 0; // Emplacement tank 1
+int xbase = 0; // Emplacement tank 1 (0, 0)
 int ybase = 0;
-int xbase2 = 450; // Emplacement tank 2
+int xbase2 = 450; // Emplacement tank 2 (450, 450)
 int ybase2 = 450;
-int vietank1 = 5; //Vie des tanks
-int vietank2 = 5;
+int DefaultVie = 5; //Vie des tanks par défaut
+int vietank1 = DefaultVie; //Vie des tanks
+int vietank2 = DefaultVie;
 int Direction = 2; //Direction des sprites des tanks
 int Direction2 = 2;
 int CP = 0; //Compteur Placement
@@ -180,6 +176,7 @@ void setup() {
   Move = new SoundFile(this, "Move.wav");
   MusicBackground = new SoundFile(this, "MusicBackground.wav");
 }
+
 void CDD() {
   //Cadrillage Des Déplacements (Tanks)
   int CDDx = xbase/50;
@@ -723,6 +720,18 @@ void MusicBackground() {
   }
 }
 
+void Reset(){
+    vietank1 = DefaultVie;
+    vietank2 = DefaultVie;
+    xbase = 0;
+    ybase = 0;
+    xbase2 = 450;
+    ybase2 = 450;
+    Menu = 1;
+    Player = 0;
+    toshow = "Menu";
+}
+
 void Game() {
   Move.amp((float)SoundVOL/1000);
   Fire.amp((float)SoundVOL/1000);
@@ -738,6 +747,8 @@ void Game() {
       if (keyPressed==true && keyCode==DOWN) {
         Player=1;
         Act=3;
+        MaxDepl = 0;
+        needed = 1;
       }
     }
   }
@@ -761,6 +772,9 @@ void Game() {
     fill(255, 0, 0);
     textSize(40);
     text("Player 2 WIN", 130, 220);
+    textSize(20);
+    textAlign(CENTER);
+    text("Click SPACE to return to menu", 250, 300);
     Winner = 2;
   }
   if (vietank2<1 || IsMulti == true && Winner == 1) {
@@ -768,6 +782,9 @@ void Game() {
     fill(0, 0, 255);
     textSize(40);
     text("Player 1 WIN", 130, 220);
+    textSize(20);
+    textAlign(CENTER);
+    text("Click SPACE to return to menu", 250, 300);
     Winner = 1;
   }
 
@@ -816,8 +833,8 @@ void Game() {
           textSize(45);
           fill(255, 255, 255, 200);
           ellipse(480, 190, 15, 15);
-          if (Player==1)fill(0, 0, 255);
-          if (Player==2)fill(255, 0, 0);
+          if (Player==1) fill(0, 0, 255);
+          if (Player==2) fill(255, 0, 0);
           ellipse(480, 190, 10, 10);
 
           textSize(23);
@@ -906,7 +923,7 @@ void Game() {
         if (CB > 0 && lock != 0) {
 
           CB = CB - 1;
-
+          AffTank();
           if (lock == 1) {
             ybasem = ybasem-50;
             CDA();
@@ -940,7 +957,7 @@ void Game() {
             vietank1 = vietank1-1;
           }
 
-          AffTank();
+
 
           fill(200);
           textSize(50);
@@ -960,21 +977,16 @@ void Game() {
 
 
       if (choix==2) {//Move
-        //println(CP);
         //Initialisation du dès de déplacements
         if (CP<1) {
           CP = (int)random(0, 10);
-          CP = 100;
-          //println(CP);
+          CP = 20;
         }
-        
+
         //Déplacements lorsque CP est différent de 0 (Joueur a encore des déplacements)
         if (CP>0) {
-          if (IA == true && Player == 2){
-            Direction2 = IA("move"); //Si nous jouons contre l'IA, elle décide dans quelle direction elle veut se déplacer
-            delay(200);
-          }
-          
+          if (IA == true && Player == 2) Direction2 = IA("move"); //Si nous jouons contre l'IA, elle décide dans quelle direction elle veut se déplacer
+
           if (IA == false && keyPressed == true && keyCode == UP || IA == true && (Player == 1 && keyPressed == true && keyCode == UP || Player == 2 && Direction2 == 1)) {
             if (Player == 1) ybase = ybase-50;
             if (Player == 2) ybase2 = ybase2-50;
@@ -1048,7 +1060,7 @@ void Game() {
           text(CP, 450, 490, 500);
         }
 
-        //Déplacements lorsque CP est inférieur à 0 (Joueur n'a plus de déplacements)
+        //Déplacements lorsque CP est inférieur à 1 (Joueur n'a plus de déplacements)
         if (CP<1) {
           choix = 0;
           Act = Act-1;
