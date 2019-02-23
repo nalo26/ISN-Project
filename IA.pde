@@ -6,7 +6,7 @@ int MaxDepl = 0;
 int IA(String state) { // Ici sont effectuées toutes les décisions de l'IA
 
   if (state == "choix") { //Si c'est au tour de l'IA de jouer, elle choisit ce qu'elle veut faire
-    println("x1 : "+xbase+", x2 : "+xbase2+", diff y : "+abs(ybase- ybase2)+", y1 : "+ybase+", y2 : "+ybase2+", diff x : "+abs(xbase - xbase2));
+    println("x1 : "+xbase/50+", x2 : "+xbase2/50+", diff y : "+abs(ybase - ybase2)/50+", y1 : "+ybase/50+", y2 : "+ybase2/50+", diff x : "+abs(xbase - xbase2)/50);
     if (Act > 1 && (xbase == xbase2 && abs(ybase - ybase2) < 7*50 || ybase == ybase2 && abs(xbase - xbase2) < 7*50)) { //Si le tank ennemi est aligné à nous et qu'il nous reste au moins une action
       choix = 1; //Choisir de tirer
     } else choix = 2; //Choisir de bouger
@@ -15,11 +15,11 @@ int IA(String state) { // Ici sont effectuées toutes les décisions de l'IA
   }
 
   if (state == "shoot") { //Si elle veut tirer
-    if (xbase == xbase2 && abs(ybase - ybase2) < 7) { //Si elle est aligné au joueur en x
-      if (ybase > ybase2) Direction2 = 1; //Tirer en haut
-      if (ybase < ybase2) Direction2 = 2; //Tirer en bas
+    if (xbase == xbase2 && abs(ybase - ybase2) < 7*50) { //Si elle est aligné au joueur en x
+      if (ybase < ybase2) Direction2 = 1; //Tirer en haut
+      if (ybase > ybase2) Direction2 = 2; //Tirer en bas
     }
-    if (ybase == ybase2 && abs(xbase - xbase2) < 7) { //Si elle est aligné au joueur en y
+    if (ybase == ybase2 && abs(xbase - xbase2) < 7*50) { //Si elle est aligné au joueur en y
       if (xbase < xbase2) Direction2 = 3; //Tirer à gauche
       if (xbase > xbase2) Direction2 = 4; //Tirer à droite
     }
@@ -31,8 +31,7 @@ int IA(String state) { // Ici sont effectuées toutes les décisions de l'IA
   if (state == "move") { //Si elle veut se déplacer
    // if (CP > MaxDepl) CalculTraj(); //Calculer la nouvelle trajectoire optimale
 
-    Direction2 = 0;
-    while(Direction < 1 || Direction > 4) Direction2 = (int)random(1, 5);
+    Direction2 = (int)random(1, 5); //TEMPORAIRE, juste le temps que j'implante les décisions de déplacement. Pour le moment il se contente d'avancer aléatoirement
     
     return Direction2; //Renvoyer la direction vers laquelle elle avance
   }

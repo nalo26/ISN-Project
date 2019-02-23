@@ -655,11 +655,11 @@ void draw() {
         CdataList = split(dataIn, '/');
       }
 
-      vietank2 = int(CdataList[0]);
-      xbase2 = int(CdataList[1]);
-      ybase2 = int(CdataList[2]);
-      IsFire2 = int(CdataList[3]);
-      DistFeu2 = int(CdataList[4]);
+      vietank2   = int(CdataList[0]);
+      xbase2     = int(CdataList[1]);
+      ybase2     = int(CdataList[2]);
+      IsFire2    = int(CdataList[3]);
+      DistFeu2   = int(CdataList[4]);
       Direction2 = int(CdataList[5]);
       //Serveur
       //myServer.write(str(Collision)+"/"); //Map       (int[]) A INTEGRER
@@ -676,11 +676,11 @@ void draw() {
       SdataList = split(dataIn, '/');
 
       //Joueur 1
-      vietank1 = int(SdataList[0]);
-      xbase = int(SdataList[1]);
-      ybase = int(SdataList[2]);
-      IsFire1 = int(SdataList[3]);
-      DistFeu1 = int(SdataList[4]);
+      vietank1  = int(SdataList[0]);
+      xbase     = int(SdataList[1]);
+      ybase     = int(SdataList[2]);
+      IsFire1   = int(SdataList[3]);
+      DistFeu1  = int(SdataList[4]);
       Direction = int(SdataList[5]);
       //Joueur 2
       myClient.write(str(vietank2)+"/");    //Vie       (int) (0 < vie < 11)
@@ -964,6 +964,7 @@ void Game() {
         //Initialisation du dès de déplacements
         if (CP<1) {
           CP = (int)random(0, 10);
+          CP = 100;
           //println(CP);
         }
         
@@ -981,7 +982,7 @@ void Game() {
             if (Player == 2) Direction2 = 1;
             Move.play();
           }
-          if (IA == false && keyPressed == true && keyCode == DOWN || IA == true && (Player == 1 && keyPressed == true && keyCode == DOWN|| Player == 2 && Direction2 == 2)) {
+          if (IA == false && keyPressed == true && keyCode == DOWN || IA == true && (Player == 1 && keyPressed == true && keyCode == DOWN || Player == 2 && Direction2 == 2)) {
             if (Player == 1) ybase = ybase+50;
             if (Player == 2) ybase2 = ybase2+50;
             CP = CP-1;
@@ -1012,25 +1013,25 @@ void Game() {
             Move.play();
           }
 
-          if (keyCode == UP && TestCadriD == 0) {
+          if (TestCadriD == 0 && (IA == false && keyCode == UP || IA == true && (Player == 1 && keyCode == UP || Player == 2 && Direction2 == 1))) {
             if (Player == 1) ybase = ybase+50;
             if (Player == 2) ybase2 = ybase2+50;
             CP = CP+1;
             TestCadriD = 1;
           }
-          if (keyCode == DOWN && TestCadriD == 0) {
+          if (TestCadriD == 0 && (IA == false && keyCode == DOWN || IA == true && (Player == 1 && keyCode == DOWN || Player == 2 && Direction2 == 2))) {
             if (Player == 1) ybase = ybase-50;
             if (Player == 2) ybase2 = ybase2-50;
             CP = CP+1;
             TestCadriD = 1;
           }
-          if (keyCode == LEFT && TestCadriD == 0) {
+          if (TestCadriD == 0 && (IA == false && keyCode == LEFT || IA == true && (Player == 1 && keyCode == LEFT || Player == 2 && Direction2 == 3))) {
             if (Player == 1) xbase = xbase+50;
             if (Player == 2) xbase2 = xbase2+50;
             CP = CP+1;
             TestCadriD = 1;
           }
-          if (keyCode == RIGHT && TestCadriD == 0) {
+          if (TestCadriD == 0 && (IA == false && keyCode == RIGHT || IA == true && (Player == 1 && keyCode == RIGHT || Player == 2 && Direction2 == 4))) {
             if (Player == 1) xbase = xbase-50;
             if (Player == 2) xbase2 = xbase2-50;
             CP = CP+1;
