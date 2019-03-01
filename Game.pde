@@ -1,18 +1,15 @@
 /*
-v. 1.3.2, 23/02/19 à 16h00, Nathan
+v. 1.3.3, 01/03/19 à 17h30, Nathan
  
  Changelog :
  
- - Ajout d'une fonction de retour au menu après une partie
- - Ajout (forcé) d'une fonction Reset() pour réinitialiser les paramètres à ceux par défaut pour relancer une partie
- - Ajouts sur l'IA:
-   - Calcul du chemin LE PLUS DIRECT pour aller jusqu'à l'adversaire
-   - Déplacement en fonction de la map calculé lors du premier coup (attaque)
-   /!\ ------------------------------ /!\
-     - Ne jouer qu'en MAP VIDE (à créer au préalable), elle ne gère pas encore les obstacles
-     - Pour tester le jeu avec le bot, bien changer la variable boolean 'inDev' (onglet IA) sur 'false', sinon elle utilise l'aléatoire comme avant
-     - Elle ne sait pas encore fuire, le game play n'est donc pas très intéressant ! :D
-   
+ - Ajout d'un timer (décompte final) :
+   - Modification des options pour rajouter sa case
+   - Possibilité de régler les minutes et secondes
+   - Affiché in game
+   - Quand plus de temps, le gagnant est celui qui a le plus de vie
+ - Ajout de la possibilité d'une égalité (si timer écoulé & les deux on la même vie)
+ 
  */
 int Player = 0; //Joueur 1 et 2 changement
 int Act = 0;
@@ -73,12 +70,17 @@ int MenuOpt = 0;
 int SMenuOpt = 1;
 int MusicVOL = 1; //  <---------------------------------------------------------------------
 int SoundVOL = 50;
+int TSel = 1;
 int TypeDeSon = 1;
 int Design = 1;
 int SummerDay = 1 ;
 int WinterDay = 1 ;
+int DefaultMin = 5, DefaultSec = 0;
 //Permet d'accéder au parametres de son en jeu
-int Link =0;
+int Link = 0;
+
+int TimerSec = DefaultSec, TimerMin = DefaultMin;
+int ComptTimer;
 
 //MusicBackground
 int FrameRate = 60;
@@ -695,7 +697,6 @@ void draw() {
       delay(10);
     }
   }
-
   // Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
   if (toshow == "Menu") Menu();
   if (toshow == "MenuPlay") MenuPlay();
@@ -706,6 +707,17 @@ void draw() {
   if (toshow == "MenuMaps") MenuMaps();
   if (toshow == "Options") Options();
   if (toshow == "Credits") Credits();
+}
+
+void Compteur() {
+  if (ComptTimer >= frameRate/20) { //S'il s'est écoulé une minute
+    ComptTimer = 0;
+    TimerSec --; //Réduire le timer d'une seconde
+    if (TimerSec == -1) { //Si une minute s'est écoulée
+      TimerSec = 59; //Remettre les secondes par défaut
+      TimerMin --; //Réduire les minutes
+    }
+  }
 }
 
 void MusicBackground() {
@@ -720,19 +732,24 @@ void MusicBackground() {
   }
 }
 
-void Reset(){
-    vietank1 = DefaultVie;
-    vietank2 = DefaultVie;
-    xbase = 0;
-    ybase = 0;
-    xbase2 = 450;
-    ybase2 = 450;
-    Menu = 1;
-    Player = 0;
-    toshow = "Menu";
+void Reset() {
+  vietank1 = DefaultVie;
+  vietank2 = DefaultVie;
+  xbase = 0;
+  ybase = 0;
+  xbase2 = 450;
+  ybase2 = 450;
+  Menu = 1;
+  Player = 0;
+  TimerSec = DefaultSec;
+  TimerMin = DefaultMin;
+  Winner = 0;
+  toshow = "Menu";
 }
 
 void Game() {
+  ComptTimer ++;
+  Compteur(); //Ajouter du temps au compteur dès que nous somme en jeu
   Move.amp((float)SoundVOL/1000);
   Fire.amp((float)SoundVOL/1000);
   textAlign(LEFT);
@@ -767,29 +784,8 @@ void Game() {
     }
   }
 
-  if (vietank1<1 || IsMulti == true && Winner == 2) {
-    background(0);
-    fill(255, 0, 0);
-    textSize(40);
-    text("Player 2 WIN", 130, 220);
-    textSize(20);
-    textAlign(CENTER);
-    text("Click SPACE to return to menu", 250, 300);
-    Winner = 2;
-  }
-  if (vietank2<1 || IsMulti == true && Winner == 1) {
-    background(0);
-    fill(0, 0, 255);
-    textSize(40);
-    text("Player 1 WIN", 130, 220);
-    textSize(20);
-    textAlign(CENTER);
-    text("Click SPACE to return to menu", 250, 300);
-    Winner = 1;
-  }
-
   //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  if (IsMulti == false || IsMulti == true && (AmIServer == true && Player == 1 || AmIClient == true && Player == 2)) {
+  if (Winner == 0 && (IsMulti == false || IsMulti == true && (AmIServer == true && Player == 1 || AmIClient == true && Player == 2))) {
     if (Act>0) {
 
       AffTank();
@@ -1070,6 +1066,37 @@ void Game() {
     }
   } else AffTank();
 
+  if (TimerMin <= -1 && vietank1 < vietank2 || vietank1<1) { //Détéction de victoire (fin de timer / plus de vie)
+    background(0);
+    fill(255, 0, 0);
+    textSize(40);
+    textAlign(CENTER);
+    text("Player 2 WIN", 250, 220);
+    textSize(20);
+    text("Click SPACE to return to menu", 250, 300);
+    Winner = 2;
+  }
+  if (TimerMin <= -1 && vietank2 < vietank1 || vietank2<1) {
+    background(0);
+    fill(0, 0, 255);
+    textSize(40);
+    textAlign(CENTER);
+    text("Player 1 WIN", 250, 220);
+    textSize(20);
+    text("Click SPACE to return to menu", 250, 300);
+    Winner = 1;
+  }
+  if (TimerMin <= -1 && vietank1 == vietank2) { //Egalité
+    background(0);
+    fill(255, 0, 255);
+    textSize(40);
+    textAlign(CENTER);
+    text("EQUALITY", 250, 220);
+    textSize(20);
+    text("Click SPACE to return to menu", 250, 300);
+    Winner = -1;
+  }
+
   if (Design==1 && Changementok == true && ChangementSaison==SummerDay) {
     Design=2;
     ChangementSaison=0;
@@ -1079,4 +1106,10 @@ void Game() {
     ChangementSaison=0;
   }
   if (Design>2)Design=1;
+  if (Winner == 0) {
+    textAlign(RIGHT);
+    textSize(15);
+    fill(255);
+    text(TimerMin+":"+TimerSec, width-10, 20);
+  }
 }

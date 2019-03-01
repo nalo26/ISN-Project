@@ -163,4 +163,14 @@ v. 1.3.2, 23/02/19 à 16h00, Nathan
      - Ne jouer qu'en MAP VIDE (à créer au préalable), elle ne gère pas encore les obstacles
      - Pour tester le jeu avec le bot, bien changer la variable boolean 'inDev' (onglet IA) sur 'false', sinon elle utilise l'aléatoire comme avant
      - Elle ne sait pas encore fuire, le game play n'est donc pas très intéressant ! :D
+
+-------------------------------------	 
+v. 1.3.3, 01/03/19 à 17h30, Nathan
+
+ - Ajout d'un timer (décompte final) :
+   - Modification des options pour rajouter sa case
+   - Possibilité de régler les minutes et secondes
+   - Affiché in game
+   - Quand plus de temps, le gagnant est celui qui a le plus de vie
+ - Ajout de la possibilité d'une égalité (si timer écoulé & les deux on la même vie)
    
