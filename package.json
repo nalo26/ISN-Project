@@ -1,0 +1,15 @@
+{
+  "name": "isn-project",
+  "version": "2.0.0",
+  "description": "processing to js project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nalo_",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}
