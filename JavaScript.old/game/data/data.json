@@ -1,0 +1,25 @@
+[
+  null,
+  {
+    "PosX": 0,
+    "Vie": 0,
+    "PosY": 0,
+    "Feu": false,
+    "id": 1,
+    "Direction": 0,
+    "DistFeu": 0
+  },
+  {
+    "PosX": 0,
+    "Vie": 0,
+    "PosY": 0,
+    "Feu": false,
+    "id": 2,
+    "Direction": 0,
+    "DistFeu": 0
+  },
+  null,
+  {"tour": 1},
+  {"state": ""},
+  {"winner": 0}
+]
