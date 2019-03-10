@@ -174,8 +174,21 @@ v. 1.3.3, 01/03/19 à 17h30, Nathan
    - Quand plus de temps, le gagnant est celui qui a le plus de vie
  - Ajout de la possibilité d'une égalité (si timer écoulé & les deux on la même vie)
  
- -------------------------------------
- v. 2.0.0, 06/03/19 à 18h10, Nathan
+-------------------------------------
+v. 2.0.0, 06/03/19 à 18h10, Nathan
 
  - Début du transfert de tout le programme en javascript
  /!\ Il n'est pas encore fonctionnel ! Tout n'est pas converti /!\
+ 
+-------------------------------------
+v. 2.0.1, 09/03/2019 à 15h07, Nathan
+ - Creation du fichier "ProcToJS.js", qui réunit toutes les fonctions pour convertir Processing en javascript.
+ - En rassemblant toutes les fonctions dans le même programme, le jeu ne fait plus d'erreur, mais ne marche pas pour autant.
+ - Problèmes donc pour lire des fonctions via d'autres fichiers
+ - Ne charge pas les images
+ - Ne se refresh pas
+ 
+-------------------------------------
+v 3.0.0, 10/03/2019, Nathan
+ - Début du transfert de tout le programme en python
+ - Création de "ProcToPy.py" pour convertir les fonction processing en python (via pygame)
