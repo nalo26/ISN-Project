@@ -1,16 +1,19 @@
+from ProcToPy import *
+
 def MenuMaps():
+	from Game import *
 	#Menu de sélection des maps
 
 	# /!\ Don't touch my creation Mouhahahahaha /!\
 	if InteracMap == 0:
 		background(0)
 		textAlign(CENTER)
-		ProcToPy.image(BackgMenu, screen,0,0)
-		textSize(20)
+		image(BackgMenu, screen,0,0)
+		font = textSize(20)
 		text("Play with Map N°1", 250, 200)
 		text("Play with Map N°2", 250, 300)
 		text("Play with Map N°3", 250, 400)
-		textSize(14)
+		font = textSize(14)
 		text("Press arrows to select your folder and press RIGHT to load file", 250, 515)
 		textAlign(LEFT)
 
@@ -39,13 +42,13 @@ def MenuMaps():
 	if InteracMap == 1:
 		background(0)
 		textAlign(CENTER)
-		ProcToPy.image(BackgMenu, screen,0,0)
-		fill(101,149,99)
-		textSize(20)
+		image(BackgMenu, screen,0,0)
+		ColorMaster = fill(101,149,99)
+		font = textSize(20)
 		text("Remplace Map N°1", 250, 200)
 		text("Remplace Map N°2", 250, 300)
 		text("Remplace Map N°3", 250, 400)
-		textSize(13)
+		font = textSize(13)
 		text("Press arrows to select a backup location and press Enter to save file", 250, 515)
 		textAlign(LEFT)
 
@@ -84,6 +87,7 @@ def MenuMaps():
 			InteracMap = 0
 
 def CurseurMenuMaps():
+	from Game import *
 	#Déplacement du curseur de choix
 	if keyCode == DOWN and keyPressed == True and SelectMap < 3:
 		SelectMap += 1
@@ -93,5 +97,5 @@ def CurseurMenuMaps():
 		delay(150)
 
 	#Souligne le choix du joueur
-	ProcToPy.image(BalleR, screen, 100, SelectMap*100+70)
-	ProcToPy.image(BalleL, screen, 350, SelectMap*100+70)
+	image(BalleR, screen, 100, SelectMap*100+70)
+	image(BalleL, screen, 350, SelectMap*100+70)

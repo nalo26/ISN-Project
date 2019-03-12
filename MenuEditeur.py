@@ -1,6 +1,9 @@
+from ProcToPy import *
+
 def MenuEditor():
+	from Game import *
 	AffEditeur()
-	textSize(10)
+	font = textSize(10)
 	text("SHIFT=Print",450,515)
 	text("ENTER=Switch",450,525)
 	text("TAB=Save",450,535)
@@ -37,11 +40,12 @@ def MenuEditor():
 		Collision[XCursorEdit+YCursorEdit*10] = Selectedtile
 
 def AffEditeur (): #Affiche l'éditeur
+	from Game import *
 	delay(150)
 	background(45, 139, 97)
-	fill(0)
+	ColorMaster = fill(0)
 	rect(0, 500, 500, 50)
-	fill(200)
+	ColorMaster = fill(200)
 	rect(0, 500, 500, 3)
 	noStroke()
 
@@ -51,33 +55,33 @@ def AffEditeur (): #Affiche l'éditeur
 			Ay = y*10
 			A = Ax + Ay
 			if Collision[A] == 1: #Couleur Roche
-				ProcToPy.image(Montagne, screen, x*50, y*50) 
+				image(Montagne, screen, x*50, y*50) 
 			if Collision[A] == 2: #Couleur Eau
-				ProcToPy.image(Eau, screen, x*50, y*50) #Eau
+				image(Eau, screen, x*50, y*50) #Eau
 
 				#rebors eau
 				if A > 10 and Collision[A-10] != 2:
-					ProcToPy.image(ContH, screen, x*50, y*50)
+					image(ContH, screen, x*50, y*50)
 					Haut = True
 				if A < 90 and Collision[A+10] != 2:
-					ProcToPy.image(ContB, screen, x*50, y*50)
+					image(ContB, screen, x*50, y*50)
 					Bas = True
 				if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and Collision[A-1] != 2:
-					ProcToPy.image(ContG, screen, x*50, y*50)
+					image(ContG, screen, x*50, y*50)
 					Gauche = True
 				if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and Collision[A+1] != 2:
-					ProcToPy.image(ContD, screen, x*50, y*50)
+					image(ContD, screen, x*50, y*50)
 					Droite = True
 
 				#Coins/angles lave
 				if Haut == True and Droite == True:
-					ProcToPy.image(ContHD, screen, x*50, y*50)
+					image(ContHD, screen, x*50, y*50)
 				if Haut == True and Gauche == True:
-					ProcToPy.image(ContHG, screen, x*50, y*50)
+					image(ContHG, screen, x*50, y*50)
 				if Bas == True and Droite == True:
-					ProcToPy.image(ContBD, screen, x*50, y*50)
+					image(ContBD, screen, x*50, y*50)
 				if Bas == True and Gauche == True:
-					ProcToPy.image(ContBG, screen, x*50, y*50)
+					image(ContBG, screen, x*50, y*50)
 
 				#Remise a 0 de la détection des tiles autours du blocs de lave
 				Bas = False
@@ -86,29 +90,29 @@ def AffEditeur (): #Affiche l'éditeur
 				Gauche = False
 
 			if Collision[A] == 3: #Lave
-				ProcToPy.image(Lave, screen, x*50, y*50) #rebors lave
+				image(Lave, screen, x*50, y*50) #rebors lave
 				if A > 10 and Collision[A-10] != 3:
-					ProcToPy.image(ContH, screen, x*50, y*50)
+					image(ContH, screen, x*50, y*50)
 					Haut = True
 				if A < 90 and Collision[A+10] != 3:
-					ProcToPy.image(ContB, screen, x*50, y*50)
+					image(ContB, screen, x*50, y*50)
 					Bas = True
 				if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and Collision[A-1] != 3:
-					ProcToPy.image(ContG, screen, x*50, y*50)
+					image(ContG, screen, x*50, y*50)
 					Gauche = True
 				if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and Collision[A+1] != 3:
-					ProcToPy.image(ContD, screen, x*50, y*50)
+					image(ContD, screen, x*50, y*50)
 					Droite = True
 
 				#Coins/angles lave
 				if Haut == True and Droite == True:
-					ProcToPy.image(ContHD, screen, x*50, y*50)
+					image(ContHD, screen, x*50, y*50)
 				if Haut == True and Gauche == True:
-					ProcToPy.image(ContHG, screen, x*50, y*50)
+					image(ContHG, screen, x*50, y*50)
 				if Bas == True and Droite == True:
-					ProcToPy.image(ContBD, screen, x*50, y*50)
+					image(ContBD, screen, x*50, y*50)
 				if Bas == True and Gauche == True:
-					ProcToPy.image(ContBG, screen, x*50, y*50)
+					image(ContBG, screen, x*50, y*50)
 
 				#Remise a 0 de la détection des tiles autours du blocs de lave
 				Bas = False
@@ -118,23 +122,23 @@ def AffEditeur (): #Affiche l'éditeur
 
 			#Foret/arbre en bas pour recouvrir les tank
 			if (Collision [A] ==4):
-				ProcToPy.image(arbre, screen, x*50, y*50) #Couleur Foret
+				image(arbre, screen, x*50, y*50) #Couleur Foret
 
 	#Affiche les terrains proposées en barre d'info
-	fill(45, 139, 97)
+	ColorMaster = fill(45, 139, 97)
 	rect(20, 505, 50, 50)
-	ProcToPy.image(Montagne, screen, 100, 505)
-	ProcToPy.image(Eau, screen, 180, 505)
-	ProcToPy.image(Lave, screen, 260, 505)
-	ProcToPy.image(arbre, screen, 340, 505)
+	image(Montagne, screen, 100, 505)
+	image(Eau, screen, 180, 505)
+	image(Lave, screen, 260, 505)
+	image(arbre, screen, 340, 505)
 
 	#Affichage selection dans la barre d'info lors du choix de la texture
 	if Selectile != 0:
 		# PImage STile 
 		# STile = loadimage("Selection Tank2.png")
-		ProcToPy.image(STile, screen, Selectile*80-60, 505)
+		image(STile, screen, Selectile*80-60, 505)
 	#Affichage curseur sur la map pour le changement des textures
 	if Selectile == 0:
 		# PImage STile 
 		# STile = loadimage("Selection Tank2.png")
-		ProcToPy.image(STile, screen, XCursorEdit*50, YCursorEdit*50)
+		image(STile, screen, XCursorEdit*50, YCursorEdit*50)

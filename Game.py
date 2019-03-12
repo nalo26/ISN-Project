@@ -1,5 +1,13 @@
 import os, pygame
-import ProcToPy, Credits, Getkey, IA, Menu, MenuEditeur, MenuMaps, Options # Charger les autres fenêtres 
+from ProcToPy import *
+
+from Credits import * # Charger les autres fenêtres 
+from Getkey import *
+from IA import *
+from Menu import *
+# from MenuEditeur import *
+# from MenuMaps import *
+# from Options import *
 
 
 MainGameMaster = True
@@ -164,20 +172,43 @@ BalleR = pygame.image.load("data/BalleR.png").convert_alpha()
 BalleL = pygame.image.load("data/BalleL.png").convert_alpha()
 BalleExplosion = pygame.image.load("data/Explosion.png").convert_alpha()
 
+fontName = "Microsoft Sans Serif"
+fontSize = 24
+font = pygame.font.SysFont(fontName, fontSize)
+
 while MainGameMaster == True:
-	ProcToPy.image(BackgMenu, screen, 0, 0)
+
+	#  -----  ZONE DE TEST  -----  #
+
+	# image(BackgMenu, 0, 0)
+	# delay(1000)
+	# background(150, 100, 150)
+	# ColorMaster = fill(10, 255, 100)
+	# font = textSize(30)
+	# i = random(0, 42)
+	# text(str(i), 20, 20)
+	# ColorMaster = fill(255, 0, 0)
+	# rect(50, 50, 10, 20)
+	# ColorMaster = fill(255, 255, 0)
+	# triangle(250, 0, 0, 250, 500, 250)
+	# ColorMaster = fill(0)
+	# ellipse(250, 250, 50, 50)
+
+
+
+	# -----  FIN ZONE TEST -----  #
 
 	# Getkey.keyPressed() # On verifie si une touche a été appuyée
 	# MusicBackground() # On charge la musique du jeu
 
 	# Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
-	'''
+	
 	if toshow == "Menu":
-		Menu.Menu()
+		MenuMain()
 	if toshow == "MenuPlay":
-		Menu.MenuPlay()
+		MenuPlay()
 	if toshow == "MenuEditor":
-		MenuEditeur.MenuEditor()
+		MenuEditor()
 	if toshow == "Game":
 		Game()
 	# if toshow == "ServerJoin":
@@ -185,16 +216,17 @@ while MainGameMaster == True:
 	# if toshow == "ServerCreate":
 	# 	ServerCreate()
 	if toshow == "MenuMaps":
-		MenuMaps.MenuMaps()
+		MenuMaps()
 	if toshow == "Options":
-		Options.Options()
+		Options()
 	if toshow == "Credits":
-		Credits.Credits()
-'''
-	for event in pygame.event.get():
-		if event.type == pygame.KEYDOWN:
-			MainGameMaster = False
+		Credits()
+
 	pygame.display.flip() # Acualisation de la page
+
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			MainGameMaster = False
 pygame.quit()
 
 def CDD():
@@ -449,9 +481,9 @@ def AffTank(): #Affiche le tank
 	if Design == 2:
 		background(196, 247, 255)
 	#Affichage barre d'info
-	fill(0)
+	ColorMaster = fill(0)
 	rect(0, 500, 500, 50)
-	fill(200)
+	ColorMaster = fill(200)
 	rect(0, 500, 500, 3)
 	noStroke()
 
@@ -461,60 +493,60 @@ def AffTank(): #Affiche le tank
 			Ay = y * 10
 			A = Ax + Ay
 			if Collision[A] == 1 and Design==1:
-				ProcToPy.image(Montagne, screen, x*50, y*50)
+				image(Montagne, screen, x*50, y*50)
 			if Collision[A] == 1 and Design==2:
-				ProcToPy.image(MontagneW, screen, x*50, y*50)
+				image(MontagneW, screen, x*50, y*50)
 			#Couleur Roche
 			if Collision[A] == 2:
 				#Eau
 				if Design == 1:
-					ProcToPy.image(Eau, screen, x*50, y*50)
+					image(Eau, screen, x*50, y*50)
 				if Design == 2:
-					ProcToPy.image(EauW, screen, x*50, y*50)
+					image(EauW, screen, x*50, y*50)
 				#rebors eau
 				if A>10 and Collision[A-10] !=2:
 					if Design == 1:
-						ProcToPy.image(ContH, screen, x*50, y*50)
+						image(ContH, screen, x*50, y*50)
 					if Design == 2:
-						ProcToPy.image(ContHW, screen, x*50, y*50)
+						image(ContHW, screen, x*50, y*50)
 					Haut = True
 				if A<90 and Collision[A+10] !=2:
 					if Design == 1:
-						ProcToPy.image(ContB, screen, x*50, y*50)
+						image(ContB, screen, x*50, y*50)
 					if Design == 2:
-						ProcToPy.image(ContBW, screen, x*50, y*50)
+						image(ContBW, screen, x*50, y*50)
 					Bas = True
 				if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and Collision[A-1] !=2:
 					if Design == 1:
-						ProcToPy.image(ContG, screen, x*50, y*50)
+						image(ContG, screen, x*50, y*50)
 					if Design == 2:
-						ProcToPy.image(ContGW, screen, x*50, y*50)
+						image(ContGW, screen, x*50, y*50)
 					Gauche = True
 				if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and Collision[A+1] !=2:
 					if Design == 1:
-						ProcToPy.image(ContD, screen, x*50, y*50)
+						image(ContD, screen, x*50, y*50)
 					if Design == 2:
-						ProcToPy.image(ContDW, screen, x*50, y*50)
+						image(ContDW, screen, x*50, y*50)
 					Droite = True
 		#Coins/angles lave
 		#Eté
 		if Haut == True and Droite == True and Design == 1:
-			ProcToPy.image(ContHD, screen, x*50, y*50)
+			image(ContHD, screen, x*50, y*50)
 		if Haut == True and Gauche == True and Design == 1:
-			ProcToPy.image(ContHG, screen, x*50, y*50)
+			image(ContHG, screen, x*50, y*50)
 		if Bas == True and Droite == True and Design == 1:
-			ProcToPy.image(ContBD, screen, x*50, y*50)
+			image(ContBD, screen, x*50, y*50)
 		if Bas == True and Gauche == True and Design == 1:
-			ProcToPy.image(ContBG, screen, x*50, y*50)
+			image(ContBG, screen, x*50, y*50)
 
 		if Haut == True and Droite==True and Design == 2:
-			ProcToPy.image(ContHDW, screen, x*50, y*50)
+			image(ContHDW, screen, x*50, y*50)
 		if Haut == True and Gauche==True and Design == 2:
-			ProcToPy.image(ContHGW, screen, x*50, y*50)
+			image(ContHGW, screen, x*50, y*50)
 		if Bas == True and Droite==True and Design == 2:
-			ProcToPy.image(ContBDW, screen, x*50, y*50)
+			image(ContBDW, screen, x*50, y*50)
 		if Bas == True and Gauche==True and Design == 2:
-			ProcToPy.image(ContBGW, screen, x*50, y*50)
+			image(ContBGW, screen, x*50, y*50)
 
 		#Remise a 0 de la détection des tiles autours du blocs de lave
 		Bas = False
@@ -525,53 +557,53 @@ def AffTank(): #Affiche le tank
 		if Collision[A] == 3:
 			#Lave
 			if Design == 1:
-				ProcToPy.image(Lave, screen, x*50, y*50)
+				image(Lave, screen, x*50, y*50)
 			if Design == 2:
-				ProcToPy.image(LaveW, screen, x*50, y*50)
+				image(LaveW, screen, x*50, y*50)
 			#rebors lave
 			if A>10 and Collision[A-10] != 3:
 				if Design == 1:
-					ProcToPy.image(ContH, screen, x*50, y*50)
+					image(ContH, screen, x*50, y*50)
 				if Design == 2:
-					ProcToPy.image(ContHW, screen, x*50, y*50)
+					image(ContHW, screen, x*50, y*50)
 				Haut=True
 			if A<90 and Collision[A+10] !=3:
 				if Design == 1:
-					ProcToPy.image(ContB, screen, x*50, y*50)
+					image(ContB, screen, x*50, y*50)
 				if Design == 2:
-					ProcToPy.image(ContBW, screen, x*50, y*50)
+					image(ContBW, screen, x*50, y*50)
 				Bas = True
 			if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and Collision[A-1] != 3:
 				if Design == 1:
-					ProcToPy.image(ContG, screen, x*50, y*50)
+					image(ContG, screen, x*50, y*50)
 				if Design == 2:
-					ProcToPy.image(ContGW, screen, x*50, y*50)
+					image(ContGW, screen, x*50, y*50)
 				Gauche = True
 			if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and Collision[A+1] != 3:
 				if Design == 1:
-					ProcToPy.image(ContD, screen, x*50, y*50)
+					image(ContD, screen, x*50, y*50)
 				if Design == 2:
-					ProcToPy.image(ContDW, screen, x*50, y*50)
+					image(ContDW, screen, x*50, y*50)
 				Droite = True
 
         #Coins/angles lave
 			if Haut == True and Droite == True and Design == 1:
-				ProcToPy.image(ContHD, screen, x*50, y*50)
+				image(ContHD, screen, x*50, y*50)
 			if Haut == True and Gauche == True and Design == 1:
-				ProcToPy.image(ContHG, screen, x*50, y*50)
+				image(ContHG, screen, x*50, y*50)
 			if Bas == True and Droite == True and Design == 1:
-				ProcToPy.image(ContBD, screen, x*50, y*50)
+				image(ContBD, screen, x*50, y*50)
 			if Bas == True and Gauche == True and Design == 1:
-				ProcToPy.image(ContBG, screen, x*50, y*50)
+				image(ContBG, screen, x*50, y*50)
 
 			if Haut == True and Droite == True and Design == 2:
-				ProcToPy.image(ContHDW, screen, x*50, y*50)
+				image(ContHDW, screen, x*50, y*50)
 			if Haut == True and Gauche == True and Design == 2:
-				ProcToPy.image(ContHGW, screen, x*50, y*50)
+				image(ContHGW, screen, x*50, y*50)
 			if Bas == True and Droite == True and Design == 2:
-				ProcToPy.image(ContBDW, screen, x*50, y*50)
+				image(ContBDW, screen, x*50, y*50)
 			if Bas == True and Gauche == True and Design == 2:
-				ProcToPy.image(ContBGW, screen, x*50, y*50)
+				image(ContBGW, screen, x*50, y*50)
 
 			#Remise a 0 de la détection des tiles autours du blocs de lave
 			Bas= False
@@ -582,66 +614,66 @@ def AffTank(): #Affiche le tank
 
 			#Foret/arbre en bas pour recouvrir les tank
 			if Collision[A] == 4 and Design == 1:
-				ProcToPy.image(arbre, screen, x*50, y*50)
+				image(arbre, screen, x*50, y*50)
 			if Collision[A] == 4 and Design == 2:
-				ProcToPy.image(arbreW, screen, x*50, y*50)
+				image(arbreW, screen, x*50, y*50)
 			#Couleur Foret
 
 	#Affichage dégats lave
 	if DegatsLaveTank == True:
-		fill(255, 0, 0, 100)
+		ColorMaster = fill(255, 0, 0, 100)
 		rect(0, 0, 500, 500)
 
 	#Selection entourage tank
 	if Player == 1:
-		ProcToPy.image(STank1, screen, xbase, ybase)
+		image(STank1, screen, xbase, ybase)
 	if Player == 2:
-		ProcToPy.image(STank2, screen, xbase2, ybase2)
+		image(STank2, screen, xbase2, ybase2)
 
 	#Affichage Tank
 	if Collision[xbase/50+ybase/50*10] != 4 and Design != 2:
 		if Direction == 1:
 			Tank1 = Tank1u 
-			ProcToPy.image(Tank1, screen, xbase, ybase)
+			image(Tank1, screen, xbase, ybase)
 		if Direction == 2:
 			Tank1 = Tank1d 
-			ProcToPy.image(Tank1, screen, xbase, ybase)
+			image(Tank1, screen, xbase, ybase)
 		if Direction == 3:
 			Tank1 = Tank1l 
-			ProcToPy.image(Tank1, screen, xbase, ybase)
+			image(Tank1, screen, xbase, ybase)
 		if Direction == 4:
 			Tank1 = Tank1r 
-			ProcToPy.image(Tank1, screen, xbase, ybase)
+			image(Tank1, screen, xbase, ybase)
 
 	if Collision[xbase2/50+ybase2/50*10] != 4 and Design != 2:
 		if Direction2 == 1:
 			Tank2 = Tank2u 
-			ProcToPy.image(Tank2, screen, xbase2, ybase2)
+			image(Tank2, screen, xbase2, ybase2)
 		if Direction2 == 2:
 			Tank2 = Tank2d 
-			ProcToPy.image(Tank2, screen, xbase2, ybase2)
+			image(Tank2, screen, xbase2, ybase2)
 		if Direction2 == 3: 
 			Tank2 = Tank2l 
-			ProcToPy.image(Tank2, screen, xbase2, ybase2)
+			image(Tank2, screen, xbase2, ybase2)
 		if Direction2 == 4:
 			Tank2 = Tank2r 
-			ProcToPy.image(Tank2, screen, xbase2, ybase2)
+			image(Tank2, screen, xbase2, ybase2)
 
 	#Affichage des vies
-	fill(255)
-	textSize(14)
+	ColorMaster = fill(255)
+	font = textSize(14)
 	text("V1:", 20, 530)
 	text(":V2", 460, 530)
 	for viebarre1 in range(vietank1, DefaultVie):
-		fill(150, 32, 32)
-		ProcToPy.image(Vies, screen, 12*viebarre1+40, 523, 8, 8)
+		ColorMaster = fill(150, 32, 32)
+		image(Vies, screen, 12*viebarre1+40, 523, 8, 8)
 	for viebarre2 in range(vietank2, DefaultVie):
-		fill(150, 32, 32)
-		ProcToPy.image(Vies, screen, -12*viebarre2+460, 523, 8, 8)
+		ColorMaster = fill(150, 32, 32)
+		image(Vies, screen, -12*viebarre2+460, 523, 8, 8)
 
 	#Affichage de la Commande pour accéder aux options en jeu
 	textAlign(CENTER)
-	fill(255)
+	ColorMaster = fill(255)
 	text("Press Shift", 250, 520)
 	text("For Options", 250, 540)
 	textAlign(LEFT)
@@ -685,8 +717,8 @@ def Game():
 		if Player == 0 and Act == 0 and vietank1 > 0 and vietank2 > 0 or Player == 2 and Act == 0 and vietank1 > 0 and vietank2 > 0:
 			background(0)
 			stroke(0)
-			fill(0, 0, 255)
-			textSize(40)
+			ColorMaster = fill(0, 0, 255)
+			font = textSize(40)
 			text("Player 1", 160, 220)
 			text("Press Down", 130, 270)
 			if keyPressed == True and keyCode == DOWN:
@@ -698,8 +730,8 @@ def Game():
 	if IsMulti == False or IsMulti == True and AmIClient == True:
 		if Player == 1 and Act == 0 and vietank1 > 0 and vietank2 > 0:
 			background(0)  
-			fill(255, 0, 0)
-			textSize(40)
+			ColorMaster = fill(255, 0, 0)
+			font = textSize(40)
 			text("Player 2", 160, 220)
 			text("Press Down", 130, 270)
 			if IA == False and keyPressed == True and keyCode == DOWN or IA == True:
@@ -718,13 +750,13 @@ def Game():
 					if keyCode == LEFT:#Lorsque le curseur est sur Shoot
 						choix2 = 1
 						choix3 = 1
-						fill(255, 255, 255, 100) #Souligne en rouge le choix Left
+						ColorMaster = fill(255, 255, 255, 100) #Souligne en rouge le choix Left
 						rect(55, 227, 180, 30)
 
 					if keyCode == RIGHT: #Lorsque le curseur est sur Move
 						choix2 = 2
 						choix3 = 1
-						fill(255, 255, 255, 100)#Souligne en rouge le choix Right
+						ColorMaster = fill(255, 255, 255, 100)#Souligne en rouge le choix Right
 						rect(263, 227, 180, 30)
 
 					if choix3 == 1 and keyCode == ENTER: #Lorsque l'action est choisie par Enter
@@ -733,32 +765,32 @@ def Game():
 
 
 					#Affichage du choix des Actions (shoot ou move)
-					fill(0, 0, 0, 125)
+					ColorMaster = fill(0, 0, 0, 125)
 					rect(0, 175, 500, 140)
 
-					fill(0, 0, 0, 65)
+					ColorMaster = fill(0, 0, 0, 65)
 					rect(0, 175+140, 500, 500-(175+140))
 					rect(0, 0, 500, 175)
 
-					fill(255, 255, 255, 30)
+					ColorMaster = fill(255, 255, 255, 30)
 					rect(0, 175+140, 500, 3)
 					rect(0, 172, 500, 3)
 
 					textAlign(CENTER)
-					textSize(45)
-					fill(255, 255, 255, 200)
+					font = textSize(45)
+					ColorMaster = fill(255, 255, 255, 200)
 					ellipse(480, 190, 15, 15)
 					if Player == 1:
-						fill(0, 0, 255)
+						ColorMaster = fill(0, 0, 255)
 					if Player == 2:
-						fill(255, 0, 0)
+						ColorMaster = fill(255, 0, 0)
 					ellipse(480, 190, 10, 10)
 
-					textSize(23)
-					fill(250, 250, 250, 255)
+					font = textSize(23)
+					ColorMaster = fill(250, 250, 250, 255)
 					text("Left(for Attack)     Right(for move)", 250, 250)
-					fill(255)
-					textSize(20)
+					ColorMaster = fill(255)
+					font = textSize(20)
 					text("Press arrow", 250, 200)
 					text("And then press Enter", 250, 300)
 					textAlign(LEFT)
@@ -782,8 +814,8 @@ def Game():
 					AffTank()
 
 					if IsMulti == False or IsMulti == True and (AmIServer == True and Player == 1 or AmIClient == True and Player == 2) or IA == True and Player == 1:
-						fill(200)
-						textSize(20)
+						ColorMaster = fill(200)
+						font = textSize(20)
 						text("Press arrows to shoot your bullet in a direction", 30, 430)
 						text("Then press Enter", 180, 480)
 
@@ -843,22 +875,22 @@ def Game():
 						ybasem -= 50
 						CDA()
 						Balle = BalleU
-						ProcToPy.image(Balle, screen, xbasem, ybasem)
+						image(Balle, screen, xbasem, ybasem)
 					if lock == 2:
 						ybasem += 50
 						CDA()
 						Balle = BalleD
-						ProcToPy.image(Balle, screen, xbasem, ybasem)
+						image(Balle, screen, xbasem, ybasem)
 					if lock == 3:
 						xbasem -= 50
 						CDA()
 						Balle = BalleL
-						ProcToPy.image(Balle, screen, xbasem, ybasem)
+						image(Balle, screen, xbasem, ybasem)
 					if lock == 4:
 						xbasem += 50
 						CDA()
 						Balle = BalleR
-						ProcToPy.image(Balle, screen, xbasem, ybasem)
+						image(Balle, screen, xbasem, ybasem)
 					if Player == 1 and xbasem == xbase2 and ybasem == ybase2:
 						CB = 0
 						vietank2 -= 1
@@ -866,8 +898,8 @@ def Game():
 						CB = 0
 						vietank1 -= 1
 
-					fill(200)
-					textSize(50)
+					ColorMaster = fill(200)
+					font = textSize(50)
 					text(CB, 450, 490, 500)
 
 				if CB < 1 and lock != 0:
@@ -875,7 +907,7 @@ def Game():
 					lock = 0
 					AffTank()
 					Balle = BalleExplosion
-					ProcToPy.image(Balle, screen, xbasem, ybasem)
+					image(Balle, screen, xbasem, ybasem)
 					Act -= 1
 					ChangementSaison += 1
 
@@ -966,9 +998,9 @@ def Game():
 						TestCadriD = 1
 
 					AffTank()
-					fill(200)
+					ColorMaster = fill(200)
 
-					textSize(50)
+					font = textSize(50)
 					text(CP, 450, 490, 500)
 
 				#Déplacements lorsque CP est inférieur à 1 (Joueur n'a plus de déplacements)
@@ -981,29 +1013,29 @@ def Game():
 
 	if TimerMin <= -1 and vietank1 < vietank2 or vietank1 < 1: #Détéction de victoire (fin de timer / plus de vie)
 		background(0)
-		fill(255, 0, 0)
-		textSize(40)
+		ColorMaster = fill(255, 0, 0)
+		font = textSize(40)
 		textAlign(CENTER)
 		text("Player 2 WIN", 250, 220)
-		textSize(20)
+		font = textSize(20)
 		text("Click SPACE to return to menu", 250, 300)
 		Winner = 2
 	if TimerMin <= -1 and vietank2 < vietank1 or vietank2 < 1:
 		background(0)
-		fill(0, 0, 255)
-		textSize(40)
+		ColorMaster = fill(0, 0, 255)
+		font = textSize(40)
 		textAlign(CENTER)
 		text("Player 1 WIN", 250, 220)
-		textSize(20)
+		font = textSize(20)
 		text("Click SPACE to return to menu", 250, 300)
 		Winner = 1
 	if TimerMin <= -1 and vietank1 == vietank2: #Egalité
 		background(0)
-		fill(255, 0, 255)
-		textSize(40)
+		ColorMaster = fill(255, 0, 255)
+		font = textSize(40)
 		textAlign(CENTER)
 		text("EQUALITY", 250, 220)
-		textSize(20)
+		font = textSize(20)
 		text("Click SPACE to return to menu", 250, 300)
 		Winner = -1
 
@@ -1017,8 +1049,8 @@ def Game():
 		Design=1
 	if Winner == 0:
 		textAlign(RIGHT)
-		textSize(15)
-		fill(255)
+		font = textSize(15)
+		ColorMaster = fill(255)
 		text(TimerMin+":"+TimerSec, width-10, 20)
 
 
@@ -1028,7 +1060,7 @@ def Game():
 
 
 
-# def load_ProcToPy.image(name):
+# def load_image(name):
 # 	path = os.path.join(main_dir, 'data', name)
 # 	return pygame.image.load(path).convert()
 # if __name__ == '__main__':

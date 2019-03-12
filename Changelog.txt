@@ -192,3 +192,8 @@ v. 2.0.1, 09/03/2019 à 15h07, Nathan
 v 3.0.0, 10/03/2019, Nathan
  - Début du transfert de tout le programme en python
  - Création de "ProcToPy.py" pour convertir les fonction processing en python (via pygame)
+
+-------------------------------------
+v 3.0.1, 12/03/2019, Nathan
+ - Fin de convertion Processing -> Python
+ - Fix des bugs en cours

@@ -1,9 +1,12 @@
-import pygame, Game
+import pygame
+from ProcToPy import *
 
 #Si une touche est appuyé, faire ce qui est demandé en fonction du menu affiché
 # https://www.pygame.org/docs/ref/key.html
 
 def keyPressed():
+	from Game import toshow, keyCode, Menu, InteracMap
+
 	keyCode = pygame.key.get_pressed()
 	if toshow == "Menu": #Si le jeu est sur le menu principal
 		if keyCode[K_UP] and Menu == 2:
@@ -69,7 +72,7 @@ def keyPressed():
 
 	if toshow == "Options":
 		if keyCode[K_TAB] and MenuOpt == 0 and Link == 0:
-			Reset()
+			Game.Reset()
 		if keyCode[K_TAB] and MenuOpt == 0 and Link == 1:
 			toshow = "Game"
 		if keyCode[K_RIGHT] and MenuOpt == 0:
@@ -83,7 +86,7 @@ def keyPressed():
 			Link = 1
 
 	if Winner != 0 and keyCode[K_SPACE]:
-		Reset()
+		Game.Reset()
 
 
 	if toshow == "Credits" and keyCode[K_TAB]:

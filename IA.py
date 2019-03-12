@@ -1,5 +1,8 @@
 #Nous voila parti pour quelque chose de plutôt complexe -.-'
 #JSONObject Traj
+
+from ProcToPy import *
+
 IA = False
 inDev = True
 MaxDepl = 0
@@ -21,7 +24,7 @@ Traj = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 def IA(state): # Ici sont effectuées toutes les décisions de l'IA
-
+	from Game import state, xbase, ybase, xbase2, ybase2, Direction2, IsFire2, Act, CP
 	if state == "choix": #Si c'est au tour de l'IA de jouer, elle choisit ce qu'elle veut faire
 		#println("x1 : "+xbase/50+", x2 : "+xbase2/50+", diff y : "+abs(ybase - ybase2)/50+", y1 : "+ybase/50+", y2 : "+ybase2/50+", diff x : "+abs(xbase - xbase2)/50)
 		if Act > 1 and (xbase == xbase2 and abs(ybase - ybase2) < 7*50 or ybase == ybase2 and abs(xbase - xbase2) < 7*50): #Si le tank ennemi est aligné à nous et qu'il nous reste au moins une action
@@ -49,7 +52,7 @@ def IA(state): # Ici sont effectuées toutes les décisions de l'IA
 	if state == "move": #Si elle veut se déplacer
 		if inDev == False:
 			if Act == 3 and CP > MaxDepl:
-				CalculTraj() #Calculer la nouvelle trajectoire optimale
+				CalculTraj() #Calculer la nouvelle trajectoire optle
 			else:
 				for y in range(10): #Chercher la case suivante à laquelle elle doit aller
 					for x in range(10):
@@ -93,6 +96,8 @@ Glisse sur la glace (toute une longueur = 1 déplacement)
 '''
 
 def CalculTraj():
+	from Game import CP, xbase2, ybase2
+	
 	MaxDepl = CP
 	for l in range(10):
 		for j in range(10):
