@@ -14,7 +14,7 @@ def fill(r, g=-1, b=-1, a=0): #Red color, Green color, blue color, alpha (transp
 
 def rect(x, y, w, h): #x position, y position, width, height
 	# from Game import screen, ColorMaster
-	return pygame.draw.rect(v.screen, v.ColorMaster, [x, y, x+w, y+h], 0)
+	return pygame.draw.rect(v.screen, v.ColorMaster, [x, y, w, h], 0)
 
 def triangle(a, b, c, d, e, f): #x1, y1, x2, y2, x3, y3 positions
 	# from Game import screen, ColorMaster
@@ -31,7 +31,7 @@ def image(i, x, y): #image name, screen, x position, y position
 def text(t, x, y): #text, font, screen, size, color, x position, y position
 	# from Game import screen, font, fontSize, ColorMaster
 	# print(t, ColorMaster)
-	return v.screen.blit(v.font.render(t, v.fontSize, v.ColorMaster), (x , y))
+	return v.screen.blit(v.font.render(str(t), v.fontSize, v.ColorMaster), (x , y))
 
 def textAlign(a): #align position needed
 	pass

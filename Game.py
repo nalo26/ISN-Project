@@ -6,9 +6,9 @@ from Credits import * # Charger les autres fenêtres
 from Getkey import *
 from IA import *
 from Menu import *
-# from MenuEditeur import *
-# from MenuMaps import *
-# from Options import *
+from MenuEditeur import *
+from MenuMaps import *
+from Options import *
 v.init()
 
 MainGameMaster = True
@@ -21,6 +21,7 @@ MainGameMaster = True
 pygame.init()
 v.screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
 v.font = pygame.font.SysFont(v.fontName, v.fontSize)
+v.width, v.height = pygame.display.get_surface().get_size()
 
 #Chargement des images du jeu
 v.BackgMenu = pygame.image.load("data/BackMenu.png").convert()
@@ -72,62 +73,6 @@ v.BalleR = pygame.image.load("data/BalleR.png").convert_alpha()
 v.BalleL = pygame.image.load("data/BalleL.png").convert_alpha()
 v.BalleExplosion = pygame.image.load("data/Explosion.png").convert_alpha()
 
-v.init()
-while MainGameMaster == True:
-	#  -----  ZONE DE TEST  -----  #
-
-	# image(BackgMenu, 0, 0)
-	# delay(1000)
-	# background(150, 100, 150)
-	# ColorMaster = fill(10, 255, 100)
-	# font = textSize(30)
-	# i = random(0, 42)
-	# text(str(i), 20, 20)
-	# ColorMaster = fill(255, 0, 0)
-	# rect(50, 50, 10, 20)
-	# ColorMaster = fill(255, 255, 0)
-	# triangle(250, 0, 0, 250, 500, 250)
-	# ColorMaster = fill(0)
-	# ellipse(250, 250, 50, 50)
-
-
-
-	# -----  FIN ZONE TEST -----  #
-
-	# MusicBackground() # On charge la musique du jeu
-
-	# Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
-	
-	if v.toshow == "Menu":
-		MenuMain()
-	if v.toshow == "MenuPlay":
-		MenuPlay()
-	if v.toshow == "MenuEditor":
-		MenuEditor()
-	if v.toshow == "Game":
-		Game()
-	if v.toshow == "Reset":
-		Reset()
-	# if v.toshow == "ServerJoin":
-	# 	ServerJoin()
-	# if v.toshow == "ServerCreate":
-	# 	ServerCreate()
-	if v.toshow == "MenuMaps":
-		MenuMaps()
-	if v.toshow == "Options":
-		Options()
-	if v.toshow == "Credits":
-		Credits()
-
-	pygame.display.flip() # Acualisation de la page
-
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			MainGameMaster = False
-		if event.type == pygame.KEYDOWN:
-			keyPressed(event.key) # On verifie si une touche a été appuyée
-pygame.quit()
-
 def CDD():
 	# Cadrillage Des Déplacements (Tanks)
 	CDDx = v.xbase/50
@@ -141,35 +86,35 @@ def CDD():
 		CDD += 1
 		v.xbase += 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	if CDDy < 0:
 		CDD += 10
 		v.ybase += 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	if CDDx > 9:
 		CDD -= 1
 		v.xbase -= 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	if CDDy > 90:
 		CDD -= 10
 		v.ybase += 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	# Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
-	if v.Collision[CDD] == 1:
+	if v.Collision[int(CDD)] == 1:
 		v.TestCadriD = 0
 		v.TD2 = 1
 	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
-	if v.Collision[CDD] == 3 and v.Design == 1:
+	if v.Collision[int(CDD)] == 3 and v.Design == 1:
 		v.TestCadriD=0
 		v.TD2=1
-	if v.Collision[CDD] == 3 and v.Design == 2:
+	if v.Collision[int(CDD)] == 3 and v.Design == 2:
 		v.TestCadriD = 1
 		v.TD2 = 1
 		v.vietank1 -= 1
@@ -177,12 +122,12 @@ def CDD():
 	else:
 		v.DegatsLaveTank = False
 	#Si le tank va dans l'eau (Il est alors ralenti)
-	if v.Collision[CDD] == 2 and v.Design == 1:
+	if v.Collision[int(CDD)] == 2 and v.Design == 1:
 		v.CP -= 1
 	#Si le Tank va sur la glace (Il glisse jusqu'à un rebord ou un terrain différent de la glace)
-	if v.Collision[CDD] == 2 and v.Design == 2:
+	if v.Collision[int(CDD)] == 2 and v.Design == 2:
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_RIGHT and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_RIGHT and v.bord == False:
 			v.xbase += 50
 			if v.xbase <= 450:
 				CDDx = v.xbase/50
@@ -190,12 +135,12 @@ def CDD():
 				v.bord = True 
 				v.xbase -= 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.xbase -= 50
 			AffTank()
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_LEFT and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_LEFT and v.bord == False:
 			v.xbase -= 50
 			if v.xbase >= 0:
 				CDDx = v.xbase/50
@@ -203,12 +148,12 @@ def CDD():
 				v.bord = True 
 				v.xbase += 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.xbase += 50
 			AffTank()
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_UP and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_UP and v.bord == False:
 			v.ybase -= 50
 			if v.ybase >= 0:
 				CDDy = v.ybase/50*10
@@ -216,12 +161,12 @@ def CDD():
 				v.bord = True 
 				v.ybase += 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.ybase += 50
 			AffTank()
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_DOWN and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_DOWN and v.bord == False:
 			v.ybase += 50
 			if v.ybase <= 450:
 				CDDy = v.ybase/50*10
@@ -229,7 +174,7 @@ def CDD():
 				v.bord = True 
 				v.ybase -= 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.ybase -= 50
 			AffTank()
@@ -247,38 +192,38 @@ def CDD2():
 		CDD += 1
 		v.xbase2 += 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	if CDDy < 0:
 		CDD += 10
 		vybase2 += 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	if CDDx > 9: 
 		CDD -= 1
 		v.xbase2 -= 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 	if CDDy > 90:
 		CDD -= 10
 		v.ybase2 -= 50
 		v.CP += 1
-		if v.Collision[CDD] == 2:
+		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
 
 	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
-	if v.Collision[CDD] == 1:
+	if v.Collision[int(CDD)] == 1:
 		v.TestCadriD = 0
 		v.TD2 = 1
 
 	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
-	if v.Collision[CDD] == 3 and v.Design == 1:
+	if v.Collision[int(CDD)] == 3 and v.Design == 1:
 		v.TestCadriD = 0
 		v.TD2 = 1
 
-	if v.Collision[CDD] == 3 and v.Design == 2:
+	if v.Collision[int(CDD)] == 3 and v.Design == 2:
 		v.TestCadriD = 1
 		v.TD2 = 1
 		v.vietank2 -= 1
@@ -286,12 +231,12 @@ def CDD2():
 	else:
 		v.DegatsLaveTank = False
 	#Si le tank va dans l'eau (Il est alors ralenti)
-	if v.Collision[CDD] == 2 and v.Design == 1:
+	if v.Collision[int(CDD)] == 2 and v.Design == 1:
 		v.CP -= 1
 	#Si le Tank va sur la glace (Il glisse jusqu'à un rebord ou un terrain différent de la glace)
-	if v.Collision[CDD] == 2 and v.Design == 2:
+	if v.Collision[int(CDD)] == 2 and v.Design == 2:
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_RIGHT and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_RIGHT and v.bord == False:
 			v.xbase2 += 50
 			if v.xbase2 <= 450:
 				CDDx = v.xbase2/50
@@ -299,12 +244,12 @@ def CDD2():
 				v.bord = True 
 				v.xbase2 -= 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.xbase2 -= 50
 			AffTank()
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_LEFT and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_LEFT and v.bord == False:
 			v.xbase2 -= 50
 			if v.xbase2 >= 0:
 				CDDx = v.xbase2/50
@@ -312,12 +257,12 @@ def CDD2():
 				v.bord = True 
 				v.xbase2 += 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.xbase2 += 50
 			AffTank()
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_UP and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_UP and v.bord == False:
 			v.ybase2 -= 50
 			if v.ybase2 >= 0:
 				CDDy = v.ybase2/50*10
@@ -325,12 +270,12 @@ def CDD2():
 				v.bord = True 
 				v.ybase2 += 50
 			CDD = CDDx + CDDy
-			if Collision[CDD] == 1:
+			if Collision[int(CDD)] == 1:
 				v.bord = True
 				v.ybase2 += 50
 			AffTank()
 
-		while v.Collision[CDD] == 2 and v.keyCode==pygame.K_DOWN and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_DOWN and v.bord == False:
 			v.ybase2 += 50
 			if v.ybase2 <= 450:
 				CDDy = v.ybase2/50*10
@@ -338,7 +283,7 @@ def CDD2():
 				v.bord = True 
 				v.ybase2 -= 50
 			CDD = CDDx + CDDy
-			if v.Collision[CDD] == 1:
+			if v.Collision[int(CDD)] == 1:
 				v.bord = True
 				v.ybase2 -= 50
 			AffTank()
@@ -364,12 +309,12 @@ def CDA():
 		v.CB = 0
 
 	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
-	if v.Collision[CDA] == 1:
+	if v.Collision[int(CDA)] == 1:
 		v.CB=0
-	if v.Collision[CDA] == 1 and v.Design==2:
-		v.Collision[CDA] = 0
+	if v.Collision[int(CDA)] == 1 and v.Design==2:
+		v.Collision[int(CDA)] = 0
 	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Foret)
-	if v.Collision[CDA] == 4:
+	if v.Collision[int(CDA)] == 4:
 		v.CB=0
 
 
@@ -384,44 +329,44 @@ def AffTank(): #Affiche le tank
 	rect(0, 500, 500, 50)
 	v.ColorMaster = fill(200)
 	rect(0, 500, 500, 3)
-	noStroke()
+	# noStroke()
 
 	for x in range(10):
 		for y in range(10):
 			Ax = x
 			Ay = y * 10
 			A = Ax + Ay
-			if v.Collision[A] == 1 and v.Design==1:
+			if v.Collision[int(A)] == 1 and v.Design==1:
 				image(v.Montagne, x*50, y*50)
-			if Collision[A] == 1 and Design==2:
+			if v.Collision[int(A)] == 1 and v.Design==2:
 				image(v.MontagneW, x*50, y*50)
 			#Couleur Roche
-			if v.Collision[A] == 2:
+			if v.Collision[int(A)] == 2:
 				#Eau
 				if v.Design == 1:
 					image(v.Eau, x*50, y*50)
 				if v.Design == 2:
 					image(v.EauW, x*50, y*50)
 				#rebors eau
-				if A>10 and v.Collision[A-10] !=2:
+				if A>10 and v.Collision[int(A-10)] !=2:
 					if v.Design == 1:
 						image(v.ContH, x*50, y*50)
 					if v.Design == 2:
 						image(v.ContHW, x*50, y*50)
 					v.Haut = True
-				if A<90 and v.Collision[A+10] !=2:
+				if A<90 and v.Collision[int(A+10)] !=2:
 					if v.Design == 1:
 						image(v.ContB, x*50, y*50)
 					if v.Design == 2:
 						image(v.ContBW, x*50, y*50)
 					v.Bas = True
-				if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and v.Collision[A-1] !=2:
+				if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and v.Collision[int(A-1)] !=2:
 					if v.Design == 1:
 						image(v.ContG, x*50, y*50)
 					if v.Design == 2:
 						image(v.ContGW, x*50, y*50)
 					v.Gauche = True
-				if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and v.Collision[A+1] !=2:
+				if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and v.Collision[int(A+1)] !=2:
 					if v.Design == 1:
 						image(v.ContD, x*50, y*50)
 					if v.Design == 2:
@@ -453,32 +398,32 @@ def AffTank(): #Affiche le tank
 		v.Droite = False
 		v.Gauche = False
 
-		if v.Collision[A] == 3:
+		if v.Collision[int(A)] == 3:
 			#Lave
 			if v.Design == 1:
 				image(v.Lave, x*50, y*50)
 			if v.Design == 2:
 				image(v.LaveW, x*50, y*50)
 			#rebors lave
-			if A>10 and v.Collision[A-10] != 3:
+			if A>10 and v.Collision[int(A-10)] != 3:
 				if v.Design == 1:
 					image(v.ContH, x*50, y*50)
 				if v.Design == 2:
 					image(v.ContHW, x*50, y*50)
 				v.Haut = True
-			if A<90 and v.Collision[A+10] !=3:
+			if A<90 and v.Collision[int(A+10)] !=3:
 				if v.Design == 1:
 					image(v.ContB, x*50, y*50)
 				if v.Design == 2:
 					image(v.ContBW, x*50, y*50)
 				v.Bas = True
-			if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and v.Collision[A-1] != 3:
+			if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and v.Collision[int(A-1)] != 3:
 				if v.Design == 1:
 					image(v.ContG, x*50, y*50)
 				if v.Design == 2:
 					image(v.ContGW, x*50, y*50)
 				v.Gauche = True
-			if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and v.Collision[A+1] != 3:
+			if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and v.Collision[int(A+1)] != 3:
 				if v.Design == 1:
 					image(v.ContD, x*50, y*50)
 				if v.Design == 2:
@@ -512,9 +457,9 @@ def AffTank(): #Affiche le tank
 			#Couleur Lave
 
 			#Foret/arbre en bas pour recouvrir les tank
-			if v.Collision[A] == 4 and v.Design == 1:
+			if v.Collision[int(A)] == 4 and v.Design == 1:
 				image(v.arbre, x*50, y*50)
-			if v.Collision[A] == 4 and v.Design == 2:
+			if v.Collision[int(A)] == 4 and v.Design == 2:
 				image(v.arbreW, x*50, y*50)
 			#Couleur Foret
 
@@ -530,8 +475,8 @@ def AffTank(): #Affiche le tank
 		image(v.STank2, v.xbase2,v. ybase2)
 
 	#Affichage Tank
-	if v.Collision[xbase/50+ybase/50*10] != 4 and v.Design != 2:
-		if Dv.irection == 1:
+	if v.Collision[int(v.xbase/50+v.ybase/50*10)] != 4 and v.Design != 2:
+		if v.Direction == 1:
 			Tank1 = v.Tank1u 
 			image(Tank1, v.xbase, v.ybase)
 		if v.Direction == 2:
@@ -544,17 +489,17 @@ def AffTank(): #Affiche le tank
 			Tank1 = v.Tank1r 
 			image(Tank1, v.xbase, v.ybase)
 
-	if v.Collision[xbase2/50+ybase2/50*10] != 4 and Design != 2:
-		if Direction2 == 1:
+	if v.Collision[int(v.xbase2/50+v.ybase2/50*10)] != 4 and v.Design != 2:
+		if v.Direction2 == 1:
 			Tank2 = v.Tank2u 
 			image(Tank2, v.xbase2, v.ybase2)
-		if Direction2 == 2:
+		if v.Direction2 == 2:
 			Tank2 = v.Tank2d 
 			image(Tank2, v.xbase2, v.ybase2)
-		if Direction2 == 3: 
+		if v.Direction2 == 3: 
 			Tank2 = v.Tank2l 
 			image(Tank2, v.xbase2, v.ybase2)
-		if Direction2 == 4:
+		if v.Direction2 == 4:
 			Tank2 = v.Tank2r 
 			image(Tank2, v.xbase2, v.ybase2)
 
@@ -615,12 +560,12 @@ def Game():
 	if v.IsMulti == False or v.IsMulti == True and v.AmIServer == True:
 		if v.Player == 0 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0 or v.Player == 2 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
 			background(0)
-			stroke(0)
+			# stroke(0)
 			v.ColorMaster = fill(0, 0, 255)
 			v.font = textSize(40)
 			text("Player 1", 160, 220)
 			text("Press Down", 130, 270)
-			if v.keyPressed == True and v.keyCode == pygame.K_DOWN:
+			if v.keyCode == pygame.K_DOWN:
 				v.Player = 1
 				v.Act = 3
 				v.MaxDepl = 0
@@ -633,13 +578,13 @@ def Game():
 			v.font = textSize(40)
 			text("Player 2", 160, 220)
 			text("Press Down", 130, 270)
-			if v.IA == False and v.keyPressed == True and v.keyCode == pygame.K_DOWN or v.IA == True:
+			if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True:
 				v.Player = 2 
 				v.Act = 3
 
   #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	if v.Winner == 0 and (v.IsMulti == False or v.IsMulti == True and (v.AmIServer == True and v.Player == 1 or v.AmIClient == True and v.Player == 2)):
-		if Act > 0:
+		if v.Act > 0:
 
 			AffTank()
 
@@ -705,7 +650,7 @@ def Game():
 						v.DistFeu1 = v.CB
 						v.xbasem = v.xbase
 						v.ybasem = v.ybase
-					if Player == 2:
+					if v.Player == 2:
 						v.DistFeu2 = v.CB
 						v.xbasem = v.xbase2
 						v.ybasem = v.ybase2
@@ -799,7 +744,7 @@ def Game():
 
 					v.ColorMaster = fill(200)
 					v.font = textSize(50)
-					text(v.CB, 450, 490, 500)
+					text(v.CB, 450, 490)
 
 				if v.CB < 1 and v.lock != 0:
 					v.choix = 0
@@ -822,7 +767,7 @@ def Game():
 					if v.IA == True and v.Player == 2:
 						v.Direction2 = IA("move") #Si nous jouons contre l'IA, elle décide dans quelle direction elle veut se déplacer
 
-					if v.IA == False and v.keyPressed == True and v.keyCode == pygame.K_UP or v.IA == True and (v.Player == 1 and v.keyPressed == True and v.keyCode == pygame.K_UP or v.Player == 2 and v.Direction2 == 1):
+					if v.IA == False and v.keyCode == pygame.K_UP or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_UP or v.Player == 2 and v.Direction2 == 1):
 						v.CP -= 1
 						if v.Player == 1:
 							v.ybase -= 50
@@ -833,7 +778,7 @@ def Game():
 							CDD2()
 							v.Direction2 = 1
 						# Move.play()
-					if v.IA == False and v.keyPressed == True and v.keyCode == pygame.K_DOWN or v.IA == True and (v.Player == 1 and v.keyPressed == True and v.keyCode == pygame.K_DOWN or v.layer == 2 and v.Direction2 == 2):
+					if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_DOWN or v.layer == 2 and v.Direction2 == 2):
 						v.CP -= 1
 						if v.Player == 1:
 							v.ybase += 50
@@ -844,7 +789,7 @@ def Game():
 							CDD2()
 							v.Direction2 = 2
 						# Move.play()
-					if v.IA == False and v.keyPressed == True and v.keyCode == pygame.K_LEFT or v.IA == True and (v.Player == 1 and v.keyPressed == True and v.keyCode == pygame.K_LEFT or v.Player == 2 and v.Direction2 == 3):
+					if v.IA == False and v.keyCode == pygame.K_LEFT or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_LEFT or v.Player == 2 and v.Direction2 == 3):
 						v.CP -= 1
 						if v.Player == 1:
 							v.xbase -= 50
@@ -855,7 +800,7 @@ def Game():
 							CDD2()
 							v.Direction2 = 3
 						# Move.play()
-					if v.IA == False and v.keyPressed == True and v.keyCode == pygame.K_RIGHT or v.IA == True and (v.Player == 1 and v.keyPressed == True and v.keyCode == pygame.K_RIGHT or v.Player == 2 and v.Direction2 == 4):
+					if v.IA == False and v.keyCode == pygame.K_RIGHT or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_RIGHT or v.Player == 2 and v.Direction2 == 4):
 						v.CP -= 1
 						if v.Player == 1:
 							v.xbase += 50
@@ -900,7 +845,7 @@ def Game():
 					v.ColorMaster = fill(200)
 
 					v.font = textSize(50)
-					text(v.CP, 450, 490, 500)
+					text(v.CP, 450, 490)
 
 				#Déplacements lorsque CP est inférieur à 1 (Joueur n'a plus de déplacements)
 				if v.CP < 1:
@@ -950,17 +895,67 @@ def Game():
 		# textAlign(RIGHT)
 		v.font = textSize(15)
 		v.ColorMaster = fill(255)
-		text(v.TimerMin+":"+v.TimerSec, width-10, 20)
+		text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-10, 20)
 
 
 
+while MainGameMaster == True:
+	#  -----  ZONE DE TEST  -----  #
+
+	# image(BackgMenu, 0, 0)
+	# delay(1000)
+	# background(150, 100, 150)
+	# ColorMaster = fill(10, 255, 100)
+	# font = textSize(30)
+	# i = random(0, 42)
+	# text(str(i), 20, 20)
+	# ColorMaster = fill(255, 0, 0)
+	# rect(50, 50, 10, 20)
+	# ColorMaster = fill(255, 255, 0)
+	# triangle(250, 0, 0, 250, 500, 250)
+	# ColorMaster = fill(0)
+	# ellipse(250, 250, 50, 50)
 
 
 
+	# -----  FIN ZONE TEST -----  #
 
+	# MusicBackground() # On charge la musique du jeu
 
-# def load_image(name):
-# 	path = os.path.join(main_dir, 'data', name)
-# 	return pygame.image.load(path).convert()
-# if __name__ == '__main__':
-# 	main()
+	# Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
+	
+	if v.toshow == "Menu":
+		MenuMain()
+	if v.toshow == "MenuPlay":
+		MenuPlay()
+	if v.toshow == "MenuEditor":
+		MenuEditor()
+	if v.toshow == "Game":
+		Game()
+	if v.toshow == "Reset":
+		Reset()
+
+	# if v.toshow == "ServerJoin":
+	# 	ServerJoin()
+	# if v.toshow == "ServerCreate":
+	# 	ServerCreate()
+	if v.toshow == "MenuMaps":
+		MenuMaps()
+	if v.toshow == "Options":
+		Options()
+	if v.toshow == "Credits":
+		Credits()
+
+	pygame.display.flip() # Acualisation de la page
+
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			MainGameMaster = False
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_ESCAPE:
+				MainGameMaster = False
+			else:
+				keyPressed(event.key) # On verifie si une touche a été appuyée
+		if event.type == pygame.KEYUP:
+			v.keyCode = 0
+pygame.quit()

@@ -1,16 +1,22 @@
 import pygame
 
 def init():
-	global Player, Act, xabse, ybase, xbase2, DefaultVie, vietank1, vietank2, Direction, Direction2, CP, turn, arrows, choix, choix2, choix3, xbasem, ybasem, CB, MLock
+	global Player, Act, xbase, ybase, xbase2, ybase2, DefaultVie, vietank1, vietank2, Direction, Direction2, CP, turn, arrows, choix, choix2, choix3, xbasem, ybasem, CB, MLock
 	global lock, lock2, lock3, TestCadriD, TD2, Bas, Haut, Droite, Gauche, end, toshow, Menu, bord, DegatsLaveTank, ChangementSaison, Changementok, Winner, Selectile
 	global Selectedtile, LockTile, XCursorEdit, YCursorEdit, InteracMap, SelectMap, MenuOpt, SMenuOpt, MusicVOL, SoundVOL, TSel, TypeDeSon, Design, SummerDay, WinterDay
 	global DefaultMin, DefaultSec, Link, TimerSec, TimerMin, ComptTimer, FrameRate, DecompteMusique, Collision
 	global fontName, fontSize, font, screen
 	global BackMenu, BackOpt, Credits, arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG
-	global arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW
+	global arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW, STile
 	global STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, BalleU, BalleD, BalleR, BalleL, BalleExplosion
+	global IA, inDev, MaxDepl, max, needed, diffX, diffY, DeplNeed, Traj
+	global ServerPort, ServerIP, IsMulti, AmIServer, AmIClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, SdataList, CdataList
+	global width, height
 
 	screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
+
+	width = 0
+	height = 0
 
 	BackgMenu = pygame.image.load("data/BackMenu.png").convert()
 	BackOpt = pygame.image.load("data/Options.png").convert()
@@ -41,6 +47,8 @@ def init():
 	ContHGW = pygame.image.load("data/Lavehaut+gaucheW.png").convert_alpha()
 	ContBDW = pygame.image.load("data/Lavebas+droiteW.png").convert_alpha()
 	ContBGW = pygame.image.load("data/Lavebas+gaucheW.png").convert_alpha()
+
+	STile = pygame.image.load("data/Selection Tank2.png").convert_alpha()
 
 	STank1 = pygame.image.load("data/Selection Tank1.png").convert_alpha()
 	STank2 = pygame.image.load("data/Selection Tank2.png").convert_alpha()
@@ -141,8 +149,24 @@ def init():
 	FrameRate = 60
 	DecompteMusique = 19 * 60 + 1
 
+	ServerPort = 1042
+	ServerIP = ""
+
+	IsMulti = False
+	AmIServer = False
+	AmIClient = False
+
+	Winner = 0
+	DistFeu1 = 0
+	DistFeu2 = 0
+	IsFire1 = 0
+	IsFire2 = 0
+
+	SdataList = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+	CdataList = ["0", "0", "0", "0", "0", "0"]
+
 	#Maps de base lorsqu'on édite une map dans le menu editeur
-	#Collision = {
+	#Collision = [
 	#  0, 2, 2, 4, 4, 0, 0, 1, 1, 3, 
 	#  0, 2, 2, 2, 4, 4, 0, 0, 0, 3, 
 	#  0, 1, 2, 2, 0, 0, 0, 3, 0, 0, 
@@ -153,8 +177,8 @@ def init():
 	#  0, 0, 3, 0, 0, 0, 2, 2, 1, 0, 
 	#  3, 0, 0, 0, 4, 4, 2, 2, 2, 0, 
 	#  3, 1, 1, 0, 0, 4, 4, 2, 2, 0
-	#}
-	Collision = {
+	#]
+	Collision = [
 	  0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -165,4 +189,24 @@ def init():
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	}
+	]
+
+	IA = False
+	inDev = True
+	MaxDepl = 0
+	max = 0
+	needed = 1
+	diffX = 0
+	diffY = 0
+	DeplNeed = 0
+	Traj = {
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0}

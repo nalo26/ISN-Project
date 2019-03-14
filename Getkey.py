@@ -81,7 +81,7 @@ def keyPressed(keyCode):
 			v.toshow = "Game"
 		if keyCode == pygame.K_RIGHT and v.MenuOpt == 0:
 			v.MenuOpt = v.SMenuOpt
-		if keyCode == pygame.K_RIGHT and v.MenuOpt > 0:
+		if keyCode == pygame.K_TAB and v.MenuOpt > 0:
 			v.MenuOpt = 0
 
 	if v.toshow == "Game":

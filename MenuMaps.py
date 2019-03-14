@@ -1,101 +1,106 @@
+import pygame, json
+import settings as v
 from ProcToPy import *
+v.init()
 
 def MenuMaps():
-	from Game import *
 	#Menu de sélection des maps
 
 	# /!\ Don't touch my creation Mouhahahahaha /!\
-	if InteracMap == 0:
+	if v.InteracMap == 0:
 		background(0)
-		textAlign(CENTER)
-		image(BackgMenu, screen,0,0)
-		font = textSize(20)
+		# textAlign(CENTER)
+		image(v.BackgMenu, 0, 0)
+		v.font = textSize(20)
 		text("Play with Map N°1", 250, 200)
 		text("Play with Map N°2", 250, 300)
 		text("Play with Map N°3", 250, 400)
-		font = textSize(14)
+		v.font = textSize(14)
 		text("Press arrows to select your folder and press RIGHT to load file", 250, 515)
-		textAlign(LEFT)
+		# textAlign(LEFT)
 
 		CurseurMenuMaps()
 
 		#Chargement des maps
-		# Map1 = loadJSONObject("Map1.json")
-		# Map2 = loadJSONObject("Map2.json")
-		# Map3 = loadJSONObject("Map3.json")
+		with open("data/Map1.json", 'r') as mf:
+			Map1 = json.load(mf)
+		with open("data/Map2.json", 'r') as mf:
+			Map2 = json.load(mf)
+		with open("data/Map1.json", 'r') as mf:
+			Map2 = json.load(mf)
 
 		#Remplace la map par défault par celle sélectionée
-		if keyCode == RIGHT:
-			for i in range(100):
+		if v.keyCode == pygame.K_RIGHT:
+			for i in range(99):
 				CollisionID = str(i)
-				if SelectMap == 1:
-					pass
-					# Collision[i] = Map1.getInt(CollisionID)
-				if SelectMap == 2:
-					pass
-					# Collision[i] = Map2.getInt(CollisionID)
-				if SelectMap == 3:
-					pass
-					# Collision[i] = Map3.getInt(CollisionID)
-			toshow = "Game"
+				if v.SelectMap == 1:
+					v.Collision[i] = Map1[CollisionID]
+				if v.SelectMap == 2:
+					v.Collision[i] = Map2[CollisionID]
+				if v.SelectMap == 3:
+					v.Collision[i] = Map3[CollisionID]
+			v.toshow = "Game"
 
-	if InteracMap == 1:
+	if v.InteracMap == 1:
 		background(0)
-		textAlign(CENTER)
-		image(BackgMenu, screen,0,0)
-		ColorMaster = fill(101,149,99)
-		font = textSize(20)
+		# textAlign(CENTER)
+		image(v.BackgMenu, 0, 0)
+		v.ColorMaster = fill(101,149,99)
+		v.font = textSize(20)
 		text("Remplace Map N°1", 250, 200)
 		text("Remplace Map N°2", 250, 300)
 		text("Remplace Map N°3", 250, 400)
-		font = textSize(13)
+		v.font = textSize(13)
 		text("Press arrows to select a backup location and press Enter to save file", 250, 515)
-		textAlign(LEFT)
+		# textAlign(LEFT)
 
 		CurseurMenuMaps()
 
 		#Le joueur choisir d'enregistrer sa Map 
-		if keyCode == ENTER:
-
-			if SelectMap == 1:
+		if v.keyCode == pygame.K_RETURN:
+			'''
+			if v.SelectMap == 1:
 				# Map1 = new JSONObject()
 				pass
-			if SelectMap == 2:
+			if v.SelectMap == 2:
 				# Map2 = new JSONObject()
 				pass
-			if SelectMap == 3:
+			if v.SelectMap == 3:
 				# Map3 = new JSONObject()
 				pass
+			'''
 
 			for i in range(100):
 				ColisionID = str(i)
-				if SelectMap == 1:
-					Map1.setInt(ColisionID, Collision[i])
-				if SelectMap == 2:
-					Map2.setInt(ColisionID, Collision[i])
-				if SelectMap == 3:
-					Map3.setInt(ColisionID, Collision[i])
+				if v.SelectMap == 1:
+					Map1[CollisionID] = v.Collision[i]
+				if v.SelectMap == 2:
+					Map2[CollisionID] = v.Collision[i]
+				if v.SelectMap == 3:
+					Map3[CollisionID] = v.Collision[i]
 
-			if SelectMap == 1:
-				saveJSONObject(Map1, "data/Map1.json")
-			if SelectMap == 2:
-				saveJSONObject(Map2, "data/Map2.json")
-			if SelectMap == 3:
-				saveJSONObject(Map3, "data/Map3.json")
+			if v.SelectMap == 1:
+				with open("data/Map1.json", 'w') as mf:
+					json.dump(Map1, mf)
+			if v.SelectMap == 2:
+				with open("data/Map2.json", 'w') as mf:
+					json.dump(Map2, mf)
+			if v.SelectMap == 3:
+				with open("data/Map2.json", 'w') as mf:
+					json.dump(Map3, mf)
 
-			toshow = "Menu"
-			InteracMap = 0
+			v.toshow = "Menu"
+			v.InteracMap = 0
 
 def CurseurMenuMaps():
-	from Game import *
 	#Déplacement du curseur de choix
-	if keyCode == DOWN and keyPressed == True and SelectMap < 3:
-		SelectMap += 1
+	if v.keyCode == pygame.K_DOWN and v.SelectMap < 3:
+		v.SelectMap += 1
 		delay(150)
-	if keyCode == UP and keyPressed == True and SelectMap > 1:
-		SelectMap -= 1
+	if v.keyCode == pygame.K_UP and v.SelectMap > 1:
+		v.SelectMap -= 1
 		delay(150)
 
 	#Souligne le choix du joueur
-	image(BalleR, screen, 100, SelectMap*100+70)
-	image(BalleL, screen, 350, SelectMap*100+70)
+	image(v.BalleR, 100, v.SelectMap*100+70)
+	image(v.BalleL, 350, v.SelectMap*100+70)

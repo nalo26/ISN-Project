@@ -210,3 +210,9 @@ v 3.0.2, 13/03/2019 à 17h50, Nathan
  - La détection de touches est maintenant entièrement fonctionnel
  - La fonction Menu() aussi
  - Reste tous les autres onglets :D
+ 
+-------------------------------------
+v 3.0.3, 14/03/2019 à 18h36, Nathan
+
+ - Fin de convertion de tous les onglets
+ - Fix de tous les bugs individuellement en cours (c'est long)
