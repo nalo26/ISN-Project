@@ -11,12 +11,15 @@ def init():
 	global STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, BalleU, BalleD, BalleR, BalleL, BalleExplosion
 	global IA, inDev, MaxDepl, max, needed, diffX, diffY, DeplNeed, Traj
 	global ServerPort, ServerIP, IsMulti, AmIServer, AmIClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, SdataList, CdataList
-	global width, height
+	global width, height, ColorMaster, TextAlignMaster
 
 	screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
 
 	width = 0
 	height = 0
+
+	ColorMaster = (255, 255, 255, 0)
+	TextAlignMaster = "LEFT"
 
 	BackgMenu = pygame.image.load("data/BackMenu.png").convert()
 	BackOpt = pygame.image.load("data/Options.png").convert()
@@ -24,8 +27,8 @@ def init():
 
 	arbre = pygame.image.load("data/arbre.png").convert_alpha()
 	Montagne = pygame.image.load("data/Montagne.png").convert_alpha()
-	Eau = pygame.image.load("data/Eau.png").convert()
-	Lave = pygame.image.load("data/Lave.png").convert()
+	Eau = pygame.image.load("data/Eau.png").convert_alpha()
+	Lave = pygame.image.load("data/Lave.png").convert_alpha()
 	ContH = pygame.image.load("data/Lavehaut.png").convert_alpha()
 	ContB = pygame.image.load("data/Lavebas.png").convert_alpha()
 	ContG = pygame.image.load("data/Lavegauche.png").convert_alpha()
@@ -37,8 +40,8 @@ def init():
 
 	arbreW = pygame.image.load("data/arbreW.png").convert_alpha()
 	MontagneW = pygame.image.load("data/MontagneW.png").convert_alpha()
-	EauW = pygame.image.load("data/EauW.png").convert()
-	LaveW = pygame.image.load("data/LaveW.png").convert()
+	EauW = pygame.image.load("data/EauW.png").convert_alpha()
+	LaveW = pygame.image.load("data/LaveW.png").convert_alpha()
 	ContHW = pygame.image.load("data/LavehautW.png").convert_alpha()
 	ContBW = pygame.image.load("data/LavebasW.png").convert_alpha()
 	ContGW = pygame.image.load("data/LavegaucheW.png").convert_alpha()

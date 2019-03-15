@@ -5,7 +5,7 @@ v.init()
 
 def MenuEditor():
 	AffEditeur()
-	v.font = textSize(10)
+	textSize(10)
 	text("SHIFT=Print",450,515)
 	text("ENTER=Switch",450,525)
 	text("TAB=Save",450,535)
@@ -44,9 +44,9 @@ def MenuEditor():
 def AffEditeur (): #Affiche l'éditeur
 	delay(150)
 	background(45, 139, 97)
-	v.ColorMaster = fill(0)
+	fill(0)
 	rect(0, 500, 500, 50)
-	v.ColorMaster = fill(200)
+	fill(200)
 	rect(0, 500, 500, 3)
 	# noStroke()
 
@@ -126,7 +126,7 @@ def AffEditeur (): #Affiche l'éditeur
 				image(v.arbre, x*50, y*50) #Couleur Foret
 
 	#Affiche les terrains proposées en barre d'info
-	v.ColorMaster = fill(45, 139, 97)
+	fill(45, 139, 97)
 	rect(20, 505, 50, 50)
 	image(v.Montagne, 100, 505)
 	image(v.Eau, 180, 505)

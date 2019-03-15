@@ -216,3 +216,12 @@ v 3.0.3, 14/03/2019 à 18h36, Nathan
 
  - Fin de convertion de tous les onglets
  - Fix de tous les bugs individuellement en cours (c'est long)
+ 
+-------------------------------------
+v 3.0.4, 15/03/2019 à 16h39, Nathan
+
+ - Correction bugs:
+	- La lave et les arbres ne s'affichaient pas
+	- Le textAlign n'avait aucun effet
+	- La fonction image() ne prenait pas en compte les recadrages
+	- La taille de la police ne changeait pas malgrès le textSize()

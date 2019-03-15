@@ -3,43 +3,51 @@ from random import *
 import settings as v
 v.init()
 
-ColorMaster = (255, 255, 255)
-
 def fill(r, g=-1, b=-1, a=0): #Red color, Green color, blue color, alpha (transparency)
 	if g == -1 and b == -1:
 		g = r
 		b = r
-	return (r, g, b, a)
-
+	v.ColorMaster = (r, g, b, a)
 
 def rect(x, y, w, h): #x position, y position, width, height
-	# from Game import screen, ColorMaster
 	return pygame.draw.rect(v.screen, v.ColorMaster, [x, y, w, h], 0)
 
 def triangle(a, b, c, d, e, f): #x1, y1, x2, y2, x3, y3 positions
-	# from Game import screen, ColorMaster
 	return pygame.draw.polygon(v.screen, v.ColorMaster, [(a, b), (c, d), (e, f)], 0)
 
 def ellipse(x, y, w, h): #x position, y position, width, height
-	# from Game import screen, ColorMaster
-	return pygame.draw.ellipse(v.screen, v.ColorMaster, [x, y, x+w, y+h], 0)
+	return pygame.draw.ellipse(v.screen, v.ColorMaster, [x, y, w, h], 0)
 
-def image(i, x, y): #image name, screen, x position, y position
-	# from Game import screen
+def image(i, x, y, w=0, h=0): #image name, screen, x position, y position
+	if w == 0 and h == 0:
+		w = i.get_width()
+		h = i.get_height()
+	i = pygame.transform.scale(i, (w, h))
 	return v.screen.blit(i, (x, y))
 
 def text(t, x, y): #text, font, screen, size, color, x position, y position
-	# from Game import screen, font, fontSize, ColorMaster
-	# print(t, ColorMaster)
-	return v.screen.blit(v.font.render(str(t), v.fontSize, v.ColorMaster), (x , y))
+	y_add = v.fontSize * -1
+	if v.textAlignMaster == 'LEFT':
+		x_add = 0
+	if v.textAlignMaster == 'CENTER':
+		x_add = int(((int(len(str(t)))*v.fontSize/2) / 2) * -1 + v.fontSize/2)
+	if v.textAlignMaster == 'RIGHT':
+		x_add = int((int(len(str(t)))*v.fontSize/2) * -1 + v.fontSize/2)
+
+	return v.screen.blit(v.font.render(str(t), v.fontSize, v.ColorMaster), (x+x_add , y+y_add))
 
 def textAlign(a): #align position needed
-	pass
+	if a.upper() == 'LEFT' or a.upper() == 'CENTER' or a.upper() == 'RIGHT':
+		v.textAlignMaster = str(a.upper())
+	else:
+		print('The Align method \''+a.upper()+'\' doesn\'t exist !')
+		v.textAlignMaster = 'LEFT'
+		return pygame.quit()
+
 
 def textSize(s): #size needed
-	# from Game import fontName
 	v.font = pygame.font.SysFont(v.fontName, s)
-	return v.font
+	v.fontSize = s
 
 def random(min, max): #minimum value, maximum value
 	return randint(min, max)
@@ -48,7 +56,6 @@ def delay(t): #time (ms)
 	return pygame.time.delay(t)
 
 def background(r, g=-1, b=-1): #Red color, Green color, blue color
-	# from Game import screen
 	if g == -1 and b == -1:
 		g = r
 		b = r

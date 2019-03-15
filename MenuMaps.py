@@ -9,15 +9,15 @@ def MenuMaps():
 	# /!\ Don't touch my creation Mouhahahahaha /!\
 	if v.InteracMap == 0:
 		background(0)
-		# textAlign(CENTER)
+		textAlign("CENTER")
 		image(v.BackgMenu, 0, 0)
-		v.font = textSize(20)
+		textSize(20)
 		text("Play with Map N°1", 250, 200)
 		text("Play with Map N°2", 250, 300)
 		text("Play with Map N°3", 250, 400)
-		v.font = textSize(14)
+		textSize(14)
 		text("Press arrows to select your folder and press RIGHT to load file", 250, 515)
-		# textAlign(LEFT)
+		textAlign("LEFT")
 
 		CurseurMenuMaps()
 
@@ -43,16 +43,16 @@ def MenuMaps():
 
 	if v.InteracMap == 1:
 		background(0)
-		# textAlign(CENTER)
+		textAlign("CENTER")
 		image(v.BackgMenu, 0, 0)
-		v.ColorMaster = fill(101,149,99)
-		v.font = textSize(20)
+		fill(101,149,99)
+		textSize(20)
 		text("Remplace Map N°1", 250, 200)
 		text("Remplace Map N°2", 250, 300)
 		text("Remplace Map N°3", 250, 400)
-		v.font = textSize(13)
+		textSize(13)
 		text("Press arrows to select a backup location and press Enter to save file", 250, 515)
-		# textAlign(LEFT)
+		textAlign("LEFT")
 
 		CurseurMenuMaps()
 

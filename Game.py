@@ -20,7 +20,7 @@ MainGameMaster = True
 
 pygame.init()
 v.screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
-v.font = pygame.font.SysFont(v.fontName, v.fontSize)
+pygame.font.SysFont(v.fontName, v.fontSize)
 v.width, v.height = pygame.display.get_surface().get_size()
 
 #Chargement des images du jeu
@@ -318,16 +318,23 @@ def CDA():
 		v.CB=0
 
 
-def AffTank(): #Affiche le tank
+def AffTank(): #Affiche le tank et la map
+	# toPrint = '\n'
+	# for l in range(10):
+	# 	for j in range(10):
+	# 		toPrint += str(v.Collision[j+l*10])+" "
+	# 	toPrint += "\n"
+	# print(toPrint)
+
 	delay(50)
 	if v.Design == 1:
 		background(45, 139, 97)
 	if v.Design == 2:
 		background(196, 247, 255)
 	#Affichage barre d'info
-	v.ColorMaster = fill(0)
+	fill(0)
 	rect(0, 500, 500, 50)
-	v.ColorMaster = fill(200)
+	fill(200)
 	rect(0, 500, 500, 3)
 	# noStroke()
 
@@ -336,6 +343,7 @@ def AffTank(): #Affiche le tank
 			Ax = x
 			Ay = y * 10
 			A = Ax + Ay
+
 			if v.Collision[int(A)] == 1 and v.Design==1:
 				image(v.Montagne, x*50, y*50)
 			if v.Collision[int(A)] == 1 and v.Design==2:
@@ -372,89 +380,89 @@ def AffTank(): #Affiche le tank
 					if v.Design == 2:
 						image(v.ContDW, x*50, y*50)
 					v.Droite = True
-		#Coins/angles lave
-		#Eté
-		if v.Haut == True and v.Droite == True and v.Design == 1:
-			image(v.ContHD, x*50, y*50)
-		if v.Haut == True and v.Gauche == True and v.Design == 1:
-			image(v.ContHG, x*50, y*50)
-		if v.Bas == True and v.Droite == True and v.Design == 1:
-			image(v.ContBD, x*50, y*50)
-		if v.Bas == True and v.Gauche == True and v.Design == 1:
-			image(v.ContBG, x*50, y*50)
+				#Coins/angles lave
+				#Eté
+				if v.Haut == True and v.Droite == True and v.Design == 1:
+					image(v.ContHD, x*50, y*50)
+				if v.Haut == True and v.Gauche == True and v.Design == 1:
+					image(v.ContHG, x*50, y*50)
+				if v.Bas == True and v.Droite == True and v.Design == 1:
+					image(v.ContBD, x*50, y*50)
+				if v.Bas == True and v.Gauche == True and v.Design == 1:
+					image(v.ContBG, x*50, y*50)
 
-		if v.Haut == True and v.Droite==True and v.Design == 2:
-			image(v.ContHDW, x*50, y*50)
-		if v.Haut == True and v.Gauche==True and v.Design == 2:
-			image(v.ContHGW, x*50, y*50)
-		if v.Bas == True and v.Droite==True and v.Design == 2:
-			image(v.ContBDW, x*50, y*50)
-		if v.Bas == True and v.Gauche==True and v.Design == 2:
-			image(v.ContBGW, x*50, y*50)
+				if v.Haut == True and v.Droite==True and v.Design == 2:
+					image(v.ContHDW, x*50, y*50)
+				if v.Haut == True and v.Gauche==True and v.Design == 2:
+					image(v.ContHGW, x*50, y*50)
+				if v.Bas == True and v.Droite==True and v.Design == 2:
+					image(v.ContBDW, x*50, y*50)
+				if v.Bas == True and v.Gauche==True and v.Design == 2:
+					image(v.ContBGW, x*50, y*50)
 
-		#Remise a 0 de la détection des tiles autours du blocs de lave
-		v.Bas = False
-		v.Haut = False
-		v.Droite = False
-		v.Gauche = False
+				#Remise a 0 de la détection des tiles autours du blocs de lave
+				v.Bas = False
+				v.Haut = False
+				v.Droite = False
+				v.Gauche = False
 
-		if v.Collision[int(A)] == 3:
-			#Lave
-			if v.Design == 1:
-				image(v.Lave, x*50, y*50)
-			if v.Design == 2:
-				image(v.LaveW, x*50, y*50)
-			#rebors lave
-			if A>10 and v.Collision[int(A-10)] != 3:
+			if v.Collision[int(A)] == 3:
+				#Lave
 				if v.Design == 1:
-					image(v.ContH, x*50, y*50)
+					image(v.Lave, x*50, y*50)
 				if v.Design == 2:
-					image(v.ContHW, x*50, y*50)
-				v.Haut = True
-			if A<90 and v.Collision[int(A+10)] !=3:
-				if v.Design == 1:
-					image(v.ContB, x*50, y*50)
-				if v.Design == 2:
-					image(v.ContBW, x*50, y*50)
-				v.Bas = True
-			if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and v.Collision[int(A-1)] != 3:
-				if v.Design == 1:
-					image(v.ContG, x*50, y*50)
-				if v.Design == 2:
-					image(v.ContGW, x*50, y*50)
-				v.Gauche = True
-			if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and v.Collision[int(A+1)] != 3:
-				if v.Design == 1:
-					image(v.ContD, x*50, y*50)
-				if v.Design == 2:
-					image(v.ContDW, x*50, y*50)
-				v.Droite = True
+					image(v.LaveW, x*50, y*50)
+				#rebors lave
+				if A>10 and v.Collision[int(A-10)] != 3:
+					if v.Design == 1:
+						image(v.ContH, x*50, y*50)
+					if v.Design == 2:
+						image(v.ContHW, x*50, y*50)
+					v.Haut = True
+				if A<90 and v.Collision[int(A+10)] !=3:
+					if v.Design == 1:
+						image(v.ContB, x*50, y*50)
+					if v.Design == 2:
+						image(v.ContBW, x*50, y*50)
+					v.Bas = True
+				if A!=0 and A!=10 and A!=20 and A!=30 and A!=40 and A!=50 and A!=60 and A!=70 and A!=80 and A!=90 and v.Collision[int(A-1)] != 3:
+					if v.Design == 1:
+						image(v.ContG, x*50, y*50)
+					if v.Design == 2:
+						image(v.ContGW, x*50, y*50)
+					v.Gauche = True
+				if A!=9 and A!=19 and A!=29 and A!=39 and A!=49 and A!=59 and A!=69 and A!=79 and A!=89 and A!=99 and v.Collision[int(A+1)] != 3:
+					if v.Design == 1:
+						image(v.ContD, x*50, y*50)
+					if v.Design == 2:
+						image(v.ContDW, x*50, y*50)
+					v.Droite = True
 
-        #Coins/angles lave
-			if v.Haut == True and v.Droite == True and v.Design == 1:
-				image(v.ContHD, x*50, y*50)
-			if v.Haut == True and v.Gauche == True and v.Design == 1:
-				image(v.ContHG, x*50, y*50)
-			if v.Bas == True and v.Droite == True and v.Design == 1:
-				image(v.ContBD, x*50, y*50)
-			if v.Bas == True and v.Gauche == True and v.Design == 1:
-				image(v.ContBG, x*50, y*50)
+	        #Coins/angles lave
+				if v.Haut == True and v.Droite == True and v.Design == 1:
+					image(v.ContHD, x*50, y*50)
+				if v.Haut == True and v.Gauche == True and v.Design == 1:
+					image(v.ContHG, x*50, y*50)
+				if v.Bas == True and v.Droite == True and v.Design == 1:
+					image(v.ContBD, x*50, y*50)
+				if v.Bas == True and v.Gauche == True and v.Design == 1:
+					image(v.ContBG, x*50, y*50)
 
-			if v.Haut == True and v.Droite == True and v.Design == 2:
-				image(v.ContHDW, x*50, y*50)
-			if v.Haut == True and v.Gauche == True and v.Design == 2:
-				image(v.ContHGW, x*50, y*50)
-			if v.Bas == True and v.Droite == True and v.Design == 2:
-				image(v.ContBDW, x*50, y*50)
-			if v.Bas == True and v.Gauche == True and v.Design == 2:
-				image(v.ContBGW, x*50, y*50)
+				if v.Haut == True and v.Droite == True and v.Design == 2:
+					image(v.ContHDW, x*50, y*50)
+				if v.Haut == True and v.Gauche == True and v.Design == 2:
+					image(v.ContHGW, x*50, y*50)
+				if v.Bas == True and v.Droite == True and v.Design == 2:
+					image(v.ContBDW, x*50, y*50)
+				if v.Bas == True and v.Gauche == True and v.Design == 2:
+					image(v.ContBGW, x*50, y*50)
 
-			#Remise a 0 de la détection des tiles autours du blocs de lave
-			v.Bas = False
-			v.Haut = False
-			v.Droite = False
-			v.Gauche = False
-			#Couleur Lave
+				#Remise a 0 de la détection des tiles autours du blocs de lave
+				v.Bas = False
+				v.Haut = False
+				v.Droite = False
+				v.Gauche = False
+				#Couleur Lave
 
 			#Foret/arbre en bas pour recouvrir les tank
 			if v.Collision[int(A)] == 4 and v.Design == 1:
@@ -465,7 +473,7 @@ def AffTank(): #Affiche le tank
 
 	#Affichage dégats lave
 	if v.DegatsLaveTank == True:
-		v.ColorMaster = fill(255, 0, 0, 100)
+		fill(255, 0, 0, 100)
 		rect(0, 0, 500, 500)
 
 	#Selection entourage tank
@@ -475,7 +483,9 @@ def AffTank(): #Affiche le tank
 		image(v.STank2, v.xbase2,v. ybase2)
 
 	#Affichage Tank
-	if v.Collision[int(v.xbase/50+v.ybase/50*10)] != 4 and v.Design != 2:
+	if v.Collision[int(v.xbase/50+v.ybase/50*10)] == 4 and v.Design == 2:
+		pass
+	else:
 		if v.Direction == 1:
 			Tank1 = v.Tank1u 
 			image(Tank1, v.xbase, v.ybase)
@@ -489,7 +499,9 @@ def AffTank(): #Affiche le tank
 			Tank1 = v.Tank1r 
 			image(Tank1, v.xbase, v.ybase)
 
-	if v.Collision[int(v.xbase2/50+v.ybase2/50*10)] != 4 and v.Design != 2:
+	if v.Collision[int(v.xbase2/50+v.ybase2/50*10)] == 4 and v.Design == 2:
+		pass
+	else:
 		if v.Direction2 == 1:
 			Tank2 = v.Tank2u 
 			image(Tank2, v.xbase2, v.ybase2)
@@ -504,26 +516,26 @@ def AffTank(): #Affiche le tank
 			image(Tank2, v.xbase2, v.ybase2)
 
 	#Affichage des vies
-	v.ColorMaster = fill(255)
-	v.font = textSize(14)
+	fill(255)
+	textSize(14)
 	text("V1:", 20, 530)
 	text(":V2", 460, 530)
-	for viebarre1 in range(v.vietank1, v.DefaultVie):
-		v.ColorMaster = fill(150, 32, 32)
+	for viebarre1 in range(v.vietank1):
+		fill(150, 32, 32)
 		image(v.Vies, 12*viebarre1+40, 523, 8, 8)
-	for viebarre2 in range(v.vietank2, v.DefaultVie):
-		v.ColorMaster = fill(150, 32, 32)
-		image(v.Vies, -12*v.viebarre2+460, 523, 8, 8)
+	for viebarre2 in range(v.vietank2):
+		fill(150, 32, 32)
+		image(v.Vies, -12*viebarre2+460, 523, 8, 8)
 
 	#Affichage de la Commande pour accéder aux options en jeu
-	# textAlign(CENTER)
-	v.ColorMaster = fill(255)
+	textAlign("CENTER")
+	fill(255)
 	text("Press Shift", 250, 520)
 	text("For Options", 250, 540)
-	# textAlign(LEFT)
+	textAlign("LEFT")
 
 def Compteur():
-	if v.ComptTimer >= 60 / 20: #S'il s'est écoulé une minute
+	if v.ComptTimer >= 60 : #S'il s'est écoulé une minute
 		v.ComptTimer = 0
 		v.TimerSec -= 1         #Réduire le timer d'une seconde
 		if v.TimerSec == -1:    #Si une minute s'est écoulée
@@ -556,13 +568,13 @@ def Game():
 	Compteur() #Ajouter du temps au compteur dès que nous somme en jeu
 	# Move.amp((float)SoundVOL/1000)
 	# Fire.amp((float)SoundVOL/1000)
-	# textAlign(LEFT)
+	textAlign("LEFT")
 	if v.IsMulti == False or v.IsMulti == True and v.AmIServer == True:
 		if v.Player == 0 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0 or v.Player == 2 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
 			background(0)
 			# stroke(0)
-			v.ColorMaster = fill(0, 0, 255)
-			v.font = textSize(40)
+			fill(0, 0, 255)
+			textSize(40)
 			text("Player 1", 160, 220)
 			text("Press Down", 130, 270)
 			if v.keyCode == pygame.K_DOWN:
@@ -574,8 +586,8 @@ def Game():
 	if v.IsMulti == False or v.IsMulti == True and v.AmIClient == True:
 		if v.Player == 1 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
 			background(0)  
-			v.ColorMaster = fill(255, 0, 0)
-			v.font = textSize(40)
+			fill(255, 0, 0)
+			textSize(40)
 			text("Player 2", 160, 220)
 			text("Press Down", 130, 270)
 			if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True:
@@ -594,13 +606,13 @@ def Game():
 					if v.keyCode == pygame.K_LEFT:#Lorsque le curseur est sur Shoot
 						v.choix2 = 1
 						v.choix3 = 1
-						v.ColorMaster = fill(255, 255, 255, 100) #Souligne en rouge le choix Left
+						fill(255, 255, 255, 100) #Souligne en rouge le choix Left
 						rect(55, 227, 180, 30)
 
 					if v.keyCode == pygame.K_RIGHT: #Lorsque le curseur est sur Move
 						v.choix2 = 2
 						v.choix3 = 1
-						v.ColorMaster = fill(255, 255, 255, 100)#Souligne en rouge le choix Right
+						fill(255, 255, 255, 100)#Souligne en rouge le choix Right
 						rect(263, 227, 180, 30)
 
 					if v.choix3 == 1 and v.keyCode == pygame.K_RETURN: #Lorsque l'action est choisie par Enter
@@ -609,35 +621,35 @@ def Game():
 
 
 					#Affichage du choix des Actions (shoot ou move)
-					v.ColorMaster = fill(0, 0, 0, 125)
+					fill(0, 0, 0, 125)
 					rect(0, 175, 500, 140)
 
-					v.ColorMaster = fill(0, 0, 0, 65)
+					fill(0, 0, 0, 65)
 					rect(0, 175+140, 500, 500-(175+140))
 					rect(0, 0, 500, 175)
 
-					v.ColorMaster = fill(255, 255, 255, 30)
+					fill(255, 255, 255, 30)
 					rect(0, 175+140, 500, 3)
 					rect(0, 172, 500, 3)
 
-					# textAlign(CENTER)
-					v.font = textSize(45)
-					v.ColorMaster = fill(255, 255, 255, 200)
+					textAlign("CENTER")
+					textSize(45)
+					fill(255, 255, 255, 200)
 					ellipse(480, 190, 15, 15)
 					if v.Player == 1:
-						v.ColorMaster = fill(0, 0, 255)
+						fill(0, 0, 255)
 					if v.Player == 2:
-						v.ColorMaster = fill(255, 0, 0)
+						fill(255, 0, 0)
 					ellipse(480, 190, 10, 10)
 
-					v.font = textSize(23)
-					v.ColorMaster = fill(250, 250, 250, 255)
+					textSize(23)
+					fill(250, 250, 250, 255)
 					text("Left(for Attack)     Right(for move)", 250, 250)
-					v.ColorMaster = fill(255)
-					v.font = textSize(20)
+					fill(255)
+					textSize(20)
 					text("Press arrow", 250, 200)
 					text("And then press Enter", 250, 300)
-					# textAlign(LEFT)
+					textAlign("LEFT")
 				elif v.IA == True and v.Player == 2:
 					v.choix = IA("choix") #Si nous jouons contre l'IA et que c'est à elle de jouer, nous lui demandons son choix
 
@@ -658,8 +670,8 @@ def Game():
 					AffTank()
 
 					if v.IsMulti == False or v.IsMulti == True and (v.AmIServer == True and v.Player == 1 or v.AmIClient == True and v.Player == 2) or v.IA == True and v.Player == 1:
-						v.ColorMaster = fill(200)
-						v.font = textSize(20)
+						fill(200)
+						textSize(20)
 						text("Press arrows to shoot your bullet in a direction", 30, 430)
 						text("Then press Enter", 180, 480)
 
@@ -742,8 +754,8 @@ def Game():
 						v.CB = 0
 						v.vietank1 -= 1
 
-					v.ColorMaster = fill(200)
-					v.font = textSize(50)
+					fill(200)
+					textSize(50)
 					text(v.CB, 450, 490)
 
 				if v.CB < 1 and v.lock != 0:
@@ -842,9 +854,9 @@ def Game():
 						v.TestCadriD = 1
 
 					AffTank()
-					v.ColorMaster = fill(200)
+					fill(200)
 
-					v.font = textSize(50)
+					textSize(50)
 					text(v.CP, 450, 490)
 
 				#Déplacements lorsque CP est inférieur à 1 (Joueur n'a plus de déplacements)
@@ -857,29 +869,29 @@ def Game():
 
 	if v.TimerMin <= -1 and v.vietank1 < v.vietank2 or v.vietank1 < 1: #Détéction de victoire (fin de timer / plus de vie)
 		background(0)
-		v.ColorMaster = fill(255, 0, 0)
-		v.font = textSize(40)
-		# textAlign(CENTER)
+		fill(255, 0, 0)
+		textSize(40)
+		textAlign("CENTER")
 		text("Player 2 WIN", 250, 220)
-		v.font = textSize(20)
+		textSize(20)
 		text("Click SPACE to return to menu", 250, 300)
 		v.Winner = 2
 	if v.TimerMin <= -1 and v.vietank2 < v.vietank1 or v.vietank2 < 1:
 		background(0)
-		v.ColorMaster = fill(0, 0, 255)
-		v.font = textSize(40)
-		# textAlign(CENTER)
+		fill(0, 0, 255)
+		textSize(40)
+		textAlign("CENTER")
 		text("Player 1 WIN", 250, 220)
-		v.font = textSize(20)
+		textSize(20)
 		text("Click SPACE to return to menu", 250, 300)
 		v.Winner = 1
 	if v.TimerMin <= -1 and v.vietank1 == v.vietank2: #Egalité
 		background(0)
-		v.ColorMaster = fill(255, 0, 255)
-		v.font = textSize(40)
-		# textAlign(CENTER)
+		fill(255, 0, 255)
+		textSize(40)
+		textAlign("CENTER")
 		text("EQUALITY", 250, 220)
-		v.font = textSize(20)
+		textSize(20)
 		text("Click SPACE to return to menu", 250, 300)
 		v.Winner = -1
 
@@ -892,9 +904,9 @@ def Game():
 	if v.Design > 2:
 		v.Design=1
 	if v.Winner == 0:
-		# textAlign(RIGHT)
-		v.font = textSize(15)
-		v.ColorMaster = fill(255)
+		textAlign("RIGHT")
+		textSize(15)
+		fill(255)
 		text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-10, 20)
 
 
@@ -934,7 +946,6 @@ while MainGameMaster == True:
 		Game()
 	if v.toshow == "Reset":
 		Reset()
-
 	# if v.toshow == "ServerJoin":
 	# 	ServerJoin()
 	# if v.toshow == "ServerCreate":
