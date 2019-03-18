@@ -72,7 +72,7 @@ def init():
 	BalleL = pygame.image.load("data/BalleL.png").convert_alpha()
 	BalleExplosion = pygame.image.load("data/Explosion.png").convert_alpha()
 
-	fontName = "Microsoft Sans Serif"
+	fontName = "Sans Serif"
 	fontSize = 24
 	font = 0
 

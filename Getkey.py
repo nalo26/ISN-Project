@@ -70,7 +70,7 @@ def keyPressed(keyCode):
 		v.toshow = "MenuMaps"
 		v.InteracMap = 1
 
-	if v.toshow == "MenuMaps" and keyCode == pygame.K_RSHIFT or keyCode == pygame.K_LSHIFT:
+	if v.toshow == "MenuMaps" and (keyCode == pygame.K_RSHIFT or keyCode == pygame.K_LSHIFT):
 		v.toshow = "Menu"
 		v.InteracMap = 0
 
@@ -88,6 +88,8 @@ def keyPressed(keyCode):
 		if keyCode == pygame.K_RSHIFT or keyCode == pygame.K_LSHIFT:
 			v.toshow = "Options"
 			v.Link = 1
+		if keyCode == pygame.K_KP_ENTER:
+			v.toshow = "Reset"
 
 	if v.Winner != 0 and keyCode == pygame.K_SPACE:
 		v.toshow = "Reset"

@@ -912,25 +912,6 @@ def Game():
 
 
 while MainGameMaster == True:
-	#  -----  ZONE DE TEST  -----  #
-
-	# image(BackgMenu, 0, 0)
-	# delay(1000)
-	# background(150, 100, 150)
-	# ColorMaster = fill(10, 255, 100)
-	# font = textSize(30)
-	# i = random(0, 42)
-	# text(str(i), 20, 20)
-	# ColorMaster = fill(255, 0, 0)
-	# rect(50, 50, 10, 20)
-	# ColorMaster = fill(255, 255, 0)
-	# triangle(250, 0, 0, 250, 500, 250)
-	# ColorMaster = fill(0)
-	# ellipse(250, 250, 50, 50)
-
-
-
-	# -----  FIN ZONE TEST -----  #
 
 	# MusicBackground() # On charge la musique du jeu
 

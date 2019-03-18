@@ -225,3 +225,9 @@ v 3.0.4, 15/03/2019 à 16h39, Nathan
 	- Le textAlign n'avait aucun effet
 	- La fonction image() ne prenait pas en compte les recadrages
 	- La taille de la police ne changeait pas malgrès le textSize()
+
+-------------------------------------
+v 3.0.5, 18/03/2019 à 9h44, Nathan
+
+ - Fix de la touche shift qui faisait revenir au menu de partout
+ - Ajout de la fonction pour revenir au menu principal n'importe où (ENTER KEYPAD)
