@@ -6,11 +6,8 @@ v.init()
 #Si une touche est appuyé, faire ce qui est demandé en fonction du menu affiché
 # https://www.pygame.org/docs/ref/key.html
 
-def keyPressed(keyCode):
-	# if keyCode == pygame.K_UP:
-	# 	print('space')
+def keyPressed(keyCode, keyUnicode):
 	v.keyCode = keyCode
-	# print(k)
 	
 	if v.toshow == "Menu": #Si le jeu est sur le menu principal
 		if keyCode == pygame.K_UP and v.Menu == 2:
@@ -53,18 +50,24 @@ def keyPressed(keyCode):
 		if v.Menu == 2 and keyCode == pygame.K_RETURN:
 			v.toshow = "MenuMaps"
 			v.IA = True
-
 		if v.Menu == 3 and keyCode == pygame.K_RETURN:
-			v.toshow = "ServerCreate" #Afficher la page de création de serveur
-		if v.Menu == 4 and keyCode == pygame.K_RETURN:
 			v.toshow = "ServerJoin" #Afficher la page pour rejoindre le serveur
 
 
-	# if toshow == "ServerJoin": #récupérer l'entré des touches pour taper l'adresse ip du serveur à rejoindre
-	# 	if (keyCode == BACKSPACE and ServerIP.length() > 0) ServerIP = ServerIP.substring(0, ServerIP.length()-1)
-	# 	else if (keyCode == TAB) toshow = "MenuPlay"
-	# 	else if (keyCode == ENTER and ServerIP.length() > 7) CanJoin = true
-	# 	else if (key != CODED and keyCode != ENTER and keyCode != BACKSPACE) ServerIP += key
+	if v.toshow == "Multiplayer": 
+		if keyCode == pygame.K_TAB:
+			toshow = "MenuPlay"
+		# if keyCode == pygame.K_BACKSPACE and len(v.message) > 0: #récupérer l'entré des touches pour taper dans le tchat
+		# 	v.message = v.message[:(len(v.message)-1)]
+		# elif keyCode == pygame.K_TAB:
+		# 	toshow = "MenuPlay"
+		# elif keyCode == pygame.K_RETURN and len(v.message) > 0:
+		# 	v.SendMessage = True
+		# elif keyCode == pygame.K_RETURN and len(v.message) == 0:
+		# 	pass
+		# elif str(keyUnicode) != '':
+		# 	v.message += str(keyUnicode)
+
 
 	if v.toshow == "MenuEditor" and keyCode == pygame.K_TAB:
 		v.toshow = "MenuMaps"
@@ -97,3 +100,9 @@ def keyPressed(keyCode):
 
 	if v.toshow == "Credits" and keyCode == pygame.K_TAB:
 		v.toshow = "Menu"
+
+
+# def ServerJoin():
+# 	background(0)
+# 	textAlign('LEFT')
+# 	text(v.message, 10, 10)

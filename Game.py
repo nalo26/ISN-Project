@@ -9,6 +9,7 @@ from Menu import *
 from MenuEditeur import *
 from MenuMaps import *
 from Options import *
+from Client import *
 v.init()
 
 MainGameMaster = True
@@ -569,7 +570,7 @@ def Game():
 	# Move.amp((float)SoundVOL/1000)
 	# Fire.amp((float)SoundVOL/1000)
 	textAlign("LEFT")
-	if v.IsMulti == False or v.IsMulti == True and v.AmIServer == True:
+	if v.IsMulti == False or v.IsMulti == True and v.WhoIAm == 1:
 		if v.Player == 0 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0 or v.Player == 2 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
 			background(0)
 			# stroke(0)
@@ -583,7 +584,7 @@ def Game():
 				v.MaxDepl = 0
 				v.needed = 1
 
-	if v.IsMulti == False or v.IsMulti == True and v.AmIClient == True:
+	if v.IsMulti == False or v.IsMulti == True and v.WhoIAm == 2:
 		if v.Player == 1 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
 			background(0)  
 			fill(255, 0, 0)
@@ -595,7 +596,7 @@ def Game():
 				v.Act = 3
 
   #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	if v.Winner == 0 and (v.IsMulti == False or v.IsMulti == True and (v.AmIServer == True and v.Player == 1 or v.AmIClient == True and v.Player == 2)):
+	if v.Winner == 0 and (v.IsMulti == False or v.IsMulti == True and (v.WhoIAm == 1 and v.Player == 1 or v.WhoIAm == 2 and v.Player == 2)):
 		if v.Act > 0:
 
 			AffTank()
@@ -669,7 +670,7 @@ def Game():
 
 					AffTank()
 
-					if v.IsMulti == False or v.IsMulti == True and (v.AmIServer == True and v.Player == 1 or v.AmIClient == True and v.Player == 2) or v.IA == True and v.Player == 1:
+					if v.IsMulti == False or v.IsMulti == True and (v.WhoIAm == 1 and v.Player == 1 or v.WhoIAm == 2 and v.Player == 2) or v.IA == True and v.Player == 1:
 						fill(200)
 						textSize(20)
 						text("Press arrows to shoot your bullet in a direction", 30, 430)
@@ -909,6 +910,8 @@ def Game():
 		fill(255)
 		text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-10, 20)
 
+	if v.IsMulti == True:
+		v.toshow = 'Multiplayer'
 
 
 while MainGameMaster == True:
@@ -917,26 +920,17 @@ while MainGameMaster == True:
 
 	# Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
 	
-	if v.toshow == "Menu":
-		MenuMain()
-	if v.toshow == "MenuPlay":
-		MenuPlay()
-	if v.toshow == "MenuEditor":
-		MenuEditor()
-	if v.toshow == "Game":
-		Game()
-	if v.toshow == "Reset":
-		Reset()
-	# if v.toshow == "ServerJoin":
-	# 	ServerJoin()
-	# if v.toshow == "ServerCreate":
-	# 	ServerCreate()
-	if v.toshow == "MenuMaps":
-		MenuMaps()
-	if v.toshow == "Options":
-		Options()
-	if v.toshow == "Credits":
-		Credits()
+	MenuMain() if v.toshow == "Menu" else ''
+	MenuPlay() if v.toshow == "MenuPlay" else ''
+	MenuEditor() if v.toshow == "MenuEditor" else ''
+	Game() if v.toshow == "Game" else ''
+	Reset() if v.toshow == "Reset" else ''
+	ServerJoin() if v.toshow == "ServerJoin" else ''
+	Multiplayer() if v.toshow == "Multiplayer" else ''
+	MenuMaps() if v.toshow == "MenuMaps" else ''
+	Options() if v.toshow == "Options" else ''
+	Credits() if v.toshow == "Credits" else ''
+
 
 	pygame.display.flip() # Acualisation de la page
 
@@ -947,7 +941,7 @@ while MainGameMaster == True:
 			if event.key == pygame.K_ESCAPE:
 				MainGameMaster = False
 			else:
-				keyPressed(event.key) # On verifie si une touche a été appuyée
+				keyPressed(event.key, event.unicode) # On verifie si une touche a été appuyée
 		if event.type == pygame.KEYUP:
 			v.keyCode = 0
 pygame.quit()

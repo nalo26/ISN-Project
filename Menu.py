@@ -31,19 +31,18 @@ def MenuMain():
 
 def MenuPlay():
 	if v.Menu < 1:
-		v.Menu=1
-	if v.Menu > 4:
-		v.Menu=4
+		v.Menu = 1
+	if v.Menu > 3:
+		v.Menu = 3
 	background(0)
 	textSize(20)
 	textAlign("CENTER")
 	image(v.BackgMenu,0,0)
 	text("1 vs 1 Local", 250, 200)
-	text("1 vs IA Local", 250, 270)
-	text("Create Server", 250, 340)
-	text("Join Server", 250, 410)
+	text("1 vs IA Local", 250, 300)
+	text("Join Server", 250, 400)
 	textSize(15)
 	text("Select with arrows and enter and press tab to back", 250, 515)
-	image(v.BalleR, 100, v.Menu*70+100)
-	image(v.BalleL, 350, v.Menu*70+100)
+	image(v.BalleR, 100, v.Menu*100+70)
+	image(v.BalleL, 350, v.Menu*100+70)
 	delay(10)

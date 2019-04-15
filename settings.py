@@ -10,8 +10,9 @@ def init():
 	global arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW, STile
 	global STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, BalleU, BalleD, BalleR, BalleL, BalleExplosion
 	global IA, inDev, MaxDepl, max, needed, diffX, diffY, DeplNeed, Traj
-	global ServerPort, ServerIP, IsMulti, AmIServer, AmIClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, SdataList, CdataList
+	global ServerPort, ServerIP, NbPlayers, WhoIAm, IsMulti, ThisClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, SdataList, CdataList
 	global width, height, ColorMaster, TextAlignMaster
+	global _y
 
 	screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
 
@@ -72,7 +73,7 @@ def init():
 	BalleL = pygame.image.load("data/BalleL.png").convert_alpha()
 	BalleExplosion = pygame.image.load("data/Explosion.png").convert_alpha()
 
-	fontName = "Sans Serif"
+	fontName = "MS Reference Sans Serif"
 	fontSize = 24
 	font = 0
 
@@ -152,12 +153,15 @@ def init():
 	FrameRate = 60
 	DecompteMusique = 19 * 60 + 1
 
-	ServerPort = 1042
-	ServerIP = ""
+	#Variables Multijoueur
+	ServerPort = "1042"
+	ServerIP = "localhost"
 
+	ThisClient = ''
+
+	WhoIAm = 0
+	NbPlayers = 0
 	IsMulti = False
-	AmIServer = False
-	AmIClient = False
 
 	Winner = 0
 	DistFeu1 = 0

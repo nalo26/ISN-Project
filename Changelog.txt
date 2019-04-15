@@ -231,3 +231,9 @@ v 3.0.5, 18/03/2019 à 9h44, Nathan
 
  - Fix de la touche shift qui faisait revenir au menu de partout
  - Ajout de la fonction pour revenir au menu principal n'importe où (ENTER KEYPAD)
+ 
+-------------------------------------
+v 3.0.6, 15/04/2019 à 16h10, Nathan
+
+ - Ajout de la fonction de communication multijoueur via PodSixNet
+ - Les variables communiquent correctement, reste à l'intégré comme il faut dans le jeu
