@@ -5,6 +5,7 @@ To test it, just clone the git, extract files, then execute command `python Game
 Needed to run the game:
 - [Python 3](https://www.python.org/downloads/)
 - [Pygame](https://www.pygame.org/) (`pip install pygame`)
+- [PodSixNet](https://github.com/chr15m/PodSixNet) (`pip install PodSixNet`)
 - Json (`pip install json`)
 
 This game is building for a school project, nothing incredible so far :D
@@ -19,6 +20,7 @@ Pour le tester, clonez le repertoire, décompressez le, puis tapez `python Game.
 Nécessaires pour lancer le jeu:
 - [Python 3](https://www.python.org/downloads/)
 - [Pygame](https://www.pygame.org/) (`pip install pygame`)
+- [PodSixNet](https://github.com/chr15m/PodSixNet) (`pip install PodSixNet`)
 - Json (`pip install json`)
 
 Ce jeu est développé pour un projet scolaire, rien d'incroyable donc !
