@@ -182,8 +182,8 @@ def CDD():
 
 def CDD2():
 	#Cadrillage Des Déplacements (Tanks)
-	CDDx = xbase2/50
-	CDDy = ybase2/50*10
+	CDDx = v.xbase2/50
+	CDDy = v.ybase2/50*10
 	CDD = CDDx + CDDy
 	#Permet de fixer les bug sur les déplacements avec la glace
 	v.bord = False
@@ -197,7 +197,7 @@ def CDD2():
 			v.CP += 1
 	if CDDy < 0:
 		CDD += 10
-		vybase2 += 50
+		v.base2 += 50
 		v.CP += 1
 		if v.Collision[int(CDD)] == 2:
 			v.CP += 1
@@ -565,13 +565,22 @@ def Reset():
 	v.toshow = "Menu"
 
 def Game():
+	# print(v.WhoIAm, v.Player, v.Act, v.Player1IG, v.Player2IG)
+
+	if v.Act == 0:
+		v.Act = 3
+		v.Player1IG = False
+		v.Player2IG = False
+		v.Player += 1
+		if v.Player > 2:
+			v.Player = 1
 	v.ComptTimer += 1
 	Compteur() #Ajouter du temps au compteur dès que nous somme en jeu
 	# Move.amp((float)SoundVOL/1000)
 	# Fire.amp((float)SoundVOL/1000)
 	textAlign("LEFT")
-	if v.IsMulti == False or v.IsMulti == True and v.WhoIAm == 1:
-		if v.Player == 0 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0 or v.Player == 2 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
+	if v.IsMulti == False or v.IsMulti == True and v.state == 'ingame' and v.WhoIAm == 1:
+		if v.Player == 1 and v.Act == 3 and v.Player1IG == False and v.vietank1 > 0 and v.vietank2 > 0:
 			background(0)
 			# stroke(0)
 			fill(0, 0, 255)
@@ -579,59 +588,56 @@ def Game():
 			text("Player 1", 160, 220)
 			text("Press Down", 130, 270)
 			if v.keyCode == pygame.K_DOWN:
-				v.Player = 1
-				v.Act = 3
+				v.Player1IG = True
+				# v.Player = 1
+				# v.Act = 3
 				v.MaxDepl = 0
 				v.needed = 1
 
-	if v.IsMulti == False or v.IsMulti == True and v.WhoIAm == 2:
-		if v.Player == 1 and v.Act == 0 and v.vietank1 > 0 and v.vietank2 > 0:
+	if v.IsMulti == False or v.IsMulti == True and v.state == 'ingame' and v.WhoIAm == 2:
+		print('step 1', v.Player, v.Act, v.Player2IG, v.vietank1, v.vietank2)
+		if v.Player == 2 and v.Act == 3 and v.Player2IG == False and v.vietank1 > 0 and v.vietank2 > 0:
+			# print('step 2')
 			background(0)  
 			fill(255, 0, 0)
 			textSize(40)
 			text("Player 2", 160, 220)
 			text("Press Down", 130, 270)
 			if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True:
-				v.Player = 2 
-				v.Act = 3
-
+				v.Player2IG = True
+		print('step 1', v.Player, v.Act, v.Player2IG, v.vietank1, v.vietank2)
   #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	if v.Winner == 0 and (v.IsMulti == False or v.IsMulti == True and (v.WhoIAm == 1 and v.Player == 1 or v.WhoIAm == 2 and v.Player == 2)):
-		if v.Act > 0:
+		if v.Act > 0 and ((v.Player == 1 and v.Player1IG == True) or (v.Player == 2 and v.Player2IG == True)):
 
 			AffTank()
 
-			if v.choix == 0: #Choix des actions (Left=Shoot/Right=Move)
+			if v.choix == 0: #Choix des actions (Left = Shoot / Right = Move)
 				if v.IA == False or v.IA == True and v.Player == 1: #Si nous sommes en 1v1 contre l'IA et que c'est à nous de jouer
 
 					if v.keyCode == pygame.K_LEFT:#Lorsque le curseur est sur Shoot
 						v.choix2 = 1
 						v.choix3 = 1
-						fill(255, 255, 255, 100) #Souligne en rouge le choix Left
-						rect(55, 227, 180, 30)
-
 					if v.keyCode == pygame.K_RIGHT: #Lorsque le curseur est sur Move
 						v.choix2 = 2
 						v.choix3 = 1
-						fill(255, 255, 255, 100)#Souligne en rouge le choix Right
-						rect(263, 227, 180, 30)
-
 					if v.choix3 == 1 and v.keyCode == pygame.K_RETURN: #Lorsque l'action est choisie par Enter
 						v.choix = v.choix2
 						v.choix3 = 0
 
 
 					#Affichage du choix des Actions (shoot ou move)
-					fill(0, 0, 0, 125)
+					
+					fill(0)
 					rect(0, 175, 500, 140)
-
-					fill(0, 0, 0, 65)
-					rect(0, 175+140, 500, 500-(175+140))
-					rect(0, 0, 500, 175)
-
-					fill(255, 255, 255, 30)
-					rect(0, 175+140, 500, 3)
+					fill(255)
 					rect(0, 172, 500, 3)
+					rect(0, 315, 500, 3)
+					fill(100)
+					if v.choix2 == 1: #Met en surbrillance le choix Left
+						rect(50, 227, 185, 30)
+					if v.choix2 == 2: #Met en surbrillance le choix Right
+						rect(270, 227, 190, 30)
 
 					textAlign("CENTER")
 					textSize(45)
@@ -641,7 +647,7 @@ def Game():
 						fill(0, 0, 255)
 					if v.Player == 2:
 						fill(255, 0, 0)
-					ellipse(480, 190, 10, 10)
+					ellipse(480-1, 190-1, 12, 12)
 
 					textSize(23)
 					fill(250, 250, 250, 255)
@@ -859,13 +865,14 @@ def Game():
 
 					textSize(50)
 					text(v.CP, 450, 490)
-
+# 
 				#Déplacements lorsque CP est inférieur à 1 (Joueur n'a plus de déplacements)
 				if v.CP < 1:
 					v.choix = 0
 					v.Act -= 1
 					v.ChangementSaison += 1
-	else:
+
+	if v.IsMulti == True and ((v.WhoIAm == 1 and v.Player == 2) or (v.WhoIAm == 2 and v.Player == 1)):
 		AffTank()
 
 	if v.TimerMin <= -1 and v.vietank1 < v.vietank2 or v.vietank1 < 1: #Détéction de victoire (fin de timer / plus de vie)

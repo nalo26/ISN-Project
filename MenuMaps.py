@@ -39,6 +39,8 @@ def MenuMaps():
 					v.Collision[i] = Map2[CollisionID]
 				if v.SelectMap == 3:
 					v.Collision[i] = Map3[CollisionID]
+			if v.IsMulti == True:
+				v.state = 'ingame'
 			v.toshow = "Game"
 
 	if v.InteracMap == 1:

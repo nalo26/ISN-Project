@@ -10,9 +10,9 @@ def init():
 	global arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW, STile
 	global STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, BalleU, BalleD, BalleR, BalleL, BalleExplosion
 	global IA, inDev, MaxDepl, max, needed, diffX, diffY, DeplNeed, Traj
-	global ServerPort, ServerIP, NbPlayers, WhoIAm, IsMulti, ThisClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, SdataList, CdataList
+	global ServerPort, ServerIP, NbPlayers, WhoIAm, IsMulti, tour, ThisClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, state
 	global width, height, ColorMaster, TextAlignMaster
-	global _y
+	global _y, Player1IG, Player2IG
 
 	screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
 
@@ -77,8 +77,10 @@ def init():
 	fontSize = 24
 	font = 0
 
-	Player = 0 #Joueur 1 et 2 changement
-	Act = 0
+	Player = 1 #Joueur 1 et 2 changement
+	Act = 3
+	Player1IG = False
+	Player2IG = False
 	xbase = 0 #Emplacement tank 1 (0, 0)
 	ybase = 0
 	xbase2 = 450 #Emplacement tank 2 (450, 450)
@@ -158,19 +160,18 @@ def init():
 	ServerIP = "localhost"
 
 	ThisClient = ''
-
+	tour = 1
 	WhoIAm = 0
 	NbPlayers = 0
 	IsMulti = False
+
+	state = 'offline'
 
 	Winner = 0
 	DistFeu1 = 0
 	DistFeu2 = 0
 	IsFire1 = 0
 	IsFire2 = 0
-
-	SdataList = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
-	CdataList = ["0", "0", "0", "0", "0", "0"]
 
 	#Maps de base lorsqu'on édite une map dans le menu editeur
 	#Collision = [

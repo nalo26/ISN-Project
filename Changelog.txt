@@ -237,3 +237,13 @@ v 3.0.6, 15/04/2019 à 16h10, Nathan
 
  - Ajout de la fonction de communication multijoueur via PodSixNet
  - Les variables communiquent correctement, reste à l'intégré comme il faut dans le jeu
+ 
+-------------------------------------
+v 3.0.7, 16/04/2019 à 16h38, Nathan
+
+ - Ajout de la séléction de map en multijoueur 
+ - Ajout du transfert de la map en multijoueur
+ - Ajout d'un écran d'attente en multi (lors de séléction map & joueur manquant)
+ - Refonte graphique de la séléction d'action
+ - Intégration plus ou moins réussi du tour par tour en multijoueur (bug inexpliqué lors du changement de joueur)
+ 

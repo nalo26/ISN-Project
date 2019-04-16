@@ -16,16 +16,16 @@ def triangle(a, b, c, d, e, f): #x1, y1, x2, y2, x3, y3 positions
 	return pygame.draw.polygon(v.screen, v.ColorMaster, [(a, b), (c, d), (e, f)], 0)
 
 def ellipse(x, y, w, h): #x position, y position, width, height
-	return pygame.draw.ellipse(v.screen, v.ColorMaster, [x, y, w, h], 0)
+	return pygame.draw.ellipse(v.screen, v.ColorMaster, [x-(w/2), y-(h/2), w, h], 0)
 
-def image(i, x, y, w=0, h=0): #image name, screen, x position, y position
+def image(i, x, y, w=0, h=0): #image name, x position, y position, width, height
 	if w == 0 and h == 0:
 		w = i.get_width()
 		h = i.get_height()
 	i = pygame.transform.scale(i, (w, h))
 	return v.screen.blit(i, (x, y))
 
-def text(t, x, y): #text, font, screen, size, color, x position, y position
+def text(t, x, y): #text, x position, y position
 	y_add = v.fontSize * -1
 	if v.textAlignMaster == 'LEFT':
 		x_add = 0

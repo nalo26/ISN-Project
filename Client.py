@@ -26,7 +26,7 @@ class Client(ConnectionListener):
 		# envoyer toutes les informations au serveur
 		if v.WhoIAm == 1:
 			connection.Send({"action": "dataPlayer", "dataPlayer": {"vie": str(v.vietank1), "x": str(v.xbase), "y": str(v.ybase), "IsFire": str(v.IsFire1), "DistFire": str(v.DistFeu1), "Dir": str(v.Direction)}})
-			connection.Send({"action": "dataServer", "dataServer": {"player": str(v.Player), "winner": str(v.Winner), "season": str(v.Design)}}) #todo : map (? & state)
+			connection.Send({"action": "dataServer", "dataServer": {"player": str(v.Player), "winner": str(v.Winner), "season": str(v.Design), "act": str(v.Act), "state": str(v.state), "P1IG": str(v.Player1IG), "P2IG": str(v.Player2IG), "map": v.Collision}}) #todo : map
 		if v.WhoIAm == 2:
 			connection.Send({"action": "dataPlayer", "dataPlayer": {"vie": str(v.vietank2), "x": str(v.xbase2), "y": str(v.ybase2), "IsFire": str(v.IsFire2), "DistFire": str(v.DistFeu2), "Dir": str(v.Direction2)}})
 
@@ -50,6 +50,8 @@ class Client(ConnectionListener):
 			v.IsFire2 = int(data['dataPlayer']['IsFire'])
 			v.DistFeu2 = int(data['dataPlayer']['DistFire'])
 			v.Direction2 = int(data['dataPlayer']['Dir'])
+			# v.Player2IG = data['dataPlayer']['P2IG']
+
 		if v.WhoIAm == 2 and int(data['who']) == 1:
 			v.vietank1 = int(data['dataPlayer']['vie'])
 			v.xbase = int(data['dataPlayer']['x'])
@@ -57,6 +59,7 @@ class Client(ConnectionListener):
 			v.IsFire1 = int(data['dataPlayer']['IsFire'])
 			v.DistFeu1 = int(data['dataPlayer']['DistFire'])
 			v.Direction = int(data['dataPlayer']['Dir'])
+			# v.Player1IG = data['dataPlayer']['P1IG']
 
 	def Network_dataServer(self, data):
 		# récupérer les informations envoyées sur la partie
@@ -64,6 +67,11 @@ class Client(ConnectionListener):
 			v.Player = int(data['dataServer']['player'])
 			v.Winner = int(data['dataServer']['winner'])
 			v.Design = int(data['dataServer']['season'])
+			v.Act = int(data['dataServer']['act'])
+			v.state = str(data['dataServer']['state'])
+			v.Player1IG = data['dataServer']['P1IG']
+			v.Player2IG = data['dataServer']['P2IG']
+			v.Collision = data['dataServer']['map']
 
 	def Network_connected(self, data):
 		print("You are now connected to the server")
@@ -81,6 +89,7 @@ class Client(ConnectionListener):
 def ServerJoin():
 	background(0)
 	v.IsMulti = True
+	v.state = 'picking'
 	v.toshow = "Multiplayer"
 	host = 'localhost'
 	port = '1042'
@@ -89,4 +98,15 @@ def ServerJoin():
 def Multiplayer():
 	v.ThisClient.Loop()
 	sleep(0.001)
-	v.toshow = 'Game'
+	if v.WhoIAm == 1 and v.state == 'picking':
+		v.toshow = 'MenuMaps' 
+	if v.WhoIAm == 1 and v.NbPlayers != 2:
+		background(0)
+		textAlign('CENTER')
+		text("En attente d'un autre joueur...", 250, 250)
+	if v.WhoIAm == 2 and v.state == 'picking':
+		background(0)
+		textAlign('CENTER')
+		text("L'host choisit une map...", 250, 250)
+	if v.state == 'ingame':
+		v.toshow = 'Game'
