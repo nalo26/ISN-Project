@@ -107,7 +107,7 @@ def ServerJoin():
 	v.IsMulti = True
 	v.state = 'picking'
 	v.toshow = "Multiplayer"
-	host = 'localhost'
+	host = '78.218.72.47'
 	port = '1042'
 	v.ThisClient = Client(host, int(port)) #Connection au serveur (fixe)
 
