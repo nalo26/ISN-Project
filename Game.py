@@ -477,7 +477,7 @@ def AffTank(): #Affiche le tank et la map
 		image(v.STank2, v.xbase2,v. ybase2)
 
 	#Affichage Tank
-	if v.Collision[int(v.xbase/50+v.ybase/50*10)] == 4 and v.Design == 2:
+	if int(v.xbase/50+v.ybase/50*10) < 100 and v.Collision[int(v.xbase/50+v.ybase/50*10)] == 4 and v.Design == 2:
 		pass
 	else:
 		if v.Direction == 1:
@@ -493,7 +493,7 @@ def AffTank(): #Affiche le tank et la map
 			Tank1 = v.Tank1r 
 			image(Tank1, v.xbase, v.ybase)
 
-	if v.Collision[int(v.xbase2/50+v.ybase2/50*10)] == 4 and v.Design == 2:
+	if int(v.xbase/50+v.ybase/50*10) < 100 and v.Collision[int(v.xbase2/50+v.ybase2/50*10)] == 4 and v.Design == 2:
 		pass
 	else:
 		if v.Direction2 == 1:
