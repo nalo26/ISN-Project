@@ -247,3 +247,11 @@ v 3.0.7, 16/04/2019 à 16h38, Nathan
  - Refonte graphique de la séléction d'action
  - Intégration plus ou moins réussi du tour par tour en multijoueur (bug inexpliqué lors du changement de joueur)
  
+-------------------------------------
+v 3.0.8, 23/04/2019 à 15h00, Nathan
+
+ - Fix du tour par tour en multijoueur
+ - Fix du timer qui marche vraiment en seconde, plus en nombre de boucle
+ - Fix problèmes mineurs 
+ - Modification de l'animation de la balle, pour pouvoir l'intégrer en multijoueur 
+ - Intégration timer en multijoueur

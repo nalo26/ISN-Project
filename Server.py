@@ -25,6 +25,12 @@ class ClientChannel(Channel):
     def Network_dataServer(self, data):
         self._server.SendToAll({"action": "dataServer", "dataServer": data['dataServer'], "who": self.nickname})
 
+    def Network_PosBalle(self, data):
+        self._server.SendToAll({"action": "PosBalle", "PosBalle": data['PosBalle'], "who": self.nickname})
+
+    def Network_Roll2Ended(self, data):
+        self._server.SendToAll({"action": "Roll2Ended", "Roll2Ended": data['Roll2Ended'], "who": self.nickname})
+
     def Network_nickname(self, data):
         self.nickname = data['nickname']
         self._server.SendPlayers()

@@ -309,24 +309,17 @@ def CDA():
 		CDA -= 10
 		v.CB = 0
 
-	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
+	#Si le boulet veux aller dans un endroit qu'il ne peux traverser (Montagne)
 	if v.Collision[int(CDA)] == 1:
 		v.CB=0
 	if v.Collision[int(CDA)] == 1 and v.Design==2:
 		v.Collision[int(CDA)] = 0
-	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Foret)
+	#Si le boulet veux aller dans un endroit qu'il ne peux traverser (Foret)
 	if v.Collision[int(CDA)] == 4:
 		v.CB=0
 
 
 def AffTank(): #Affiche le tank et la map
-	# toPrint = '\n'
-	# for l in range(10):
-	# 	for j in range(10):
-	# 		toPrint += str(v.Collision[j+l*10])+" "
-	# 	toPrint += "\n"
-	# print(toPrint)
-
 	delay(50)
 	if v.Design == 1:
 		background(45, 139, 97)
@@ -523,10 +516,10 @@ def AffTank(): #Affiche le tank et la map
 	text(":V2", 460, 530)
 	for viebarre1 in range(v.vietank1):
 		fill(150, 32, 32)
-		image(v.Vies, 12*viebarre1+40, 523, 8, 8)
+		image(v.Vies, 12*viebarre1+50, 523, 8, 8)
 	for viebarre2 in range(v.vietank2):
 		fill(150, 32, 32)
-		image(v.Vies, -12*viebarre2+460, 523, 8, 8)
+		image(v.Vies, -12*viebarre2+445, 523, 8, 8)
 
 	#Affichage de la Commande pour accéder aux options en jeu
 	textAlign("CENTER")
@@ -535,9 +528,80 @@ def AffTank(): #Affiche le tank et la map
 	text("For Options", 250, 540)
 	textAlign("LEFT")
 
+
+def Bullet():
+	if v.IsMulti == False or v.WhoIAm == v.Player:
+		if v.CB > 0 and v.lock != 0:
+			v.CB -= 1
+			AffTank()
+			if v.Player == 1 and v.Direction == 1 or v.Player == 2 and v.Direction2 == 1:
+				v.ybasem -= 50
+				CDA()
+				Balle = v.BalleU
+				image(Balle, v.xbasem, v.ybasem)
+			if v.Player == 1 and v.Direction == 2 or v.Player == 2 and v.Direction2 == 2:
+				v.ybasem += 50
+				CDA()
+				Balle = v.BalleD
+				image(Balle, v.xbasem, v.ybasem)
+			if v.Player == 1 and v.Direction == 3 or v.Player == 2 and v.Direction2 == 3:
+				v.xbasem -= 50
+				CDA()
+				Balle = v.BalleL
+				image(Balle, v.xbasem, v.ybasem)
+			if v.Player == 1 and v.Direction == 4 or v.Player == 2 and v.Direction2 == 4:
+				v.xbasem += 50
+				CDA()
+				Balle = v.BalleR
+				image(Balle, v.xbasem, v.ybasem)
+			if v.Player == 1 and v.xbasem == v.xbase2 and v.ybasem == v.ybase2:
+				v.CB = 0
+				v.vietank2 -= 1
+			if v.Player == 2 and v.xbasem == v.xbase and v.ybasem == v.ybase:
+				v.CB = 0
+				v.vietank1 -= 1
+
+			fill(200)
+			textSize(50)
+			text(v.CB, 450, 490)
+
+		if v.CB < 1 and v.lock != 0:
+			IsFire1 = False
+			IsFire2 = False
+			v.choix = 0
+			v.lock = 0
+			v.xbasem = -100
+			v.ybasem = -100
+			AffTank()
+			Balle = v.BalleExplosion
+			image(Balle, v.xbasem, v.ybasem)
+			if v.IsMulti == True and v.Player == 2:
+				v.EndRoll2 = True
+			else:
+				v.Act -= 1
+			v.ChangementSaison += 1
+	else:
+		print('bullets')
+		AffTank()
+		if v.Player == 1 and v.Direction == 1 or v.Player == 2 and v.Direction2 == 1:
+			image(v.BalleU, v.xbasem, v.ybasem)
+		if v.Player == 1 and v.Direction == 2 or v.Player == 2 and v.Direction2 == 2:
+			image(v.BalleD, v.xbasem, v.ybasem)
+		if v.Player == 1 and v.Direction == 3 or v.Player == 2 and v.Direction2 == 3:
+			image(v.BalleL, v.xbasem, v.ybasem)
+		if v.Player == 1 and v.Direction == 4 or v.Player == 2 and v.Direction2 == 4:
+			image(v.BalleR, v.xbasem, v.ybasem)
+		delay(100)
+
+
 def Compteur():
-	if v.ComptTimer >= 60 : #S'il s'est écoulé une minute
-		v.ComptTimer = 0
+	if v.Tstart == 0:
+		v.Tstart = pygame.time.get_ticks()
+
+	v.Tdiff = int((pygame.time.get_ticks() - v.Tstart))
+
+	if v.Tdiff/v.ComptTimer >= 1000 : #S'il s'est écoulé une minute
+		v.ComptTimer += 1
 		v.TimerSec -= 1         #Réduire le timer d'une seconde
 		if v.TimerSec == -1:    #Si une minute s'est écoulée
 			v.TimerSec = 59     #Remettre les secondes par défaut
@@ -553,31 +617,49 @@ def MusicBackground():
 def Reset():
 	v.vietank1 = v.DefaultVie
 	v.vietank2 = v.DefaultVie
+	v.Player1IG = False
+	v.Player2IG = False
+	v.ActRemind = 3
+	v.Act = 3
 	v.xbase = 0
 	v.ybase = 0
 	v.xbase2 = 450
 	v.ybase2 = 450
 	v.Menu = 1
-	v.Player = 0
+	v.Player = 1
 	v.TimerSec = v.DefaultSec
 	v.TimerMin = v.DefaultMin
+	v.Tstart = 0
+	v.Tdiff = 0
 	v.Winner = 0
 	v.toshow = "Menu"
 
 def Game():
-	# print(v.WhoIAm, v.Player, v.Act, v.Player1IG, v.Player2IG)
 
-	if v.Act == 0:
+	if v.IsMulti == True and v.WhoIAm == 1 and v.InfoSend == True:
+		v.InfoSend = False
+		v.Act -= 1
+
+	if v.IsMulti == True and v.WhoIAm == 2 and v.Player == 2 and v.Act == v.ActRemind - 1:
+		v.ActRemind = v.Act
+		v.EndRoll2 = False
+
+
+	if ((v.IsMulti == True and v.WhoIAm == 1) or v.IsMulti == False) and v.Act == 0:
+		v.ActRemind = 3
 		v.Act = 3
+		v.EndRoll2 = False
 		v.Player1IG = False
 		v.Player2IG = False
 		v.Player += 1
 		if v.Player > 2:
 			v.Player = 1
-	v.ComptTimer += 1
-	Compteur() #Ajouter du temps au compteur dès que nous somme en jeu
+
+	Compteur() #Calcule du temps restant avant la fin de la partie 
+
 	# Move.amp((float)SoundVOL/1000)
 	# Fire.amp((float)SoundVOL/1000)
+
 	textAlign("LEFT")
 	if v.IsMulti == False or v.IsMulti == True and v.state == 'ingame' and v.WhoIAm == 1:
 		if v.Player == 1 and v.Act == 3 and v.Player1IG == False and v.vietank1 > 0 and v.vietank2 > 0:
@@ -589,24 +671,20 @@ def Game():
 			text("Press Down", 130, 270)
 			if v.keyCode == pygame.K_DOWN:
 				v.Player1IG = True
-				# v.Player = 1
-				# v.Act = 3
 				v.MaxDepl = 0
 				v.needed = 1
 
 	if v.IsMulti == False or v.IsMulti == True and v.state == 'ingame' and v.WhoIAm == 2:
-		print('step 1', v.Player, v.Act, v.Player2IG, v.vietank1, v.vietank2)
 		if v.Player == 2 and v.Act == 3 and v.Player2IG == False and v.vietank1 > 0 and v.vietank2 > 0:
-			# print('step 2')
 			background(0)  
 			fill(255, 0, 0)
 			textSize(40)
 			text("Player 2", 160, 220)
 			text("Press Down", 130, 270)
-			if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True:
+			if (v.IA == False and v.keyCode == pygame.K_DOWN) or v.IA == True:
 				v.Player2IG = True
-		print('step 1', v.Player, v.Act, v.Player2IG, v.vietank1, v.vietank2)
-  #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		
+	#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	if v.Winner == 0 and (v.IsMulti == False or v.IsMulti == True and (v.WhoIAm == 1 and v.Player == 1 or v.WhoIAm == 2 and v.Player == 2)):
 		if v.Act > 0 and ((v.Player == 1 and v.Player1IG == True) or (v.Player == 2 and v.Player2IG == True)):
 
@@ -623,9 +701,11 @@ def Game():
 						v.choix3 = 1
 					if v.choix3 == 1 and v.keyCode == pygame.K_RETURN: #Lorsque l'action est choisie par Enter
 						v.choix = v.choix2
+						v.choix2 = 0
 						v.choix3 = 0
 
-
+					v.IsFire1 = False
+					v.IsFire2 = False
 					#Affichage du choix des Actions (shoot ou move)
 					
 					fill(0)
@@ -693,7 +773,7 @@ def Game():
 							v.Direction = 1
 						if v.Player == 2:
 							triangle(v.xbase2+10, v.ybase2-10, v.xbase2+40, v.ybase2-10, v.xbase2+25, v.ybase2-30)
-							Direction2 = 1
+							v.Direction2 = 1
 					if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_DOWN or v.Player == 2 and v.Direction2 == 2):
 						v.lock2 = 2
 						v.lock3 = 1
@@ -721,58 +801,16 @@ def Game():
 						if v.Player == 2:
 							triangle(v.xbase2+60, v.ybase2+10, v.xbase2+60, v.ybase2+40, v.xbase2+80, v.ybase2+25)
 							v.Direction2 = 4
-					if v.lock3 == 1 and (v.IA == False and v.keyCode == pygame.K_RETURN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_RETURN or v.Player == 2 and v.IsFire2 == 1)):
+					if v.lock3 == 1 and (v.IA == False and v.keyCode == pygame.K_RETURN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_RETURN or v.Player == 2 and v.IsFire2 == True)):
 						# Fire.play(3)
 						v.lock = v.lock2
 						v.lock3 = 0
 						if v.Player == 1:
-							v.IsFire1 = 1
+							v.IsFire1 = True
 						if v.Player == 2:
-							v.IsFire2 = 1
+							v.IsFire2 = True
 
-				if v.CB > 0 and v.lock != 0:
-
-					v.CB -= 1
-					AffTank()
-					if v.lock == 1:
-						v.ybasem -= 50
-						CDA()
-						Balle = v.BalleU
-						image(Balle, v.xbasem, v.ybasem)
-					if v.lock == 2:
-						v.ybasem += 50
-						CDA()
-						Balle = v.BalleD
-						image(Balle, v.xbasem, v.ybasem)
-					if v.lock == 3:
-						v.xbasem -= 50
-						CDA()
-						Balle = v.BalleL
-						image(Balle, v.xbasem, v.ybasem)
-					if v.lock == 4:
-						v.xbasem += 50
-						CDA()
-						Balle = v.BalleR
-						image(Balle, v.xbasem, v.ybasem)
-					if v.Player == 1 and v.xbasem == v.xbase2 and v.ybasem == v.ybase2:
-						v.CB = 0
-						v.vietank2 -= 1
-					if v.Player == 2 and v.xbasem == v.xbase and v.ybasem == v.ybase:
-						v.CB = 0
-						v.vietank1 -= 1
-
-					fill(200)
-					textSize(50)
-					text(v.CB, 450, 490)
-
-				if v.CB < 1 and v.lock != 0:
-					v.choix = 0
-					v.lock = 0
-					AffTank()
-					Balle = v.BalleExplosion
-					image(Balle, v.xbasem, v.ybasem)
-					v.Act -= 1
-					v.ChangementSaison += 1
+				Bullet() #Afficher l'animation de la balle
 
 
 			if v.choix == 2: #Move
@@ -865,15 +903,23 @@ def Game():
 
 					textSize(50)
 					text(v.CP, 450, 490)
-# 
+
 				#Déplacements lorsque CP est inférieur à 1 (Joueur n'a plus de déplacements)
 				if v.CP < 1:
 					v.choix = 0
-					v.Act -= 1
+					if v.IsMulti == True and v.Player == 2:
+						v.EndRoll2 = True
+					else:
+						v.Act -= 1
 					v.ChangementSaison += 1
 
+	print(v.xbasem, v.ybasem)
 	if v.IsMulti == True and ((v.WhoIAm == 1 and v.Player == 2) or (v.WhoIAm == 2 and v.Player == 1)):
-		AffTank()
+		if (v.WhoIAm == 1 and v.Player == 2 and v.xbasem != v.xbase2 and v.ybasem != v.ybase2) or (v.WhoIAm == 2 and v.Player == 1 and v.xbasem != v.xbase and v.ybasem != v.ybase) and v.xbasem != -100 and v.ybasem != -100:
+			Bullet()
+		else:
+			AffTank()
+
 
 	if v.TimerMin <= -1 and v.vietank1 < v.vietank2 or v.vietank1 < 1: #Détéction de victoire (fin de timer / plus de vie)
 		background(0)
@@ -915,7 +961,7 @@ def Game():
 		textAlign("RIGHT")
 		textSize(15)
 		fill(255)
-		text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-10, 20)
+		text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-20, 20)
 
 	if v.IsMulti == True:
 		v.toshow = 'Multiplayer'

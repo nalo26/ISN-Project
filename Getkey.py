@@ -54,9 +54,9 @@ def keyPressed(keyCode, keyUnicode):
 			v.toshow = "ServerJoin" #Afficher la page pour rejoindre le serveur
 
 
-	if v.toshow == "Multiplayer": 
-		if keyCode == pygame.K_TAB:
-			toshow = "MenuPlay"
+	# if v.toshow == "Multiplayer": 
+	# 	if keyCode == pygame.K_TAB:
+	# 		toshow = "MenuPlay"
 		# if keyCode == pygame.K_BACKSPACE and len(v.message) > 0: #récupérer l'entré des touches pour taper dans le tchat
 		# 	v.message = v.message[:(len(v.message)-1)]
 		# elif keyCode == pygame.K_TAB:

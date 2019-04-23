@@ -4,7 +4,7 @@ def init():
 	global Player, Act, xbase, ybase, xbase2, ybase2, DefaultVie, vietank1, vietank2, Direction, Direction2, CP, turn, arrows, choix, choix2, choix3, xbasem, ybasem, CB, MLock
 	global lock, lock2, lock3, TestCadriD, TD2, Bas, Haut, Droite, Gauche, end, toshow, Menu, bord, DegatsLaveTank, ChangementSaison, Changementok, Winner, Selectile
 	global Selectedtile, LockTile, XCursorEdit, YCursorEdit, InteracMap, SelectMap, MenuOpt, SMenuOpt, MusicVOL, SoundVOL, TSel, TypeDeSon, Design, SummerDay, WinterDay
-	global DefaultMin, DefaultSec, Link, TimerSec, TimerMin, ComptTimer, FrameRate, DecompteMusique, Collision
+	global DefaultMin, DefaultSec, Link, TimerSec, TimerMin, Tdiff, Tstart, ComptTimer, FrameRate, DecompteMusique, Collision
 	global fontName, fontSize, font, screen
 	global BackMenu, BackOpt, Credits, arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG
 	global arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW, STile
@@ -12,7 +12,7 @@ def init():
 	global IA, inDev, MaxDepl, max, needed, diffX, diffY, DeplNeed, Traj
 	global ServerPort, ServerIP, NbPlayers, WhoIAm, IsMulti, tour, ThisClient, Winner, DistFeu1, DistFeu2, IsFire1, IsFire2, state
 	global width, height, ColorMaster, TextAlignMaster
-	global _y, Player1IG, Player2IG
+	global _y, Player1IG, Player2IG, EndRoll2, InfoSend, ActRemind
 
 	screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
 
@@ -89,15 +89,15 @@ def init():
 	vietank1 = DefaultVie #Vie des tanks
 	vietank2 = DefaultVie
 	Direction = 2 #Direction des sprites des tanks
-	Direction2 = 2
+	Direction2 = 1
 	CP = 0 #Compteur Placement
 	turn = 0 #Un décompte de random éffectué
 	arrows = 0 #Empèche le joueur de maintenir les flèches pour se déplacer ( un appui = un déplacement )
 	choix = 0 #Validation Choix
 	choix2 = 0 #Choix entre Attaque ou Déplacement
 	choix3 = 0 #Anti Enter*2 ( effet d'un key pressed pour enter car non ascii)
-	xbasem = 0 # Emplacement balle
-	ybasem = 0
+	xbasem = -100 # Emplacement balle
+	ybasem = -100
 	CB = 0 #Compteur Balle
 	MLock = 0
 	lock = 0 #touche de tire vérouillée
@@ -126,11 +126,6 @@ def init():
 	XCursorEdit = 0
 	YCursorEdit = 0
 
-	#MenuMaps
-	# JSONObject Map1
-	# JSONObject Map2
-	# JSONObject Map3
-
 	InteracMap = 0 #Interac(tion)Map permet de définir s'il s'agit d'une lecture (0) ou d'une écriture de map
 	SelectMap = 1 #Annonce quelle map est sélectione
 
@@ -144,12 +139,14 @@ def init():
 	Design = 1
 	SummerDay = 1 
 	WinterDay = 1 
+	Link = 0 #Permet d'accéder au parametres de son en jeu
 	DefaultMin = 5
 	DefaultSec = 0
-	Link = 0 #Permet d'accéder au parametres de son en jeu
 	TimerSec = DefaultSec
 	TimerMin = DefaultMin
-	ComptTimer = 0
+	Tdiff = 0
+	Tstart = 0
+	ComptTimer = 1
 
 	#MusicBackground
 	FrameRate = 60
@@ -161,7 +158,10 @@ def init():
 
 	ThisClient = ''
 	tour = 1
+	EndRoll2 = False
+	InfoSend = False
 	WhoIAm = 0
+	ActRemind = 3
 	NbPlayers = 0
 	IsMulti = False
 
@@ -170,8 +170,8 @@ def init():
 	Winner = 0
 	DistFeu1 = 0
 	DistFeu2 = 0
-	IsFire1 = 0
-	IsFire2 = 0
+	IsFire1 = False
+	IsFire2 = False
 
 	#Maps de base lorsqu'on édite une map dans le menu editeur
 	#Collision = [

@@ -1,5 +1,4 @@
 #Nous voila parti pour quelque chose de plutôt complexe -.-'
-#JSONObject Traj
 import pygame
 import settings as v
 from ProcToPy import *
@@ -27,7 +26,7 @@ def IA(state): # Ici sont effectuées toutes les décisions de l'IA
 			if v.xbase > v.xbase2:
 				v.Direction2 = 4 #Tirer à droite
 		delay(200)
-		v.IsFire2 = 1 #Indiquer qu'elle tire
+		v.IsFire2 = True #Indiquer qu'elle tire
 		return v.Direction2 #Renvoyer la direction de son tir
 
 	if state == "move": #Si elle veut se déplacer
