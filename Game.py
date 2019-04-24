@@ -189,107 +189,107 @@ def CDD2():
 	#Permet de fixer les bug sur les déplacements avec la glace
 	v.bord = False
 
-	if CDD < 100:
-		#Colisions cotés de terrain (Déplacements), si le tank rencontre la limite et qu'il se trouve sur de l'eau CP a besoin de +2 pour revenir a son etat initial
-		if CDDx < 0:
-			CDD += 1
+	
+	#Colisions cotés de terrain (Déplacements), si le tank rencontre la limite et qu'il se trouve sur de l'eau CP a besoin de +2 pour revenir a son etat initial
+	if CDDx < 0:
+		CDD += 1
+		v.xbase2 += 50
+		v.CP += 1
+		if v.Collision[int(CDD)] == 2:
+			v.CP += 1
+	if CDDy < 0:
+		CDD += 10
+		v.base2 += 50
+		v.CP += 1
+		if v.Collision[int(CDD)] == 2:
+			v.CP += 1
+	if CDDx > 9: 
+		CDD -= 1
+		v.xbase2 -= 50
+		v.CP += 1
+		if v.Collision[int(CDD)] == 2:
+			v.CP += 1
+	if CDDy > 90:
+		CDD -= 10
+		v.ybase2 -= 50
+		v.CP += 1
+		if v.Collision[int(CDD)] == 2:
+			v.CP += 1
+
+	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
+	if v.Collision[int(CDD)] == 1:
+		v.TestCadriD = 0
+		v.TD2 = 1
+
+	#Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
+	if v.Collision[int(CDD)] == 3 and v.Design == 1:
+		v.TestCadriD = 0
+		v.TD2 = 1
+
+	if v.Collision[int(CDD)] == 3 and v.Design == 2:
+		v.TestCadriD = 1
+		v.TD2 = 1
+		v.vietank2 -= 1
+		v.DegatsLaveTank = True
+	else:
+		v.DegatsLaveTank = False
+	#Si le tank va dans l'eau (Il est alors ralenti)
+	if v.Collision[int(CDD)] == 2 and v.Design == 1:
+		v.CP -= 1
+	#Si le Tank va sur la glace (Il glisse jusqu'à un rebord ou un terrain différent de la glace)
+	if v.Collision[int(CDD)] == 2 and v.Design == 2:
+
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_RIGHT and v.bord == False:
 			v.xbase2 += 50
-			v.CP += 1
-			if v.Collision[int(CDD)] == 2:
-				v.CP += 1
-		if CDDy < 0:
-			CDD += 10
-			v.base2 += 50
-			v.CP += 1
-			if v.Collision[int(CDD)] == 2:
-				v.CP += 1
-		if CDDx > 9: 
-			CDD -= 1
-			v.xbase2 -= 50
-			v.CP += 1
-			if v.Collision[int(CDD)] == 2:
-				v.CP += 1
-		if CDDy > 90:
-			CDD -= 10
-			v.ybase2 -= 50
-			v.CP += 1
-			if v.Collision[int(CDD)] == 2:
-				v.CP += 1
-
-		#Si le tank veux aller dans un endroit qu'il ne peux traverser (Montagne)
-		if v.Collision[int(CDD)] == 1:
-			v.TestCadriD = 0
-			v.TD2 = 1
-
-		#Si le tank veux aller dans un endroit qu'il ne peux traverser (Lave)
-		if v.Collision[int(CDD)] == 3 and v.Design == 1:
-			v.TestCadriD = 0
-			v.TD2 = 1
-
-		if v.Collision[int(CDD)] == 3 and v.Design == 2:
-			v.TestCadriD = 1
-			v.TD2 = 1
-			v.vietank2 -= 1
-			v.DegatsLaveTank = True
-		else:
-			v.DegatsLaveTank = False
-		#Si le tank va dans l'eau (Il est alors ralenti)
-		if v.Collision[int(CDD)] == 2 and v.Design == 1:
-			v.CP -= 1
-		#Si le Tank va sur la glace (Il glisse jusqu'à un rebord ou un terrain différent de la glace)
-		if v.Collision[int(CDD)] == 2 and v.Design == 2:
-
-			while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_RIGHT and v.bord == False:
-				v.xbase2 += 50
-				if v.xbase2 <= 450:
-					CDDx = v.xbase2/50
-				else:
-					v.bord = True 
-					v.xbase2 -= 50
-				CDD = CDDx + CDDy
-				if v.Collision[int(CDD)] == 1:
-					v.bord = True
-					v.xbase2 -= 50
-				AffTank()
-
-			while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_LEFT and v.bord == False:
+			if v.xbase2 <= 450:
+				CDDx = v.xbase2/50
+			else:
+				v.bord = True 
 				v.xbase2 -= 50
-				if v.xbase2 >= 0:
-					CDDx = v.xbase2/50
-				else:
-					v.bord = True 
-					v.xbase2 += 50
-				CDD = CDDx + CDDy
-				if v.Collision[int(CDD)] == 1:
-					v.bord = True
-					v.xbase2 += 50
-				AffTank()
+			CDD = CDDx + CDDy
+			if v.Collision[int(CDD)] == 1:
+				v.bord = True
+				v.xbase2 -= 50
+			AffTank()
 
-			while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_UP and v.bord == False:
-				v.ybase2 -= 50
-				if v.ybase2 >= 0:
-					CDDy = v.ybase2/50*10
-				else:
-					v.bord = True 
-					v.ybase2 += 50
-				CDD = CDDx + CDDy
-				if Collision[int(CDD)] == 1:
-					v.bord = True
-					v.ybase2 += 50
-				AffTank()
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_LEFT and v.bord == False:
+			v.xbase2 -= 50
+			if v.xbase2 >= 0:
+				CDDx = v.xbase2/50
+			else:
+				v.bord = True 
+				v.xbase2 += 50
+			CDD = CDDx + CDDy
+			if v.Collision[int(CDD)] == 1:
+				v.bord = True
+				v.xbase2 += 50
+			AffTank()
 
-			while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_DOWN and v.bord == False:
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_UP and v.bord == False:
+			v.ybase2 -= 50
+			if v.ybase2 >= 0:
+				CDDy = v.ybase2/50*10
+			else:
+				v.bord = True 
 				v.ybase2 += 50
-				if v.ybase2 <= 450:
-					CDDy = v.ybase2/50*10
-				else:
-					v.bord = True 
-					v.ybase2 -= 50
-				CDD = CDDx + CDDy
-				if v.Collision[int(CDD)] == 1:
-					v.bord = True
-					v.ybase2 -= 50
-				AffTank()
+			CDD = CDDx + CDDy
+			if Collision[int(CDD)] == 1:
+				v.bord = True
+				v.ybase2 += 50
+			AffTank()
+
+		while v.Collision[int(CDD)] == 2 and v.keyCode==pygame.K_DOWN and v.bord == False:
+			v.ybase2 += 50
+			if v.ybase2 <= 450:
+				CDDy = v.ybase2/50*10
+			else:
+				v.bord = True 
+				v.ybase2 -= 50
+			CDD = CDDx + CDDy
+			if v.Collision[int(CDD)] == 1:
+				v.bord = True
+				v.ybase2 -= 50
+			AffTank()
 
 def CDA():
 	#Cadrillage Des Attaques (Bullets)
@@ -819,7 +819,7 @@ def Game():
 				#Initialisation du dès de déplacements
 				if v.CP < 1:
 					v.CP = int(random(0, 10))
-					v.CP = 20
+					#v.CP = 20
 
 				#Déplacements lorsque CP est différent de 0 (Joueur a encore des déplacements)
 				if v.CP > 0:
