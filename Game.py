@@ -811,8 +811,8 @@ def Game():
 			if v.choix == 2: #Move
 				#Initialisation du dès de déplacements
 				if v.CP < 1:
-					v.CP = int(random(0, 10))
-					#v.CP = 20
+					# v.CP = int(random(0, 10))
+					v.CP = 20
 
 				#Déplacements lorsque CP est différent de 0 (Joueur a encore des déplacements)
 				if v.CP > 0:
@@ -830,7 +830,7 @@ def Game():
 							CDD2()
 							v.Direction2 = 1
 						Move.play()
-					if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_DOWN or v.layer == 2 and v.Direction2 == 2):
+					if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_DOWN or v.Player == 2 and v.Direction2 == 2):
 						v.CP -= 1
 						if v.Player == 1:
 							v.ybase += 50
@@ -908,7 +908,6 @@ def Game():
 						v.Act -= 1
 					v.ChangementSaison += 1
 
-	print(v.xbasem, v.ybasem)
 	if v.IsMulti == True and ((v.WhoIAm == 1 and v.Player == 2) or (v.WhoIAm == 2 and v.Player == 1)):
 		if (v.WhoIAm == 1 and v.Player == 2 and v.xbasem != v.xbase2 and v.ybasem != v.ybase2) or (v.WhoIAm == 2 and v.Player == 1 and v.xbasem != v.xbase and v.ybasem != v.ybase) and v.xbasem != -100 and v.ybasem != -100:
 			Bullet()
@@ -956,7 +955,10 @@ def Game():
 		textAlign("RIGHT")
 		textSize(15)
 		fill(255)
-		text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-20, 20)
+		if v.TimerSec < 10:
+			text(str(v.TimerMin)+":0"+str(v.TimerSec), v.width-20, 20)
+		else:
+			text(str(v.TimerMin)+":"+str(v.TimerSec), v.width-20, 20)
 
 	if v.IsMulti == True:
 		v.toshow = 'Multiplayer'
