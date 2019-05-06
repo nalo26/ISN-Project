@@ -15,9 +15,6 @@ v.init()
 MainGameMaster = True
 
 # import processing.sound.*
-# SoundFile Fire
-# SoundFile Move
-# SoundFile MusicBackground
 
 pygame.init()
 v.screen = pygame.display.set_mode((500, 550)) # Définir la taille de l'écran
@@ -73,6 +70,10 @@ v.BalleD = pygame.image.load("data/BalleD.png").convert_alpha()
 v.BalleR = pygame.image.load("data/BalleR.png").convert_alpha()
 v.BalleL = pygame.image.load("data/BalleL.png").convert_alpha()
 v.BalleExplosion = pygame.image.load("data/Explosion.png").convert_alpha()
+
+Fire = pygame.mixer.Sound("data/tankfire.wav")
+Move = pygame.mixer.Sound("data/Move.wav")
+pygame.mixer.music.load("data/MusicBackground.wav")
 
 def CDD():
 	# Cadrillage Des Déplacements (Tanks)
@@ -609,13 +610,6 @@ def Compteur():
 			v.TimerSec = 59     #Remettre les secondes par défaut
 			v.TimerMin -= 1     #Réduire les minutes
 
-def MusicBackground():
-	# MusicBackground.amp(float(v.MusicVOL)/1000) #Volume du son
-	v.DecompteMusique -= 1
-	if v.DecompteMusique < 0 or v.DecompteMusique == 19 * 60: #Boucle musique de fond
-		# MusicBackground.play()
-		v.DecompteMusique = 19*60
-
 def Reset():
 	v.vietank1 = v.DefaultVie
 	v.vietank2 = v.DefaultVie
@@ -637,7 +631,6 @@ def Reset():
 	v.toshow = "Menu"
 
 def Game():
-
 	if v.IsMulti == True and v.WhoIAm == 1 and v.InfoSend == True:
 		v.InfoSend = False
 		v.Act -= 1
@@ -836,7 +829,7 @@ def Game():
 							v.ybase2 -= 50
 							CDD2()
 							v.Direction2 = 1
-						# Move.play()
+						Move.play()
 					if v.IA == False and v.keyCode == pygame.K_DOWN or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_DOWN or v.layer == 2 and v.Direction2 == 2):
 						v.CP -= 1
 						if v.Player == 1:
@@ -847,7 +840,7 @@ def Game():
 							v.ybase2 += 50
 							CDD2()
 							v.Direction2 = 2
-						# Move.play()
+						Move.play()
 					if v.IA == False and v.keyCode == pygame.K_LEFT or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_LEFT or v.Player == 2 and v.Direction2 == 3):
 						v.CP -= 1
 						if v.Player == 1:
@@ -858,7 +851,7 @@ def Game():
 							v.xbase2 -= 50
 							CDD2()
 							v.Direction2 = 3
-						# Move.play()
+						Move.play()
 					if v.IA == False and v.keyCode == pygame.K_RIGHT or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_RIGHT or v.Player == 2 and v.Direction2 == 4):
 						v.CP -= 1
 						if v.Player == 1:
@@ -869,7 +862,7 @@ def Game():
 							v.xbase2 += 50
 							CDD2()
 							v.Direction2 = 4
-						# Move.play()
+						Move.play()
 
 					if v.TestCadriD == 0 and (v.IA == False and v.keyCode == pygame.K_UP or v.IA == True and (v.Player == 1 and v.keyCode == pygame.K_UP or v.Player == 2 and v.Direction2 == 1)):
 						if v.Player == 1:
@@ -971,7 +964,10 @@ def Game():
 
 while MainGameMaster == True:
 
-	# MusicBackground() # On charge la musique du jeu
+	if v.Music == False:
+		pygame.mixer.music.set_volume(float(v.MusicVOL)/1000) #Volume du son
+		pygame.mixer.music.play(420000) # Jouer la musique une infinité de fois (ou presque)
+		v.Music = True
 
 	# Ici, on appelle le void qu'il faut en fonction de ce qu'on veut afficher
 	

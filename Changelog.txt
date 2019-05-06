@@ -255,3 +255,8 @@ v 3.0.8, 23/04/2019 à 15h00, Nathan
  - Fix problèmes mineurs 
  - Modification de l'animation de la balle, pour pouvoir l'intégrer en multijoueur 
  - Intégration timer en multijoueur
+
+-------------------------------------
+v 3.0.9, 06/05/2019 à 9h10, Nathan
+
+ - Ajout des musiques, qui ne fonctionnaient pas depuis la convertion
