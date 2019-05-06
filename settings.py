@@ -5,7 +5,7 @@ def init():
 	global lock, lock2, lock3, TestCadriD, TD2, Bas, Haut, Droite, Gauche, end, toshow, Menu, bord, DegatsLaveTank, ChangementSaison, Changementok, Winner, Selectile
 	global Selectedtile, LockTile, XCursorEdit, YCursorEdit, InteracMap, SelectMap, MenuOpt, SMenuOpt, MusicVOL, SoundVOL, TSel, TypeDeSon, Design, SummerDay, WinterDay
 	global DefaultMin, DefaultSec, Link, TimerSec, TimerMin, Tdiff, Tstart, ComptTimer, FrameRate, DecompteMusique, Collision
-	global fontName, fontSize, font, screen
+	global fontName, fontSize, font, screen, Music
 	global BackMenu, BackOpt, Credits, arbre, Montagne, Eau, Lave, ContH, ContB, ContG, ContD, ContHD, ContHG, ContBD, ContBG
 	global arbreW, MontagneW, EauW, LaveW, ContHW, ContBW, ContGW, ContDW, ContHDW, ContHGW, ContBDW, ContBGW, STile
 	global STank1, STank2, Tank1, Tank1u, Tank1d, Tank1r, Tank1l, Tank2, Tank2u, Tank2d, Tank2r, Tank2l, Vies, BalleU, BalleD, BalleR, BalleL, BalleExplosion
@@ -77,6 +77,8 @@ def init():
 	fontSize = 24
 	font = 0
 
+	Music = False
+
 	Player = 1 #Joueur 1 et 2 changement
 	Act = 3
 	Player1IG = False
@@ -132,7 +134,7 @@ def init():
 	#Menu option
 	MenuOpt = 0
 	SMenuOpt = 1
-	MusicVOL = 1 #  <---------------------------------------------------------------------
+	MusicVOL = 50
 	SoundVOL = 50
 	TSel = 1
 	TypeDeSon = 1
