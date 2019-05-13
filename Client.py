@@ -24,7 +24,7 @@ class Client(ConnectionListener): #Echnange de données pour le multijoueur
 		# envoyer toutes les informations au serveur
 		if v.WhoIAm == 1:
 			connection.Send({"action": "dataPlayer", "dataPlayer": {"vie": str(v.vietank1), "x": str(v.xbase), "y": str(v.ybase), "IsFire": str(v.IsFire1), "Dir": str(v.Direction), "PlayerIG": str(v.Player1IG)}})
-			connection.Send({"action": "dataServer", "dataServer": {"player": str(v.Player), "winner": str(v.Winner), "season": str(v.Design), "state": str(v.state), "act": str(v.Act), "min": str(v.TimerMin), "sec": str(v.TimerSec), "map": v.Collision}}) #todo : map
+			connection.Send({"action": "dataServer", "dataServer": {"player": str(v.Player), "winner": str(v.Winner), "season": str(v.Design), "state": str(v.state), "act": str(v.Act), "min": str(v.TimerMin), "sec": str(v.TimerSec), "map": v.Collision}})
 			if v.IsFire1 == True:
 				# v.IsFire1 = False
 				connection.Send({"action": "PosBalle", "PosBalle": {"x": str(v.xbasem), "y": str(v.ybasem)}})

@@ -573,18 +573,17 @@ def Bullet():
 			IsFire2 = False
 			v.choix = 0
 			v.lock = 0
+			image(v.BalleExplosion, v.xbasem, v.ybasem)
+			delay(10)
 			v.xbasem = -100
 			v.ybasem = -100
 			AffTank()
-			Balle = v.BalleExplosion
-			image(Balle, v.xbasem, v.ybasem)
 			if v.IsMulti == True and v.Player == 2:
 				v.EndRoll2 = True
 			else:
 				v.Act -= 1
 			v.ChangementSaison += 1
 	else:
-		print('bullets')
 		AffTank()
 		if v.Player == 1 and v.Direction == 1 or v.Player == 2 and v.Direction2 == 1:
 			image(v.BalleU, v.xbasem, v.ybasem)
