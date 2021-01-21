@@ -14,7 +14,7 @@
     "jQuery": "^1.7.4",
     "require": "^2.4.20",
     "requirejs": "^2.3.6",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "uglify-js": "^3.4.9"
   }
 }
